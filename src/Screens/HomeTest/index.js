@@ -1,25 +1,32 @@
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
 import { Button, Divider, Layout } from "@ui-kitten/components";
 import { ThemeContext } from "../../config/theme-context";
-import { Navbar } from "../../common/Navbar";
+import { MainLayout } from "../../Layout/MainLayout";
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeTest = ({ navigation }) => {
   const themeContext = React.useContext(ThemeContext);
 
   const navigateDetails = () => {
     navigation.navigate("Details");
   };
 
+  const navigateSearch = () => {
+    navigation.navigate("Search");
+  };
+console.log(navigation)
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
-      <Navbar title="MyApp" />
-      <Divider />
+    <MainLayout navigation={navigation}>
       <Layout
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
         <Button style={{ marginVertical: 4 }} onPress={navigateDetails}>
           OPEN DETAILS
+        </Button>
+        <Button style={{ marginVertical: 4 }} onPress={navigateSearch}>
+          Search
+        </Button>
+        <Button style={{ marginVertical: 4 }} onPress={navigation.toggleDrawer}>
+          Drawer
         </Button>
         <Button
           style={{ marginVertical: 4 }}
@@ -28,6 +35,6 @@ export const HomeScreen = ({ navigation }) => {
           TOGGLE THEME
         </Button>
       </Layout>
-    </SafeAreaView>
+    </MainLayout>
   );
 };
