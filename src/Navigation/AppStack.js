@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Home} from './../Screens/Home';
-import {Details} from './../Screens/Details';
-import {AuthContext} from './AuthProvider';
+// import {Details} from './../Screens/Details';
+// import {AuthContext} from './AuthProvider';
 import { useTheme } from '@ui-kitten/components';
 import { DrawerBody } from './../Shared/DrawerBody';
 
@@ -21,10 +21,10 @@ const HomeStack = ({navigation}) => {
                 component={Home}
             />
 
-            <Stack.Screen
-                name={'DETAILS'}
-                component={Details}
-            />
+            {/*<Stack.Screen*/}
+            {/*    name={'DETAILS'}*/}
+            {/*    component={Details}*/}
+            {/*/>*/}
 
         </Stack.Navigator>
     );

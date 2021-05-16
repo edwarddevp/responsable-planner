@@ -1,60 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import AsyncStorage from '@react-native-community/async-storage';
-import {SingUp} from './../Screens/SingUp';
-import {LoginScreen} from './../Screens/Login';
-import {OnboardingScreen} from './../Screens/OnboardingScreen';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {SingUp} from '../Screens/SingUp';
+import {LoginScreen} from '../Screens/Login';
+import {OnBoardingScreen} from '../Screens/OnBoardingScreen';
 
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
-    const [isFirstLaunch, setIsFirstLaunch] = useState({});
-    let routeName;
+  const [isAlreadyLaunched, setIsAlreadyLaunched] = useState(true);
 
-    useEffect(() => {
-        AsyncStorage.getItem('alreadyLaunched').then((value) => {
-            if (value == null) {
-                AsyncStorage.setItem('alreadyLaunched', 'true');
-                setIsFirstLaunch(true);
-            } else {
-                setIsFirstLaunch(false);
-            }
-        });
+  useEffect(() => {
+    AsyncStorage.getItem('alreadyLaunched').then((value) => {
+      if (value) {
+        setIsAlreadyLaunched(true);
+      } else {
+        setIsAlreadyLaunched(false);
+      }
+    });
+  }, []);
 
-        // GoogleSignin.configure({
-        //     webClientId: 'YOUR_APP_WEB_CLIENT_ID',
-        // });
-
-    }, []);
-
-    if (isFirstLaunch === null) {
-        return null;
-    } else if (isFirstLaunch == true) {
-        routeName = 'Onboarding';
-    } else {
-        routeName = 'Login';
-    }
-
-    return (
-        <Stack.Navigator initialRouteName={routeName}>
+  return (
+    <Stack.Navigator>
+      {
+        isAlreadyLaunched ?
+          <>
             <Stack.Screen
-                name="Onboarding"
-                component={OnboardingScreen}
-                options={{header: () => null}}
+              name="Login"
+              component={LoginScreen}
+              options={{header: () => null}}
             />
             <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{header: () => null}}
+              name="Signup"
+              component={SingUp}
+              options={{header: () => null}}
             />
-            <Stack.Screen
-                name="Signup"
-                component={SingUp}
-                options={{header: () => null}}
-            />
-        </Stack.Navigator>
-    );
+          </> :
+          <Stack.Screen
+            name="OnBoarding"
+            component={OnBoardingScreen}
+            options={{header: () => null}}
+          />
+      }
+    </Stack.Navigator>
+  );
 };
 
 export default AuthStack;

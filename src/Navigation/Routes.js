@@ -5,7 +5,7 @@ import AuthStack from './AuthStack';
 import AppStack from './AppStack';
 
 export const Routes = () => {
-    const {user, setUser} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     // const [initializing, setInitializing] = useState(true);
 
     // const onAuthStateChanged = (user) => {
@@ -24,7 +24,7 @@ export const Routes = () => {
 
     return (
         <NavigationContainer>
-            {user ? <AppStack /> : <AuthStack />}
+            {user?.id? <AppStack /> : <AuthStack />}
         </NavigationContainer>
     );
 };

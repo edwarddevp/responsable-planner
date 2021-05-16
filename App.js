@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import "react-native-gesture-handler";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import { default as customTheme } from "./src/theme/theme.json";
-import { default as mapping } from "./src/theme/mapping.json";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
+import {default as customTheme} from "./src/theme/theme.json";
+import {default as mapping} from "./src/theme/mapping.json";
+import {EvaIconsPack} from "@ui-kitten/eva-icons";
 import Providers from "./src/Navigation";
-import { ThemeContext } from "./src/config/theme-context";
+import {ThemeContext} from "./src/config/theme-context";
 import AppLoading from 'expo-app-loading';
-import { useFonts } from 'expo-font';
-import { LogBox } from 'react-native';
+import {useFonts} from 'expo-font';
+import {LogBox} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
@@ -28,22 +29,23 @@ export default () => {
 
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return <AppLoading/>;
   }
 
   return (
     <>
-      <IconRegistry icons={EvaIconsPack} />
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <IconRegistry icons={EvaIconsPack}/>
+      <ThemeContext.Provider value={{theme, toggleTheme}}>
         <ApplicationProvider
           {...eva}
           theme={{
-             ...eva[theme], 
+            ...eva[theme],
             //  ...customTheme 
-            }}
+          }}
           customMapping={mapping}
         >
-          <Providers />
+          <Providers/>
+          <Toast ref={(ref) => Toast.setRef(ref)}/>
         </ApplicationProvider>
       </ThemeContext.Provider>
     </>
