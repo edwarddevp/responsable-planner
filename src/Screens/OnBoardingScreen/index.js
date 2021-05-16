@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Onboarding from 'react-native-onboarding-swiper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Dots = ({selected}) => {
     let backgroundColor;
@@ -47,15 +48,25 @@ const Done = ({...props}) => (
     </TouchableOpacity>
 );
 
-export const OnboardingScreen = ({navigation}) => {
+const onDone = () => {
+  AsyncStorage.setItem('alreadyLaunched', 'true');
+  // navigation.replace("Login")
+}
+
+const onSkip = () => {
+  AsyncStorage.setItem('alreadyLaunched', 'true');
+  // navigation.replace("Login")
+}
+
+export const OnBoardingScreen = ({navigation}) => {
     return (
         <Onboarding
             SkipButtonComponent={Skip}
             NextButtonComponent={Next}
             DoneButtonComponent={Done}
             DotComponent={Dots}
-            onSkip={() => navigation.replace("Login")}
-            onDone={() => navigation.navigate("Login")}
+            onSkip={onSkip}
+            onDone={onDone}
             pages={[
                 {
                     backgroundColor: '#a6e4d0',

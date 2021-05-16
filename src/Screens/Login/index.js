@@ -1,171 +1,182 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, Alert } from 'react-native';
-import { Button, Input, Text, Icon } from '@ui-kitten/components';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
+import {Button, Input, Text, Icon, Spinner} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
-
-import { ImageOverlay } from './../../Shared/image-overlay.component';
-import {
-    FacebookIcon,
-    GoogleIcon,
-    PersonIcon,
-} from './../../Shared/icons';
-import { KeyboardAvoidingView } from './../../Shared/3rd-party';
+import {ImageOverlay} from '../../Shared/image-overlay.component';
+import {EmailIcon} from '../../Shared/icons';
+import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
-import {sha512} from 'react-native-sha512';
+import {useForm, Controller} from "react-hook-form";
+import {authBgImage, emailRegex} from "../../lib/constants";
 
-export const LoginScreen = ({ navigation }) => {
-    const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const image = { uri: "https://images.unsplash.com/photo-1612197527762-8cfb55b618d1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTJ8fGJpdGNvaW5zfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" };
-    const {login} = useContext(AuthContext);
+export const LoginScreen = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const image = {uri: authBgImage};
+  const {login} = useContext(AuthContext);
 
-    const onSignInButtonPress = async () => {
-        setLoading(true);
-        login();
-        // const pass = await sha512(password);
-        // const response = await login(email, pass);
+  const {control, handleSubmit, formState: {errors} } = useForm({
+    defaultValues: {
+      email:'test8@email.com',
+      password: 'asd123'
+    },
+  });
 
-        // if(response !== undefined) {
-        //     setLoading(false);
-        //     Toast.show(`Error ${response}`, Toast.LONG);
-        // }
-    };
+  const onSubmit = async ({email, password}) => {
+    setLoading(true);
+    const response = await login(email, password);
 
-    const onSignUpButtonPress = () => {
-        navigation && navigation.navigate('Signup');
-    };
+    if (!response?.success) {
+      setLoading(false);
+      Toast.show({
+        text1:`Error ${response?.errors?.error?.[0]}`,
+        type:'error'
+    });
+    }
+  };
 
-    const onPasswordIconPress = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+  const onSignUpButtonPress = () => {
+    navigation && navigation.navigate('Signup');
+  };
 
-    const renderPasswordIcon = (props) => (
-        <TouchableWithoutFeedback onPress={onPasswordIconPress}>
-            <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'} />
-        </TouchableWithoutFeedback>
-    );
+  const renderPasswordIcon = (props) => (
+    <TouchableWithoutFeedback onPress={()=>setPasswordVisible(!passwordVisible)}>
+      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'}/>
+    </TouchableWithoutFeedback>
+  );
 
-    const validateEmail = (text) => {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(text);
-    };
+  return (
+    <KeyboardAvoidingView>
+      <ImageOverlay
+        style={styles.container}
+        source={image}
+      >
+        <View style={styles.headerContainer}>
+          <Text
+            category='h1'
+            status='control'>
+            Hello
+          </Text>
+          <Text
+            style={styles.signInLabel}
+            category='s1'
+            status='control'>
+            Sign in to your account
+          </Text>
+        </View>
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
+              <Input
+                status={(errors.email && isTouched) ? 'danger' : 'control'}
+                placeholder='Email'
+                accessoryRight={EmailIcon}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="email"
+            rules={{required: true, pattern: emailRegex}}
+            defaultValue=""
+          />
+          {
+            errors.email?.type === 'required' ?
+              <Text status='danger'>This is required.</Text> :
+              errors.email?.type === 'pattern' &&
+              <Text status='danger'>Invalid Email.</Text>
+          }
+          <Controller
+            control={control}
+            render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
+              <Input
+                style={styles.passwordInput}
+                status={(errors.password && isTouched) ? 'danger' : 'control'}
+                placeholder='Password'
+                accessoryRight={renderPasswordIcon}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                secureTextEntry={!passwordVisible}
+              />
+            )}
+            name="password"
+            rules={{required: true}}
+            defaultValue=""
+          />
+          {errors.password && <Text status='danger'>This is required.</Text>}
+        </View>
+        <Button
+          type='submit'
+          style={styles.signInButton}
+          size='giant'
+          onPress={handleSubmit(onSubmit)}
+          disabled={loading}
+        >
+          {
+            loading ?
+              <View style={styles.indicator}>
+                <Spinner size='small' status='control'/>
+              </View> :
+              'SIGN IN'
+          }
 
-    const checkTextInputIsEmptyOrNot = () => {
-        // console.log('\x1b[1;34m', 'LOG: ', password, email);
-        onSignInButtonPress();
+        </Button>
 
-        // if (password === '' || email === '') {
-        //     Alert.alert('Error!', 'Please fill in all the fields')
-        // }
-        // else {
-        //     if (!validateEmail(email)) {
-        //         Alert.alert('Error!!!', 'Invalid Email')
-        //     } else {
-        //         onSignInButtonPress();
-        //     }
-        // }
-    };
-
-    return (
-        <KeyboardAvoidingView>
-            <ImageOverlay
-                style={styles.container}
-                source={image}
-            >
-                <View style={styles.headerContainer}>
-                    <Text
-                        category='h1'
-                        status='control'>
-                        Hello
-                        </Text>
-                    <Text
-                        style={styles.signInLabel}
-                        category='s1'
-                        status='control'>
-                        Sign in to your account
-                        </Text>
-                </View>
-                <View style={styles.formContainer}>
-                    <Input
-                        status='control'
-                        placeholder='Email'
-                        accessoryRight={PersonIcon}
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-                    <Input
-                        style={styles.passwordInput}
-                        status='control'
-                        placeholder='Password'
-                        accessoryRight={renderPasswordIcon}
-                        value={password}
-                        secureTextEntry={!passwordVisible}
-                        onChangeText={setPassword}
-                    />
-
-                </View>
-                <Button
-                    style={styles.signInButton}
-                    size='giant'
-                    onPress={checkTextInputIsEmptyOrNot}>
-                    SIGN IN
-                </Button>
-
-                <Button
-                    style={styles.signUpButton}
-                    appearance='ghost'
-                    status='control'
-                    onPress={onSignUpButtonPress}>
-                    Don't have an account? Sign Up
-                </Button>
-            </ImageOverlay>
-        </KeyboardAvoidingView>
-    );
+        <Button
+          style={styles.signUpButton}
+          appearance='ghost'
+          status='control'
+          onPress={onSignUpButtonPress}>
+          Don't have an account? Sign Up
+        </Button>
+      </ImageOverlay>
+    </KeyboardAvoidingView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    headerContainer: {
-        minHeight: 216,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    formContainer: {
-        flex: 1,
-        paddingHorizontal: 16,
-    },
-    signInLabel: {
-        marginTop: 16,
-    },
-    passwordInput: {
-        marginTop: 16,
-    },
-    signInButton: {
-        marginHorizontal: 16,
-    },
-    forgotPasswordContainer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-    },
-    forgotPasswordButton: {
-        paddingHorizontal: 0,
-    },
-    signUpButton: {
-        marginVertical: 12,
-    },
-    socialAuthContainer: {
-        marginTop: 32,
-    },
-    socialAuthButtonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-    },
-    socialAuthHintText: {
-        alignSelf: 'center',
-        marginBottom: 16,
-    },
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    minHeight: 216,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  signInLabel: {
+    marginTop: 16,
+  },
+  passwordInput: {
+    marginTop: 16,
+  },
+  signInButton: {
+    marginHorizontal: 16,
+  },
+  forgotPasswordContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  forgotPasswordButton: {
+    paddingHorizontal: 0,
+  },
+  signUpButton: {
+    marginVertical: 12,
+  },
+  socialAuthContainer: {
+    marginTop: 32,
+  },
+  socialAuthButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  socialAuthHintText: {
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
 });

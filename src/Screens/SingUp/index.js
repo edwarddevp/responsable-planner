@@ -1,181 +1,221 @@
-import React, { useState, useCallback, useContext } from 'react';
-import { View, TouchableWithoutFeedback, Alert } from 'react-native';
+import React, {useState, useContext} from 'react';
+import {View, TouchableWithoutFeedback} from 'react-native';
 import {
-    Button,
-    CheckBox,
-    Input,
-    StyleService,
-    useStyleSheet,
-    Text,
-    Icon,
-    Spinner,
-    Layout
+  Button,
+  Input,
+  StyleService,
+  useStyleSheet,
+  Text,
+  Icon,
+  Spinner
 } from '@ui-kitten/components';
-import { sha512 } from 'react-native-sha512';
-
-import { ImageOverlay } from './../../Shared/image-overlay.component';
-import { EmailIcon, PersonIcon, PlusIcon } from './../../Shared/icons';
-import { KeyboardAvoidingView } from './../../Shared/3rd-party';
+import {ImageOverlay} from '../../Shared/image-overlay.component';
+import {EmailIcon, PersonIcon} from '../../Shared/icons';
+import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
+import {Controller, useForm} from "react-hook-form";
+import {authBgImage, emailRegex} from "../../lib/constants";
+import Toast from "react-native-toast-message";
 
-export const SingUp = ({ navigation }) => {
-    const [loading, setLoading] = useState(false);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const image = { uri: "https://images.unsplash.com/photo-1612197527762-8cfb55b618d1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTJ8fGJpdGNvaW5zfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" };
-    const { register } = useContext(AuthContext);
+export const SingUp = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const image = {uri: authBgImage};
+  const {register} = useContext(AuthContext);
 
-    const styles = useStyleSheet(themedStyles);
+  const styles = useStyleSheet(themedStyles);
 
-    const onSignUpButtonPress = async () => {
-        setLoading(true);
-        const pass = await sha512(password);
-        const data = {
-            email,
-            firstName,
-            lastName,
-            password: pass
-        };
+  const {control, handleSubmit, formState: {errors} } = useForm({
+    defaultValues: {
+      email:'test8@email.com',
+      password: 'asd123',
+      name: 'Pedro'
+    },
+  });
 
-        const response = await register(data);
-        if(response === undefined) {
-            setLoading(false);
+  const onSubmit = async (values) => {
+    setLoading(true);
 
-        }else {
-            Alert.alert('Error!!!', 'There is already an account with the email provided');
-            setLoading(false);
-        }
-    };
+    const response = await register(values);
+    if (response?.success) {
+      navigation && navigation.navigate('Login');
+      Toast.show({
+        text1: `User registered succesfully`,
+        text2: 'Please sign in to continue'
+      });
+    } else {
+      setLoading(false);
+      Toast.show({
+        text1: `Error ${response?.errors?.error?.[0]}`,
+        type: 'error'
+      });
+    }
+  };
 
-    const onSignInButtonPress = () => {
-        navigation && navigation.navigate('Login');
-    };
+  const onSignInButtonPress = () => {
+    navigation && navigation.navigate('Login');
+  };
 
-    const onPasswordIconPress = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+  const onPasswordIconPress = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
-    const renderPasswordIcon = (props) => (
-        <TouchableWithoutFeedback onPress={onPasswordIconPress}>
-            <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'} />
-        </TouchableWithoutFeedback>
-    );
+  const renderPasswordIcon = (props) => (
+    <TouchableWithoutFeedback onPress={onPasswordIconPress}>
+      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'}/>
+    </TouchableWithoutFeedback>
+  );
 
-    return (
-        <KeyboardAvoidingView>
-            {
-                loading ?
-                    <Layout style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-                        <Spinner/>
-                    </Layout> :
-                    <ImageOverlay
-                        style={styles.container}
-                        source={image}>
+  return (
+    <KeyboardAvoidingView>
+      <ImageOverlay
+        style={styles.container}
+        source={image}>
+        <View style={styles.headerContainer}>
+          <Text
+            category='h1'
+            status='control'>
+            Hello
+          </Text>
+          <Text
+            style={styles.signInLabel}
+            category='s1'
+            status='control'>
+            Sign in to your account
+          </Text>
+        </View>
 
-                        <View style={styles.formContainer}>
-                            <Input
-                                status='control'
-                                autoCapitalize='none'
-                                placeholder='First Name'
-                                accessoryRight={PersonIcon}
-                                value={firstName}
-                                onChangeText={setFirstName}
-                            />
-                            <Input
-                                status='control'
-                                style={styles.formInput}
-                                autoCapitalize='none'
-                                placeholder='Last Name'
-                                accessoryRight={PersonIcon}
-                                value={lastName}
-                                onChangeText={setLastName}
-                            />
-                            <Input
-                                style={styles.formInput}
-                                status='control'
-                                autoCapitalize='none'
-                                placeholder='Email'
-                                accessoryRight={EmailIcon}
-                                value={email}
-                                onChangeText={setEmail}
-                            />
-                            <Input
-                                style={styles.formInput}
-                                status='control'
-                                autoCapitalize='none'
-                                secureTextEntry={!passwordVisible}
-                                placeholder='Password'
-                                accessoryRight={renderPasswordIcon}
-                                value={password}
-                                onChangeText={setPassword}
-                            />
-                        </View>
-                        <Button
-                            style={styles.signUpButton}
-                            size='giant'
-                            onPress={onSignUpButtonPress}>
-                            SIGN UP
-                        </Button>
-                        <Button
-                            style={styles.signInButton}
-                            appearance='ghost'
-                            status='control'
-                            onPress={onSignInButtonPress}>
-                            Already have an account? Sign In
-                        </Button>
-                    </ImageOverlay>
-            }
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
+              <Input
+                status={(errors.name && isTouched) ? 'danger' : 'control'}
+                placeholder='Name'
+                accessoryRight={PersonIcon}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="name"
+            rules={{required: true}}
+          />
+          {errors.name && <Text status='danger'>This is required.</Text>}
+          <Controller
+            control={control}
+            render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
+              <Input
+                style={styles.formInput}
+                status={(errors.email && isTouched) ? 'danger' : 'control'}
+                placeholder='Email'
+                accessoryRight={EmailIcon}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="email"
+            rules={{required: true, pattern: emailRegex}}
+            defaultValue=""
+          />
+          {
+            errors.email?.type === 'required' ?
+              <Text status='danger'>This is required.</Text> :
+              errors.email?.type === 'pattern' &&
+              <Text status='danger'>Invalid Email.</Text>
+          }
+          <Controller
+            control={control}
+            render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
+              <Input
+                style={styles.formInput}
+                status={(errors.password && isTouched) ? 'danger' : 'control'}
+                placeholder='Password'
+                accessoryRight={renderPasswordIcon}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                secureTextEntry={!passwordVisible}
+              />
+            )}
+            name="password"
+            rules={{required: true}}
+            defaultValue=""
+          />
+          {errors.password && <Text status='danger'>This is required.</Text>}
+        </View>
+        <Button
+          type='submit'
+          status='success'
+          style={styles.signUpButton}
+          size='giant'
+          onPress={handleSubmit(onSubmit)}
+          disabled={loading}
+        >
+          {
+            loading ?
+              <View style={styles.indicator}>
+                <Spinner size='small' status='control'/>
+              </View> :
+              'SIGN UP'
+          }
 
-        </KeyboardAvoidingView>
-    );
+        </Button>
+        <Button
+          style={styles.signInButton}
+          appearance='ghost'
+          status='control'
+          onPress={onSignInButtonPress}>
+          Already have an account? Sign In
+        </Button>
+      </ImageOverlay>
+    </KeyboardAvoidingView>
+  );
 };
 
 const themedStyles = StyleService.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'background-basic-color-1',
-    },
-    headerContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 216,
-    },
-    profileAvatar: {
-        width: 116,
-        height: 116,
-        borderRadius: 58,
-        alignSelf: 'center',
-        backgroundColor: 'background-basic-color-1',
-        tintColor: 'text-hint-color',
-    },
-    editAvatarButton: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-    },
-    formContainer: {
-        flex: 1,
-        paddingTop: 32,
-        paddingHorizontal: 16,
-    },
-    formInput: {
-        marginTop: 16,
-    },
-    termsCheckBox: {
-        marginTop: 24,
-    },
-    termsCheckBoxText: {
-        color: 'text-control-color',
-        marginLeft: 10,
-    },
-    signUpButton: {
-        marginHorizontal: 16,
-    },
-    signInButton: {
-        marginVertical: 12,
-        marginHorizontal: 16,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: 'background-basic-color-1',
+  },
+  headerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 216,
+  },
+  profileAvatar: {
+    width: 116,
+    height: 116,
+    borderRadius: 58,
+    alignSelf: 'center',
+    backgroundColor: 'background-basic-color-1',
+    tintColor: 'text-hint-color',
+  },
+  editAvatarButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  formContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  formInput: {
+    marginTop: 16,
+  },
+  termsCheckBox: {
+    marginTop: 24,
+  },
+  termsCheckBoxText: {
+    color: 'text-control-color',
+    marginLeft: 10,
+  },
+  signUpButton: {
+    marginHorizontal: 16,
+  },
+  signInButton: {
+    marginVertical: 12,
+    marginHorizontal: 16,
+  },
 });
