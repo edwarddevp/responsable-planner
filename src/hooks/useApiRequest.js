@@ -2,8 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {API_URL, SAFE_EVENT_PLANNER_TOKEN_KEY} from "@env"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from "../Navigation/AuthProvider";
+import Toast from "react-native-toast-message";
 
-export const useApiRequest = (path, {method = 'GET', paramsData, skip, withToken = true, logoutContext} = {}) => {
+export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => {
   const [response, setResponse] = useState({})
   const [loading, setLoading] = useState(!skip)
   const [error, setError] = useState({})
@@ -23,13 +24,20 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip, withToken
     return {}
   }
 
+  const getBody = (params) => {
+    return params? {
+      body: JSON.stringify(params)
+    } : {}
+  }
+
   const apiRequest = async (params) => {
     try {
       setLoading(true)
-      const body = (params || paramsData) ? {
-        body: JSON.stringify(params || paramsData)// body data type must match "Content-Type" header
-      } : {}
-      const authorization = withToken ? await getToken() : {}
+
+      const body = getBody(params || paramsData)
+
+      const authorization =  await getToken()
+
       const response = await fetch(API_URL + path, {
         method: method, // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -42,17 +50,14 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip, withToken
         ...body
       });
       const json = await response.json()
-      console.log('%c json', 'background: #222; color: #bada55',json)
-      if (withToken) {
-        if(json?.code === 401 || json?.code === 403){
-          authContext?.logout?
-            authContext?.logout() :
-            logoutContext && logoutContext()
-        }
+
+      if (json?.code === 401 || json?.code === 403) {
+        authContext && await authContext?.logout()
+        Toast.show({
+          type: 'error',
+          text1: 'Authentication error, please sign in'
+        });
       }
-
-
-
 
       setResponse(json)
       setLoading(false)

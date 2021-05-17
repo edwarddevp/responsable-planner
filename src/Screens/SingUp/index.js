@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {View, TouchableWithoutFeedback} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {View, TouchableWithoutFeedback, Platform, StatusBar} from 'react-native';
 import {
   Button,
   Input,
@@ -24,6 +24,15 @@ export const SingUp = ({navigation}) => {
   const {register} = useContext(AuthContext);
 
   const styles = useStyleSheet(themedStyles);
+
+  useEffect(() => {
+    if(Platform.OS === 'android') {
+      StatusBar.setBarStyle('light-content');
+    }
+    return () => {
+      StatusBar.setBarStyle('dark-content');
+    }
+  }, []);
 
   const {control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {

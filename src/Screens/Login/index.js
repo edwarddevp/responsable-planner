@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, View, TouchableWithoutFeedback, Platform} from 'react-native';
 import {Button, Input, Text, Icon, Spinner} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 import {ImageOverlay} from '../../Shared/image-overlay.component';
@@ -8,12 +8,22 @@ import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
 import {useForm, Controller} from "react-hook-form";
 import {authBgImage, emailRegex} from "../../lib/constants";
+import { StatusBar } from 'react-native';
 
 export const LoginScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const image = {uri: authBgImage};
   const {login} = useContext(AuthContext);
+
+  useEffect(() => {
+    if(Platform.OS === 'android') {
+      StatusBar.setBarStyle('light-content');
+    }
+    return () => {
+      StatusBar.setBarStyle('dark-content');
+    }
+  }, []);
 
   const {control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {

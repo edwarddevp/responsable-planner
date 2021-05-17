@@ -11,10 +11,12 @@ import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
 import {LogBox} from 'react-native';
 import Toast from 'react-native-toast-message';
+import {useAppLoading} from "./src/hooks/useAppLoading";
 
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
   const [theme, setTheme] = React.useState("light");
+  const  [loading, user, isAppFirstLaunched] = useAppLoading()
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -27,8 +29,7 @@ export default () => {
     'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 
-
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loading) {
     return <AppLoading/>;
   }
 
@@ -44,7 +45,10 @@ export default () => {
           }}
           customMapping={mapping}
         >
-          <Providers/>
+          <Providers
+            user={user}
+            isAppFirstLaunched={isAppFirstLaunched}
+          />
           <Toast ref={(ref) => Toast.setRef(ref)}/>
         </ApplicationProvider>
       </ThemeContext.Provider>

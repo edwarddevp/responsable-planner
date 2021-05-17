@@ -73,7 +73,7 @@ const AppStack = () => {
             tabBarOptions={{
                 activeTintColor: theme['color-basic-100'],
             }}>
-            <Drawer.Screen name="Home"component={HomeStack}/>
+            <Drawer.Screen name="Home" component={HomeStack}/>
 
             <Drawer.Screen
                 name="Profile"
