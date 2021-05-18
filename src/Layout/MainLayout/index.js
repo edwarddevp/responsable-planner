@@ -10,7 +10,7 @@ import {StatusBarBackground} from "../../Shared/StatusBarBackground";
 
 export const MainLayout = ({children, backButton, navigation}) => {
   // const themeContext = React.useContext(ThemeContext);
-  // useStatusBarColor()
+  useStatusBarColor()
   const {logout} = useContext(AuthContext);
 
   return (
@@ -19,7 +19,7 @@ export const MainLayout = ({children, backButton, navigation}) => {
       // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
     }}>
       <>
-        <StatusBarBackground />
+        <StatusBarBackground  />
         <Navbar
           title="MyApp"
           renderLeftActions={() =>

@@ -9,7 +9,6 @@ export const StatusBarBackground = (props) => {
 const styles = StyleSheet.create({
   statusBarBackground: {
     height: (Platform.OS === 'ios') ? 20 : StatusBar.currentHeight,
-    backgroundColor: "white",
   }
 
 })
