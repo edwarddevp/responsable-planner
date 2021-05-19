@@ -12,17 +12,17 @@ export const DrawerMenuItem = ({item, navigation}) => {
         {
           backgroundColor: pressed
             ? 'rgb(210, 230, 255)'
-            : 'white'
+            : 'transparent'
         }
       ]}>
       {() => (
         <View style={styles?.drawerMenuItem}>
           <View style={styles?.drawerMenuItemLeft}>
-            <Icon fill='#5B6A86' style={styles?.icon} name={item?.icon? item?.icon : 'bell-outline'}/>
+            <Icon fill='#BE923B' style={styles?.icon} name={item?.icon? item?.icon : 'bell-outline'}/>
             <Text style={{...styles?.spacing, ...styles?.textLabel}}>{item?.label}</Text>
           </View>
           <View style={styles?.drawerMenuItemRight}>
-            <ForwardIcon fill='#B6BECD' style={styles?.icon}/>
+            <ForwardIcon fill='#BE923B' style={styles?.icon}/>
           </View>
         </View>
       )}
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   textLabel: {
     flex: 1,
     fontSize: 18,
-    color: '#5B6A86'
+    color: '#F2F2F2'
   },
   spacing: {
     marginLeft: 12,

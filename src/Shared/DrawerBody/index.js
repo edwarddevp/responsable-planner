@@ -41,7 +41,10 @@ export const DrawerBody = ({navigation}) => {
     },
     {
       divider: true,
-      id:'7'
+      id:'7',
+      styles:{
+        backgroundColor:'#BE923B'
+      }
     },
     {
       label: 'Settings',
@@ -59,7 +62,7 @@ export const DrawerBody = ({navigation}) => {
       id:'10'
     }]
 
-  return <View style={{flex: 1, width: '100%'}}>
+  return <View style={{flex: 1, width: '100%', backgroundColor:'#1D1D1F'}}>
     <Header user={user}/>
     <FlatList
       data={drawer}
