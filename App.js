@@ -15,7 +15,7 @@ import {useAppLoading} from "./src/hooks/useAppLoading";
 
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
-  const [theme, setTheme] = React.useState("light");
+  const [theme, setTheme] = React.useState("dark");
   const  [loading, user, isAppFirstLaunched] = useAppLoading()
 
   const toggleTheme = () => {
@@ -41,7 +41,7 @@ export default () => {
           {...eva}
           theme={{
             ...eva[theme],
-            //  ...customTheme 
+             ...customTheme
           }}
           customMapping={mapping}
         >

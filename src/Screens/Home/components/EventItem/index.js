@@ -1,8 +1,6 @@
 import React from 'react';
-import {ImageBackground, Text, View} from "react-native";
-import {withStyles, Button} from "@ui-kitten/components";
-import {useApiRequest} from "../../../../hooks/useApiRequest";
-import {EVENTS} from "../../../../lib/apiRoutes";
+import {ImageBackground, View} from "react-native";
+import {Layout, withStyles, Text} from "@ui-kitten/components";
 import {ForwardIcon} from "../../../../Shared/icons";
 
 const EventItemComponent = (
@@ -21,10 +19,8 @@ const EventItemComponent = (
     eva
   }) => {
   const styles = eva?.style;
-  const {data} = useApiRequest(EVENTS)
-  console.log('%c data', 'background: #222; color: #bada55', data)
 
-  return <View style={styles?.eventItem}>
+  return <Layout style={styles?.eventItem}>
     <ImageBackground
       source={{uri: "https://reactjs.org/logo-og.png"}}
       style={styles.image}
@@ -38,53 +34,46 @@ const EventItemComponent = (
       </View>
 
     </ImageBackground>
-    <View style={styles?.bottomContainer}>
+    <Layout style={styles?.bottomContainer}>
       <View style={styles?.bottomLeftContainer}>
-        <View style={styles?.securityBadge}>
-          <Text style={styles?.editText}>Dangerous</Text>
-        </View>
-
+        {/*<Layout style={styles?.securityBadge}>*/}
+        <Text style={styles?.editText}>Dangerous</Text>
+        {/*</Layout>*/}
       </View>
-      <View style={styles?.bottomRightContainer}>
+      <Layout style={styles?.bottomRightContainer} level={"1"}>
         <Text style={styles?.editText}>Event Details</Text>
         <ForwardIcon fill='#B6BECD' style={styles?.icon}/>
-      </View>
-    </View>
-  </View>
+      </Layout>
+    </Layout>
+  </Layout>
 };
 
 export const EventItem = withStyles(EventItemComponent, (theme) => ({
-  securityBadge:{
-
-  },
-  bottomLeftContainer:{
-    flex:1,
-    alignItems:'center',
+  securityBadge: {},
+  bottomLeftContainer: {
+    flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-    // borderRightWidth: 1,
-    // borderRightColor: theme["color-basic-400"],
-    backgroundColor: theme["color-danger-400"],
-    padding:4
+    backgroundColor: theme["color-danger-800"],
+    padding: 6
   },
-  bottomRightContainer:{
-    flex:1,
+  bottomRightContainer: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginLeft:5,
-    padding:4
+    padding: 6
   },
   eventItem: {
     borderTopStartRadius: 8,
     borderTopEndRadius: 8,
     marginHorizontal: 24,
-    marginTop:0,
-    marginBottom: 24,
+    marginVertical: 12,
     overflow: 'hidden',
-    shadowColor: "#000",
+    shadowColor: theme["color-basic-transparent-500"],
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 5,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -99,10 +88,10 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
   icon: {
     width: 24,
     height: 24,
-  padding:8
+    padding: 8
   },
   editText: {
-    fontSize: 18
+    fontSize: 16
   },
   image: {
     height: 150.5,

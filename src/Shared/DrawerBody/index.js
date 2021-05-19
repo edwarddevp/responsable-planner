@@ -1,77 +1,102 @@
 import React, {useContext} from 'react'
-import {FlatList, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {AuthContext} from "../../Navigation/AuthProvider";
 import {Header} from "./components/Header";
-import {DrawerMenuItem} from "./components/DrawerMenuItem";
+import {Drawer, IndexPath, DrawerItem, Text, Icon, Divider, Layout} from "@ui-kitten/components";
+import {ForwardIcon} from "../icons";
 
 
-export const DrawerBody = ({navigation}) => {
+export const DrawerBody = ({navigation,state}) => {
   const {user} = useContext(AuthContext);
 
-  const drawer = [
-    {
-      label: 'My Events',
-      icon: 'home-outline',
-      id:'1'
-    },
-    {
-      label: 'Create Event',
-      icon: 'plus',
-      id:'2'
-    },
-    {
-      label: 'Tareas Pendientes',
-      icon: 'checkmark-square-2-outline',
-      id:'3'
-    },
-    {
-      label: 'Security Measures',
-      icon: 'file-text-outline',
-      id:'4'
-    },
-    {
-      label: 'Reminders',
-      icon: 'bell-outline',
-      id:'5'
-    },
-    {
-      label: 'Favorite Events',
-      icon: 'heart-outline',
-      id:'6'
-    },
-    {
-      divider: true,
-      id:'7',
-      styles:{
-        backgroundColor:'#BE923B'
-      }
-    },
-    {
-      label: 'Settings',
-      icon: 'settings-outline',
-      id:'8'
-    },
-    {
-      label: 'Logout',
-      icon: 'log-out-outline',
-      id:'9'
-    },
-    {
-      label: 'Share',
-      icon: 'share-outline',
-      id:'10'
-    }]
-
-  return <View style={{flex: 1, width: '100%', backgroundColor:'#1D1D1F'}}>
-    <Header user={user}/>
-    <FlatList
-      data={drawer}
-      renderItem={({item}) =>
-        <DrawerMenuItem item={item} navigation={navigation}/>}
-      keyExtractor={item => item.id}
-      refreshing
+  return <Drawer
+    selectedIndex={new IndexPath(state.index)}
+    onSelect={index => navigation.navigate(state.routeNames[index.row])}
+    appearance='noDivider'
+    header={() => <Header user={user}/>}
+  >
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>My Events</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='home-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
     />
-  </View>
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Create Event</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='plus'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Tareas Pendientes</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='checkmark-square-2-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Security Measures</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='file-text-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Reminders</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='bell-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Favorite Events</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='heart-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <Divider style={styles?.divider}/>
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Settings</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='settings-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Logout</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='log-out-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+
+    <DrawerItem
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Share</Text>}
+      accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='share-outline'/>}
+      accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
+      style={styles?.drawerMenuItem}
+    />
+  </Drawer>
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  divider: {
+  },
+  drawerMenuItem: {
+    paddingLeft: 14,
+    paddingRight: 8,
+    paddingVertical: 18,
+  },
+  textLabel: {
+    flex: 1,
+    fontSize: 18,
+    marginLeft: 12,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+})

@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Home} from './../Screens/Home';
+import {Home} from '../Screens/Home';
 // import {Details} from './../Screens/Details';
 // import {AuthContext} from './AuthProvider';
 import { useTheme } from '@ui-kitten/components';
-import { DrawerBody } from './../Shared/DrawerBody';
+import { DrawerBody } from '../Shared/DrawerBody';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -68,26 +68,29 @@ const AppStack = () => {
     const theme = useTheme();
 
     return (
-        <Drawer.Navigator
-            drawerContent={props => <DrawerBody {...props}/>}
-            tabBarOptions={{
-                activeTintColor: theme['color-basic-100'],
-            }}>
+        <Drawer.Navigator drawerContent={props => <DrawerBody {...props}/>}>
             <Drawer.Screen name="Home" component={HomeStack}/>
-
-            <Drawer.Screen
-                name="Profile"
-                component={ProfileStack}
-                options={{
-                    tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons
-                            name="account-outline"
-                            color={color}
-                            size={size}
-                        />
-                    ),
-                }}
-            />
+            <Drawer.Screen name="Create Event" component={HomeStack}/>
+            <Drawer.Screen name="Tareas Pendientes" component={HomeStack}/>
+            <Drawer.Screen name="Security Measures" component={HomeStack}/>
+            <Drawer.Screen name="Reminders" component={HomeStack}/>
+            <Drawer.Screen name="Favorite Events" component={HomeStack}/>
+            <Drawer.Screen name="Settings" component={HomeStack}/>
+            <Drawer.Screen name="Logout" component={HomeStack}/>
+            <Drawer.Screen name="Share" component={HomeStack}/>
+            {/*<Drawer.Screen*/}
+            {/*    name="Profile"*/}
+            {/*    component={ProfileStack}*/}
+            {/*    options={{*/}
+            {/*        tabBarIcon: ({color, size}) => (*/}
+            {/*            <MaterialCommunityIcons*/}
+            {/*                name="account-outline"*/}
+            {/*                color={color}*/}
+            {/*                size={size}*/}
+            {/*            />*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
         </Drawer.Navigator>
     );
 };
