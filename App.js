@@ -15,13 +15,14 @@ import {useAppLoading} from "./src/hooks/useAppLoading";
 
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
+  LogBox.ignoreLogs(['Reanimated 2']);
   const [theme, setTheme] = React.useState("dark");
   const  [loading, user, isAppFirstLaunched] = useAppLoading()
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);
-  };
+  };  
 
   let [fontsLoaded] = useFonts({
     'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),

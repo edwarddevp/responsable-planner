@@ -6,6 +6,7 @@ import {Home} from '../Screens/Home';
 // import {AuthContext} from './AuthProvider';
 import { useTheme } from '@ui-kitten/components';
 import { DrawerBody } from '../Shared/DrawerBody';
+import {CreateEvent} from "../Screens/CreateEvent";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,8 +70,8 @@ const AppStack = () => {
 
     return (
         <Drawer.Navigator drawerContent={props => <DrawerBody {...props}/>}>
-            <Drawer.Screen name="Home" component={HomeStack}/>
-            <Drawer.Screen name="Create Event" component={HomeStack}/>
+            <Drawer.Screen name="Home" component={Home}/>
+            <Drawer.Screen name="Create Event" component={CreateEvent}/>
             <Drawer.Screen name="Tareas Pendientes" component={HomeStack}/>
             <Drawer.Screen name="Security Measures" component={HomeStack}/>
             <Drawer.Screen name="Reminders" component={HomeStack}/>

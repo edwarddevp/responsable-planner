@@ -88,15 +88,15 @@ const styles = StyleSheet.create({
   drawerMenuItem: {
     paddingLeft: 14,
     paddingRight: 8,
-    paddingVertical: 18,
+    paddingVertical: 14,
   },
   textLabel: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 12,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
   },
 })
