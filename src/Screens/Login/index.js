@@ -30,7 +30,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
   const {control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {
-      email:'test8@email.com',
+      email:'test2updated@email.com',
       password: 'asd123'
     },
   });
@@ -69,13 +69,13 @@ const LoginScreenComponent = ({navigation,eva}) => {
             style={styles.textColor}
             category='h1'
             status='control'>
-            Hello
+            Bienvenido
           </Text>
           <Text
             style={{...styles.textColor,...styles.signInLabel}}
             category='s1'
             status='control'>
-            Sign in to your account
+            Inicia sesión en tu cuenta
           </Text>
         </View>
         <View style={styles.formContainer}>
@@ -97,9 +97,9 @@ const LoginScreenComponent = ({navigation,eva}) => {
           />
           {
             errors.email?.type === 'required' ?
-              <Text status='danger'>This is required.</Text> :
+              <Text status='danger'>Campo Requerido.</Text> :
               errors.email?.type === 'pattern' &&
-              <Text status='danger'>Invalid Email.</Text>
+              <Text status='danger'>Email Invalido.</Text>
           }
           <Controller
             control={control}
@@ -107,7 +107,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
               <Input
                 style={styles.passwordInput}
                 status={(errors.password && isTouched) ? 'danger' : 'control'}
-                placeholder='Password'
+                placeholder='Contraseña'
                 accessoryRight={renderPasswordIcon}
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
@@ -119,7 +119,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
             rules={{required: true}}
             defaultValue=""
           />
-          {errors.password && <Text status='danger'>This is required.</Text>}
+          {errors.password && <Text status='danger'>Campo Requerido.</Text>}
         </View>
         <Button
           type='submit'
@@ -133,7 +133,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
               <View style={styles.indicator}>
                 <Spinner size='small' status='control'/>
               </View> :
-              'SIGN IN'
+              'Inicia Sesión'
           }
 
         </Button>
@@ -143,7 +143,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
           appearance='ghost'
           status='control'
           onPress={onSignUpButtonPress}>
-          Don't have an account? Sign Up
+          No tienes una cuenta? Registrate
         </Button>
       </ImageOverlay>
     </KeyboardAvoidingView>

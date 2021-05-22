@@ -16,14 +16,14 @@ export const DrawerBody = ({navigation,state}) => {
     header={() => <Header user={user}/>}
   >
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>My Events</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Mis Eventos</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='home-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Create Event</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Crear Evento</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='plus'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
@@ -37,21 +37,21 @@ export const DrawerBody = ({navigation,state}) => {
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Security Measures</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Medidas de Seguridad</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='file-text-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Reminders</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Notificaciones</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='bell-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Favorite Events</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Eventos Favoritos</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='heart-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
@@ -60,21 +60,21 @@ export const DrawerBody = ({navigation,state}) => {
     <Divider style={styles?.divider}/>
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Settings</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Configuracion</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='settings-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Logout</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Cerrar Sesión</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='log-out-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}
     />
 
     <DrawerItem
-      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Share</Text>}
+      title={({style}) => <Text style={[style[0],style[1],styles?.textLabel]}>Compartir</Text>}
       accessoryLeft={({style}) => <Icon fill='#BE923B' style={[style[0],style[1],styles?.icon]} name='share-outline'/>}
       accessoryRight={({style}) => <ForwardIcon fill='#BE923B' style={[style[0],style[1],styles?.icon]}/>}
       style={styles?.drawerMenuItem}

@@ -84,13 +84,13 @@ export const SingUp = ({navigation}) => {
           <Text
             category='h1'
             status='control'>
-            Hello
+            Bienvenido
           </Text>
           <Text
             style={styles.signInLabel}
             category='s1'
             status='control'>
-            Sign in to your account
+            Crea una nueva cuenta
           </Text>
         </View>
 
@@ -100,7 +100,7 @@ export const SingUp = ({navigation}) => {
             render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
               <Input
                 status={(errors.name && isTouched) ? 'danger' : 'control'}
-                placeholder='Name'
+                placeholder='Nombre'
                 accessoryRight={PersonIcon}
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
@@ -110,7 +110,7 @@ export const SingUp = ({navigation}) => {
             name="name"
             rules={{required: true}}
           />
-          {errors.name && <Text status='danger'>This is required.</Text>}
+          {errors.name && <Text status='danger'>Campo Requerido.</Text>}
           <Controller
             control={control}
             render={({fieldState:{isTouched},field: {onChange, onBlur, value}}) => (
@@ -130,9 +130,9 @@ export const SingUp = ({navigation}) => {
           />
           {
             errors.email?.type === 'required' ?
-              <Text status='danger'>This is required.</Text> :
+              <Text status='danger'>Campo Requerido.</Text> :
               errors.email?.type === 'pattern' &&
-              <Text status='danger'>Invalid Email.</Text>
+              <Text status='danger'>Email Invalido.</Text>
           }
           <Controller
             control={control}
@@ -140,7 +140,7 @@ export const SingUp = ({navigation}) => {
               <Input
                 style={styles.formInput}
                 status={(errors.password && isTouched) ? 'danger' : 'control'}
-                placeholder='Password'
+                placeholder='Contraseña'
                 accessoryRight={renderPasswordIcon}
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
@@ -152,7 +152,7 @@ export const SingUp = ({navigation}) => {
             rules={{required: true}}
             defaultValue=""
           />
-          {errors.password && <Text status='danger'>This is required.</Text>}
+          {errors.password && <Text status='danger'>Campo Requerido.</Text>}
         </View>
         <Button
           type='submit'
@@ -167,7 +167,7 @@ export const SingUp = ({navigation}) => {
               <View style={styles.indicator}>
                 <Spinner size='small' status='control'/>
               </View> :
-              'SIGN UP'
+              'Registrarse'
           }
 
         </Button>
@@ -176,7 +176,7 @@ export const SingUp = ({navigation}) => {
           appearance='ghost'
           status='control'
           onPress={onSignInButtonPress}>
-          Already have an account? Sign In
+          Tienes una cuenta? Inicia Sesión
         </Button>
       </ImageOverlay>
     </KeyboardAvoidingView>
