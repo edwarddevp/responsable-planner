@@ -14,9 +14,6 @@ export const DarkerImageBackgroundComponent = ({children, eva, source, ...rest})
 export const DarkerImageBackground = withStyles(DarkerImageBackgroundComponent, (theme) => ({
   innerFrame: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, .5)',
-
+    backgroundColor: 'rgba(0, 0, 0, .7)',
   },
 }));

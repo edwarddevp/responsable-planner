@@ -1,44 +1,50 @@
 import React, {useEffect} from "react";
-import {Button, Input, Layout, Text, ViewPager, withStyles} from "@ui-kitten/components";
+import {Layout, Text, ViewPager, withStyles} from "@ui-kitten/components";
 import {StatusBarBackground} from "../../Shared/StatusBarBackground";
-import {Dimensions, ImageBackground, View} from "react-native";
+import {Dimensions, View} from "react-native";
 import splash from './../../../assets/splash.png';
-import {Controller, useForm} from "react-hook-form";
-import {PersonIcon} from "../../Shared/icons";
+import {useForm} from "react-hook-form";
 import {useIsFocused} from "@react-navigation/native";
 import {DarkerImageBackground} from "../../Shared/DarkerImageBackground";
-import {Step1Component} from "./components/Step1";
+import {useCreateEventSlider} from "../../hooks/useCreateEventSlider";
+import {Step1} from "./components/Step1";
+import {Step2} from "./components/Step2";
+import {Step3} from "./components/Step3";
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const CreateEventScreen = ({navigation, eva}) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const styles = eva?.style;
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const {categories} = useCreateEventSlider();
   // check if screen is focused
   const isFocused = useIsFocused();
 
-  // listen for isFocused, if useFocused changes
-  // call the function that you use to mount the component.
-
   useEffect(() => {
+    // listen for isFocused, if useFocused changes
+    // call the function that you use to mount the component.
     setSelectedIndex(0)
+    reset({
+      "name": "Test 1",
+      "categoryId": 2
+    })
   }, [isFocused]);
 
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, handleSubmit, trigger, reset, getValues, formState: {errors}} = useForm({
     defaultValues: {
-      "name": "name", //required
-      "description": "description",
-      "guestlimit": 20,
-      "direction": "Calle falsa 123",
-      "startdate": "2005/05/05", //required
-      "enddate": "2005/05/07", //required
-      "categoryid": 8,
-      "securityMeasureIds": [],
+      "name": "Test 1",
+      "categoryId": 2
     },
   });
 
+  console.log('%c getValues', 'background: #222; color: #bada55',getValues())
+
   const nextPage = () => {
     setSelectedIndex(index => index + 1)
+  }
+
+  const previousPage = () => {
+    setSelectedIndex(index => index - 1)
   }
 
   return (
@@ -51,21 +57,37 @@ const CreateEventScreen = ({navigation, eva}) => {
           swipeEnabled={false}
         >
           <DarkerImageBackground style={styles.tab} source={splash}>
-            <Step1Component
+            <Step1
               control={control}
-              nextPage={nextPage}
+              trigger={trigger}
               errors={errors}
+              nextPage={nextPage}
+              navigation={navigation}
             />
           </DarkerImageBackground>
           <DarkerImageBackground style={styles.tab} source={splash}>
-            <View>
-              <Text>Page 2</Text>
-            </View>
+            <Step2
+              control={control}
+              trigger={trigger}
+              errors={errors}
+              nextPage={nextPage}
+              previousPage={previousPage}
+              navigation={navigation}
+              categories={categories}
+              getValues={getValues}
+            />
           </DarkerImageBackground>
           <DarkerImageBackground style={styles.tab} source={splash}>
-            <View>
-              <Text>Page 3</Text>
-            </View>
+            <Step3
+              control={control}
+              trigger={trigger}
+              errors={errors}
+              nextPage={nextPage}
+              previousPage={previousPage}
+              navigation={navigation}
+              categories={categories}
+              getValues={getValues}
+            />
           </DarkerImageBackground>
         </ViewPager>
       </Layout>
