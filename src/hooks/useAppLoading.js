@@ -49,7 +49,7 @@ export const useAppLoading = () => {
   const checkIfAppFirstLaunched = async () => {
     try {
       const isFirstLaunchedValue = await AsyncStorage.getItem('alreadyLaunched')
-      if (isFirstLaunchedValue) {
+      if (isFirstLaunchedValue === 'true') {
         setIsAppFirstLaunched(false);
       } else {
         setIsAppFirstLaunched(true);

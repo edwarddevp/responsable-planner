@@ -16,20 +16,18 @@ const AuthStack = ({isAppFirstLaunched}) => {
             name="OnBoarding"
             component={OnBoardingScreen}
             options={{header: () => null}}
-          /> :
-          <>
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{header: () => null}}
-            />
-            <Stack.Screen
-              name="Signup"
-              component={SingUp}
-              options={{header: () => null}}
-            />
-          </>
+          /> : null
       }
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SingUp}
+        options={{header: () => null}}
+      />
     </Stack.Navigator>
   );
 };

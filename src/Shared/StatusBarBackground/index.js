@@ -1,10 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Platform, StatusBar} from 'react-native';
 
-export const StatusBarBackground = (props) => {
-
-  return <View style={[styles.statusBarBackground, props.style || {}]} />
-};
+export const StatusBarBackground = (props) =>
+  <View style={[styles.statusBarBackground, props.style || {}]}/>
 
 const styles = StyleSheet.create({
   statusBarBackground: {

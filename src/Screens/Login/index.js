@@ -30,7 +30,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
   const {control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {
-      email:'test2updated@email.com',
+      email:'test8@email.com',
       password: 'asd123'
     },
   });

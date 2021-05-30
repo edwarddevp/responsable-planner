@@ -71,7 +71,7 @@ const AppStack = () => {
     return (
         <Drawer.Navigator drawerContent={props => <DrawerBody {...props}/>}>
             <Drawer.Screen name="Home" component={Home}/>
-            <Drawer.Screen name="Create Event" component={CreateEvent}/>
+            <Drawer.Screen name="Create Event" component={CreateEvent} options={{ swipeEnabled: false }}/>
             <Drawer.Screen name="Tareas Pendientes" component={HomeStack}/>
             <Drawer.Screen name="Security Measures" component={HomeStack}/>
             <Drawer.Screen name="Reminders" component={HomeStack}/>
