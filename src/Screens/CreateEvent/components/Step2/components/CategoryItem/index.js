@@ -4,10 +4,9 @@ import {Image, Pressable} from "react-native";
 
 const CategoryItemComponent = ({eva, category, onChange, selected}) => {
   const {style: styles, theme} = eva
-  console.log('%c selected', 'background: #222; color: #bada55',selected)
+
   return <Pressable
     onPress={() => {
-      console.log('%c category?.id', 'background: #222; color: #bada55',category?.id)
       onChange(category?.id)
     }}
     style={({pressed}) => [

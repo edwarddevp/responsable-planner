@@ -1,15 +1,20 @@
 import React from 'react';
-import {Button, withStyles} from "@ui-kitten/components";
+import {Button, Spinner, withStyles} from "@ui-kitten/components";
 import {View} from "react-native";
 
-export const FooterButtonsComponent = ({eva, rightAction, leftAction, style}) => {
+export const FooterButtonsComponent = ({eva, rightAction, leftAction, style, loading}) => {
   const styles = eva?.style
   return <View style={style}>
-    <Button status='basic' onPress={leftAction} style={styles?.goBackButton}>
+    <Button disabled={loading} status='basic' onPress={leftAction} style={styles?.goBackButton}>
       Volver
     </Button>
-    <Button onPress={rightAction} style={styles?.nextButton}>
-      Siguiente
+    <Button disabled={loading} onPress={rightAction} style={styles?.nextButton}>
+      {
+        loading?
+          <Spinner/>:
+          "Siguiente"
+      }
+
     </Button>
   </View>
 };

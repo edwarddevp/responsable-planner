@@ -13,7 +13,7 @@ export const HomeTest = ({ navigation }) => {
   const navigateSearch = () => {
     navigation.navigate("Search");
   };
-console.log(navigation)
+
   return (
     <MainLayout navigation={navigation}>
       <Layout

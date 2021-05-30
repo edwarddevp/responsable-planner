@@ -1,19 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList} from "react-native";
 import {useApiRequest} from "../../../../hooks/useApiRequest";
 import {EVENTS} from "../../../../lib/apiRoutes";
 import {EventItem} from "../EventItem";
+import {useIsFocused} from "@react-navigation/native";
 
 export const EventList = (props) => {
-  const {data} = useApiRequest(EVENTS)
+  const {data, call: getEvents, loading} = useApiRequest(EVENTS)
+  // check if screen is focused
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    getEvents()
+  }, [isFocused]);
 
   return <FlatList
     data={data?.data?.events}
     renderItem={({item}) =>
-      <EventItem item={item}/>}
+      <EventItem {...item}/>}
     keyExtractor={item => item.id.toString()}
-    refreshing
     contentContainerStyle={styles?.eventList}
+    onRefresh={getEvents}
+    refreshing={loading}
   />
 };
 

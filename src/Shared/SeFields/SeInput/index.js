@@ -9,15 +9,19 @@ const SeInputComponent = (
     errors,
     control,
     label,
+    placeholder,
     validateAfterTouch,
     name,
     rightIcon,
     rightIconStyles,
+    style,
+    labelStyles,
+    required,
     ...rest
   }) => {
   const {style: styles, theme} = eva
-  return <View style={styles?.fieldContainer}>
-    <Text style={styles?.label}>{label}</Text>
+  return <View style={style}>
+    <Text style={{...styles?.label,...labelStyles}}>{label}</Text>
     {
       control &&
       <Controller
@@ -25,27 +29,28 @@ const SeInputComponent = (
         render={({fieldState: {isTouched}, field: {onChange, onBlur, value}}) => (
           <Input
             status={validateAfterTouch ? (errors?.[name] && isTouched) ? 'danger' : 'control' : 'control'}
-            placeholder={label}
+            placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
             value={value}
             style={(errors?.[name]) ? styles?.borderColorRed : {}}
             accessoryRight={(props) =>
-              <Icon
-                name={rightIcon}
-                fill={
-                  errors.name ?
-                    theme['color-danger-500'] :
-                    theme['color-primary-500']
-                }
-                {...props}
-              />
+              rightIcon ?
+                <Icon
+                  name={rightIcon}
+                  fill={
+                    errors.name ?
+                      theme['color-danger-500'] :
+                      theme['color-primary-500']
+                  }
+                  {...props}
+                /> : null
             }
             {...rest}
           />
         )}
         name={name}
-        rules={{required: true}}
+        rules={{required: required}}
       />
     }
     {
@@ -58,9 +63,6 @@ const SeInputComponent = (
 };
 
 export const SeInput = withStyles(SeInputComponent, (theme) => ({
-  fieldContainer: {
-    flex:1
-  },
   label: {
     fontSize: 16,
     marginBottom: 12

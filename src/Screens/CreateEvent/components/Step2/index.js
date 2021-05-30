@@ -6,15 +6,15 @@ import {CategoriesList} from "./components/CategoriesList";
 
 const Step2Component = ({eva, control, nextPage, previousPage, errors, trigger, categories, getValues}) => {
   const {style: styles} = eva
-  // console.log('%c categories', 'background: #222; color: #bada55',categories)
+
   const changePage = async () => {
-    await trigger("categoryId")
-    if (!errors?.categoryId) {
+    const validate = await trigger("categoryId")
+    if (validate) {
       nextPage()
     }
   }
 
-  return <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={-150} style={styles?.container}>
+  return <>
     <View style={styles?.containerTitle}>
       <Text style={styles?.h1}>{getValues('name')}</Text>
       <Text style={{...styles?.marginTop, ...styles?.h2}}>Seleccione el tipo de evento</Text>
@@ -30,13 +30,12 @@ const Step2Component = ({eva, control, nextPage, previousPage, errors, trigger, 
       leftAction={previousPage}
       rightAction={changePage}
     />
-  </KeyboardAvoidingView>
+  </>
 };
 
 export const Step2 = withStyles(Step2Component, (theme) => ({
-  container: {
-    flex: 1,
-    paddingVertical: 48,
+  container:{
+    flex:1
   },
   containerTitle: {
     flex: 1,
@@ -59,9 +58,6 @@ export const Step2 = withStyles(Step2Component, (theme) => ({
   },
   errorMessage: {
     marginTop: 8
-  },
-  borderColorRed: {
-    borderColor: theme['color-danger-500']
   },
   h1: {
     fontSize: 32

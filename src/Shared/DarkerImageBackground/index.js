@@ -1,19 +1,13 @@
 import React from 'react';
-import {withStyles} from "@ui-kitten/components";
 import {ImageBackground, View} from "react-native";
 
-export const DarkerImageBackgroundComponent = ({children, eva, source, ...rest}) => {
-  const styles = eva?.style
-  return <ImageBackground source={source} {...rest}>
-    <View style={styles?.innerFrame}>
+export const DarkerImageBackground = ({children, eva, source, overlayColor, ...rest}) =>
+  <ImageBackground source={source} {...rest}>
+    <View style={{
+      flex: 1,
+      backgroundColor: overlayColor || 'rgba(0, 0, 0, .7)',
+    }}>
       {children}
     </View>
   </ImageBackground>
-};
 
-export const DarkerImageBackground = withStyles(DarkerImageBackgroundComponent, (theme) => ({
-  innerFrame: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, .7)',
-  },
-}));

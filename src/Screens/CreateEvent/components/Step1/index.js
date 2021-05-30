@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, withStyles} from "@ui-kitten/components";
-import {KeyboardAvoidingView, View} from "react-native";
-import {PersonIcon} from "../../../../Shared/icons";
+import {KeyboardAvoidingView, ScrollView, View} from "react-native";
 import {FooterButtons} from "../FooterButtons";
 import {SeInput} from "../../../../Shared/SeFields/SeInput";
 
@@ -9,13 +8,13 @@ const Step1Component = ({eva, control, nextPage, errors, trigger, navigation}) =
   const {style: styles} = eva
 
   const changePage = async () => {
-    await trigger("name")
-    if (!errors?.name) {
+    const validate = await trigger("name")
+    if (validate) {
       nextPage()
     }
   }
 
-  return <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={-150} style={styles?.container}>
+  return <>
     <View style={styles?.containerTitle}>
       <Text style={styles?.h1}>Bienvenido</Text>
       <Text style={{...styles?.marginTop, ...styles?.h2}}>Lo guiaremos durante la creacion de su evento</Text>
@@ -26,7 +25,9 @@ const Step1Component = ({eva, control, nextPage, errors, trigger, navigation}) =
         control={control}
         errors={errors}
         label='Ingrese el nombre de su evento'
+        placeholder='Ingrese el nombre de su evento'
         rightIcon='person'
+        required
       />
       <View/>
     </View>
@@ -35,13 +36,12 @@ const Step1Component = ({eva, control, nextPage, errors, trigger, navigation}) =
       leftAction={navigation?.goBack}
       rightAction={changePage}
     />
-  </KeyboardAvoidingView>
+  </>
 };
 
 export const Step1 = withStyles(Step1Component, (theme) => ({
-  container: {
-    flex: 1,
-    paddingVertical: 48,
+  container:{
+    flex:1
   },
   containerTitle: {
     flex: 1,

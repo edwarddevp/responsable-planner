@@ -1,20 +1,21 @@
 import React from 'react';
-import { Text, withStyles} from "@ui-kitten/components";
-import {KeyboardAvoidingView, View} from "react-native";
+import {Text, withStyles} from "@ui-kitten/components";
+import {View} from "react-native";
 import {FooterButtons} from "../FooterButtons";
 import {BasicInformationForm} from "./components/BasicInformationForm";
 
-const Step3Component = ({eva, control, nextPage, errors, trigger, previousPage, getValues}) => {
+
+const Step3Component = ({eva, control, nextPage, errors, trigger, previousPage, getValues, watch, setValue, loading}) => {
   const styles = eva?.style
 
   const changePage = async () => {
-    await trigger("name")
-    if (!errors?.name) {
+    const validate = await trigger(["startdate","enddate"])
+    if (validate) {
       nextPage()
     }
   }
 
-  return <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={-280} style={styles?.container}>
+  return <>
     <View style={styles?.containerTitle}>
       <Text style={styles?.h1}>{getValues('name')}</Text>
       <Text style={{...styles?.marginTop, ...styles?.h2}}>Información acerca del evento</Text>
@@ -23,27 +24,28 @@ const Step3Component = ({eva, control, nextPage, errors, trigger, previousPage, 
       control={control}
       errors={errors}
       style={styles?.containerForm}
+      getValues={getValues}
+      watch={watch}
+      setValue={setValue}
     />
     <FooterButtons
       style={styles?.containerButtons}
       leftAction={previousPage}
       rightAction={changePage}
+      loading={loading}
     />
-  </KeyboardAvoidingView>
+  </>
 };
 
 export const Step3 = withStyles(Step3Component, (theme) => ({
-  container: {
-    flex: 1,
-    paddingVertical: 48,
-  },
   containerTitle: {
     flex: 1,
     paddingHorizontal: 24
   },
   containerForm: {
     flex: 4,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    paddingBottom:12
   },
   containerButtons: {
     flex: 1,

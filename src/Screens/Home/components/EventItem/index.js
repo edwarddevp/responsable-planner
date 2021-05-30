@@ -2,6 +2,8 @@ import React from 'react';
 import {ImageBackground, View} from "react-native";
 import {Layout, withStyles, Text} from "@ui-kitten/components";
 import {ForwardIcon} from "../../../../Shared/icons";
+import {format} from 'date-fns'
+import {DarkerImageBackground} from "../../../../Shared/DarkerImageBackground";
 
 const EventItemComponent = (
   {
@@ -9,31 +11,34 @@ const EventItemComponent = (
     // createdat = "2021-05-04T04:00:00.000Z",
     // description = "description",
     // direction = "calle falsa 123",
-    // enddate = "2021-05-07T04:00:00.000Z",
+    enddate,
     // guestlimit = 20,
     // id = 4,
     // isactive = true,
-    name = "name 2",
-    startdate = "2021-05-05T04:00:00.000Z",
+    name,
+    startdate,
     // securityLabel = 5,
     eva
   }) => {
   const styles = eva?.style;
 
+  const formatDate = (date) => format(new Date(format(new Date(startdate), 'MM/dd/yyyy')), 'MM/dd/yyyy')
   return <Layout style={styles?.eventItem}>
-    <ImageBackground
-      source={{uri: "https://reactjs.org/logo-og.png"}}
-      style={styles.image}
-    >
-      <View style={styles?.topItem}>
-        {/*<Text style={styles?.textColor}>{name}</Text>*/}
+    <DarkerImageBackground source={{uri: "https://reactjs.org/logo-og.png"}} style={styles?.image}>
+      <View style={styles?.imageContainer}>
+        <View style={styles?.topItem}>
+          {/*<Text style={styles?.textColor}>{name}</Text>*/}
+        </View>
+        <View style={styles?.bottomItem}>
+          <Text style={{...styles?.textColor, ...styles?.eventName}}>{name}</Text>
+          <Text style={{...styles?.textColor, ...styles?.eventStartDate}}>{
+            formatDate(startdate) === formatDate(enddate) ?
+              formatDate(startdate) :
+              `${formatDate(startdate)} - ${formatDate(enddate)}`
+          }</Text>
+        </View>
       </View>
-      <View style={styles?.bottomItem}>
-        <Text style={{...styles?.textColor, ...styles?.eventName}}>{name}</Text>
-        <Text style={{...styles?.textColor, ...styles?.eventStartDate}}>{startdate}</Text>
-      </View>
-
-    </ImageBackground>
+    </DarkerImageBackground>
     <Layout style={styles?.bottomContainer}>
       <View style={styles?.bottomLeftContainer}>
         {/*<Layout style={styles?.securityBadge}>*/}
@@ -95,7 +100,11 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
   },
   image: {
     height: 150.5,
+    flex:1
+  },
+  imageContainer: {
     padding: 8,
+    flex:1,
   },
   topItem: {
     flex: 2,

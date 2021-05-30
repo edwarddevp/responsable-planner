@@ -29,7 +29,7 @@ export const CategoriesListComponent = ({eva, categories, style, control, errors
           <View styles={styles?.whiteSpace}/>
         </View>
       )}
-      name='categoryId'
+      name='categoryid'
       rules={{required: true}}
     />
     {
