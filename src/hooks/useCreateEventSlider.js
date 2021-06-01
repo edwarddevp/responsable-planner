@@ -41,7 +41,7 @@ export const useCreateEventSlider = ({reset, navigation}) => {
         type:'error'
       });
     } else {
-      navigation && navigation.navigate('Home');
+      navigation && navigation.navigate('HOME');
       Toast.show({
         text1:`Evento Creado`,
         type:'success'

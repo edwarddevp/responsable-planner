@@ -5,7 +5,7 @@ import {EVENTS} from "../../../../lib/apiRoutes";
 import {EventItem} from "../EventItem";
 import {useIsFocused} from "@react-navigation/native";
 
-export const EventList = ({navigation}) => {
+export const EventList = (props) => {
   const {data, call: getEvents, loading} = useApiRequest(EVENTS)
   // check if screen is focused
   const isFocused = useIsFocused();
@@ -17,7 +17,7 @@ export const EventList = ({navigation}) => {
   return <FlatList
     data={data?.data?.events}
     renderItem={({item}) =>
-      <EventItem {...item} navigation={navigation}/>}
+      <EventItem {...item}/>}
     keyExtractor={item => item.id.toString()}
     contentContainerStyle={styles?.eventList}
     onRefresh={getEvents}

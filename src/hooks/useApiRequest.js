@@ -12,7 +12,7 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
 
   useEffect(() => {
     !skip && apiRequest(paramsData)
-  }, [])
+  }, [path])
 
   const getToken = async () => {
     const value = await AsyncStorage.getItem(SAFE_EVENT_PLANNER_TOKEN_KEY)

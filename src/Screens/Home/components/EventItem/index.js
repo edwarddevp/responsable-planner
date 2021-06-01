@@ -1,57 +1,59 @@
 import React from 'react';
-import {ImageBackground, View} from "react-native";
+import {Pressable, View} from "react-native";
 import {Layout, withStyles, Text} from "@ui-kitten/components";
-import {ForwardIcon} from "../../../../Shared/icons";
 import {format} from 'date-fns'
 import {DarkerImageBackground} from "../../../../Shared/DarkerImageBackground";
+import {ForwardIcon} from "../../../../Shared/icons";
 
-const EventItemComponent = (
-  {
-    // categoryid = 1,
-    // createdat = "2021-05-04T04:00:00.000Z",
-    // description = "description",
-    // direction = "calle falsa 123",
-    enddate,
-    // guestlimit = 20,
-    // id = 4,
-    // isactive = true,
-    name,
-    startdate,
-    // securityLabel = 5,
-    eva
-  }) => {
-  const styles = eva?.style;
+const EventItemComponent = ({navigation, id, enddate, name, startdate, eva}) => {
+  const {style: styles} = eva;
 
-  const formatDate = (date) => format(new Date(format(new Date(startdate), 'MM/dd/yyyy')), 'MM/dd/yyyy')
+  const formatDate = (date) => format(new Date(format(new Date(date), 'MM/dd/yyyy')), 'MM/dd/yyyy')
+
+  const navigateToEventDetails = () => navigation.navigate('EVENT_DETAILS', {
+    screen: 'DASHBOARD',
+    params: {
+      eventId: id,
+      eventName: name,
+    },
+  });
+
   return <Layout style={styles?.eventItem}>
-    <DarkerImageBackground source={{uri: "https://reactjs.org/logo-og.png"}} style={styles?.image}>
-      <View style={styles?.imageContainer}>
-        <View style={styles?.topItem}>
-          {/*<Text style={styles?.textColor}>{name}</Text>*/}
-        </View>
-        <View style={styles?.bottomItem}>
-          <Text style={{...styles?.textColor, ...styles?.eventName}}>{name}</Text>
-          <Text style={{...styles?.textColor, ...styles?.eventStartDate}}>{
-            formatDate(startdate) === formatDate(enddate) ?
-              formatDate(startdate) :
-              `${formatDate(startdate)} - ${formatDate(enddate)}`
-          }</Text>
-        </View>
-      </View>
-    </DarkerImageBackground>
-    <Layout style={styles?.bottomContainer}>
-      <View style={styles?.bottomLeftContainer}>
-        {/*<Layout style={styles?.securityBadge}>*/}
-        <Text style={styles?.editText}>Dangerous</Text>
-        {/*</Layout>*/}
-      </View>
-      <Layout style={styles?.bottomRightContainer} level={"1"}>
-        <Text style={styles?.editText}>Event Details</Text>
-        <ForwardIcon fill='#B6BECD' style={styles?.icon}/>
-      </Layout>
-    </Layout>
+    <Pressable onPress={navigateToEventDetails}>
+      {({pressed}) => (
+        <>
+          <DarkerImageBackground source={{uri: "https://reactjs.org/logo-og.png"}} style={styles?.image}>
+            <View style={styles?.imageContainer(pressed)}>
+              <View style={styles?.topItem}>
+                {/*<Text style={styles?.textColor}>{name}</Text>*/}
+              </View>
+              <View style={styles?.bottomItem}>
+                <Text style={{...styles?.textColor, ...styles?.eventName}}>{name}</Text>
+                <Text style={{...styles?.textColor, ...styles?.eventStartDate}}>{
+                  formatDate(startdate) === formatDate(enddate) ?
+                    formatDate(startdate) :
+                    `${formatDate(startdate)} - ${formatDate(enddate)}`
+                }</Text>
+              </View>
+            </View>
+          </DarkerImageBackground>
+          <Layout style={styles?.bottomContainer}>
+            <View style={styles?.bottomLeftContainer}>
+              {/*<Layout style={styles?.securityBadge}>*/}
+              <Text style={styles?.editText}>Dangerous</Text>
+              {/*</Layout>*/}
+            </View>
+            <Layout style={styles?.bottomRightContainer} level="1">
+              <Text style={styles?.editText}>Event Details</Text>
+              <ForwardIcon fill='#B6BECD' style={styles?.icon}/>
+            </Layout>
+          </Layout>
+
+        </>
+      )}
+    </Pressable>
   </Layout>
-};
+}
 
 export const EventItem = withStyles(EventItemComponent, (theme) => ({
   securityBadge: {},
@@ -59,8 +61,8 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme["color-danger-800"],
-    padding: 6
+    padding: 6,
+    backgroundColor: theme["color-danger-800"]
   },
   bottomRightContainer: {
     flex: 1,
@@ -100,12 +102,15 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
   },
   image: {
     height: 150.5,
-    flex:1
+    flex: 1
   },
-  imageContainer: {
+  imageContainer: (pressed) => ({
     padding: 8,
-    flex:1,
-  },
+    flex: 1,
+    backgroundColor: pressed
+      ? theme['color-basic-transparent-500']
+      : 'transparent'
+  }),
   topItem: {
     flex: 2,
     alignItems: 'flex-end'

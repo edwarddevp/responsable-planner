@@ -9,7 +9,7 @@ const HomeScreen = ({navigation, eva}) => {
   return (
     <MainLayout navigation={navigation} title='Events'>
       <Layout style={bg} level='3'>
-        <EventList/>
+        <EventList navigation={navigation}/>
       </Layout>
     </MainLayout>
   );
