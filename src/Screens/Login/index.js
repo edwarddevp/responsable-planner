@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
-import {Button, Input, Text, Icon, Spinner} from '@ui-kitten/components';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, View, TouchableWithoutFeedback, Platform} from 'react-native';
+import {Button, Input, Text, Icon, Spinner, withStyles, useTheme} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 import {ImageOverlay} from '../../Shared/image-overlay.component';
 import {EmailIcon} from '../../Shared/icons';
@@ -8,12 +8,25 @@ import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
 import {useForm, Controller} from "react-hook-form";
 import {authBgImage, emailRegex} from "../../lib/constants";
+import { StatusBar } from 'react-native';
+import loginImage from './../../../assets/loginImage.jpg'
 
-export const LoginScreen = ({navigation}) => {
+const LoginScreenComponent = ({navigation,eva}) => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const styles = eva?.style
+  const theme = useTheme();
   const image = {uri: authBgImage};
   const {login} = useContext(AuthContext);
+
+  useEffect(() => {
+    if(Platform.OS === 'android') {
+      StatusBar.setBarStyle('light-content');
+    }
+    return () => {
+      StatusBar.setBarStyle('dark-content');
+    }
+  }, []);
 
   const {control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {
@@ -41,7 +54,7 @@ export const LoginScreen = ({navigation}) => {
 
   const renderPasswordIcon = (props) => (
     <TouchableWithoutFeedback onPress={()=>setPasswordVisible(!passwordVisible)}>
-      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'}/>
+      <Icon fill={theme['color-primary-500']} {...props} name={passwordVisible ? 'eye-off' : 'eye'}/>
     </TouchableWithoutFeedback>
   );
 
@@ -49,19 +62,20 @@ export const LoginScreen = ({navigation}) => {
     <KeyboardAvoidingView>
       <ImageOverlay
         style={styles.container}
-        source={image}
+        source={loginImage}
       >
         <View style={styles.headerContainer}>
           <Text
+            style={styles.textColor}
             category='h1'
             status='control'>
-            Hello
+            Bienvenido
           </Text>
           <Text
-            style={styles.signInLabel}
+            style={{...styles.textColor,...styles.signInLabel}}
             category='s1'
             status='control'>
-            Sign in to your account
+            Inicia sesión en tu cuenta
           </Text>
         </View>
         <View style={styles.formContainer}>
@@ -71,7 +85,7 @@ export const LoginScreen = ({navigation}) => {
               <Input
                 status={(errors.email && isTouched) ? 'danger' : 'control'}
                 placeholder='Email'
-                accessoryRight={EmailIcon}
+                accessoryRight={(props)=> <EmailIcon fill={theme['color-primary-500']} {...props}/>}
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
                 value={value}
@@ -83,9 +97,9 @@ export const LoginScreen = ({navigation}) => {
           />
           {
             errors.email?.type === 'required' ?
-              <Text status='danger'>This is required.</Text> :
+              <Text status='danger'>Campo Requerido.</Text> :
               errors.email?.type === 'pattern' &&
-              <Text status='danger'>Invalid Email.</Text>
+              <Text status='danger'>Email Invalido.</Text>
           }
           <Controller
             control={control}
@@ -93,7 +107,7 @@ export const LoginScreen = ({navigation}) => {
               <Input
                 style={styles.passwordInput}
                 status={(errors.password && isTouched) ? 'danger' : 'control'}
-                placeholder='Password'
+                placeholder='Contraseña'
                 accessoryRight={renderPasswordIcon}
                 onBlur={onBlur}
                 onChangeText={value => onChange(value)}
@@ -105,7 +119,7 @@ export const LoginScreen = ({navigation}) => {
             rules={{required: true}}
             defaultValue=""
           />
-          {errors.password && <Text status='danger'>This is required.</Text>}
+          {errors.password && <Text status='danger'>Campo Requerido.</Text>}
         </View>
         <Button
           type='submit'
@@ -119,7 +133,7 @@ export const LoginScreen = ({navigation}) => {
               <View style={styles.indicator}>
                 <Spinner size='small' status='control'/>
               </View> :
-              'SIGN IN'
+              'Inicia Sesión'
           }
 
         </Button>
@@ -129,14 +143,14 @@ export const LoginScreen = ({navigation}) => {
           appearance='ghost'
           status='control'
           onPress={onSignUpButtonPress}>
-          Don't have an account? Sign Up
+          No tienes una cuenta? Registrate
         </Button>
       </ImageOverlay>
     </KeyboardAvoidingView>
   );
 };
 
-const styles = StyleSheet.create({
+export const LoginScreen = withStyles(LoginScreenComponent, (theme) => ({
   container: {
     flex: 1,
   },
@@ -145,15 +159,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textColor: {
+    color: theme['color-primary-500']
+  },
   formContainer: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
   },
   signInLabel: {
     marginTop: 16,
   },
   passwordInput: {
-    marginTop: 16,
+    marginTop: 24,
   },
   signInButton: {
     marginHorizontal: 16,
@@ -179,4 +196,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 16,
   },
-});
+}));
+

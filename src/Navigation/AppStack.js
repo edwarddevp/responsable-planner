@@ -1,24 +1,24 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Home} from './../Screens/Home';
+import {Home} from '../Screens/Home';
 // import {Details} from './../Screens/Details';
 // import {AuthContext} from './AuthProvider';
 import { useTheme } from '@ui-kitten/components';
-import { DrawerBody } from './../Shared/DrawerBody';
+import { DrawerBody } from '../Shared/DrawerBody';
+import {CreateEvent} from "../Screens/CreateEvent";
+import {EventDetailsDashboard} from "../Screens/EventDetails";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 
-const HomeStack = ({navigation}) => {
-    // const {logout} = useContext(AuthContext);
-    // const theme = useTheme();
+const EventDetailStack = ({navigation}) => {
     return (
         <Stack.Navigator headerMode='none'>
             <Stack.Screen
-                name={'HOME'}
-                component={Home}
+                name="DASHBOARD"
+                component={EventDetailsDashboard}
             />
 
             {/*<Stack.Screen*/}
@@ -30,64 +30,22 @@ const HomeStack = ({navigation}) => {
     );
 };
 
-const ProfileStack = ({navigation}) => {
-
-    return (
-        <Stack.Navigator>
-            {/* <Stack.Screen
-                name={'PROFILE'}
-                component={Profile}
-                options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: theme['color-basic-100'],,
-                        fontSize: 18,
-                    },
-                    headerStyle: {
-                        backgroundColor:theme['color-primary-500'],
-                        elevation: 0
-                    },
-                    headerRight: () => (
-                        <View style={{marginRight: 10}}>
-                            <MaterialCommunityIcons
-                                name="logout"
-                                size={30}
-                                color={theme['color-basic-100'],}
-                                onPress={() => logout()}
-                            />
-                        </View>
-                    )
-                }}
-            /> */}
-
-        </Stack.Navigator>
-    );
-}
-
 const AppStack = () => {
     const theme = useTheme();
-
     return (
-        <Drawer.Navigator
-            drawerContent={props => <DrawerBody {...props}/>}
-            tabBarOptions={{
-                activeTintColor: theme['color-basic-100'],
-            }}>
-            <Drawer.Screen name="Home"component={HomeStack}/>
+        <Drawer.Navigator drawerContent={props => <DrawerBody {...props}/>}>
+            <Drawer.Screen name="HOME" component={Home}/>
+            <Drawer.Screen name="CREATE_EVENT" component={CreateEvent} options={{ swipeEnabled: false }}/>
+            <Drawer.Screen name="TAREAS_PENDIENTES" component={Home}/>
+            <Drawer.Screen name="SECURITY_MEASURES" component={Home}/>
+            <Drawer.Screen name="REMINDERS" component={Home}/>
+            <Drawer.Screen name="FAVORITE_EVENTS" component={Home}/>
+            <Drawer.Screen name="SETTINGS" component={Home}/>
+            <Drawer.Screen name="LOGOUT" component={Home}/>
+            <Drawer.Screen name="SHARE" component={Home}/>
 
-            <Drawer.Screen
-                name="Profile"
-                component={ProfileStack}
-                options={{
-                    tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons
-                            name="account-outline"
-                            color={color}
-                            size={size}
-                        />
-                    ),
-                }}
-            />
+
+            <Drawer.Screen name="EVENT_DETAILS" component={EventDetailStack} />
         </Drawer.Navigator>
     );
 };

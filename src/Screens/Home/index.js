@@ -1,31 +1,25 @@
 import React from "react";
-import { Button, Divider,Layout, withStyles } from "@ui-kitten/components";
-import { MainLayout } from "../../Layout/MainLayout";
-import { Text, View } from "react-native";
+import {Layout, withStyles} from "@ui-kitten/components";
+import {MainLayout} from "../../Layout/MainLayout";
+import {EventList} from "./components/EventList";
 
-const HomeScreen = ({ navigation, eva, style }) => {
-  // const themeContext = React.useContext(ThemeContext);
-  const { placeholder } = eva?.style;
-  const navigateDetails = () => {
-    navigation.navigate("DETAILS");
-  };
-
-  const navigateSearch = () => {
-    navigation.navigate("SEARCH");
-  };
+const HomeScreen = ({navigation, eva}) => {
+  const {bg} = eva?.style;
 
   return (
-    <MainLayout navigation={navigation}>
-      <Layout style={{ flex: 1 }}>
-        <View style={placeholder}>
-          <Text>assdsadsa</Text>
-        </View>
+    <MainLayout navigation={navigation} title='Events'>
+      <Layout style={bg} level='3'>
+        <EventList navigation={navigation}/>
       </Layout>
     </MainLayout>
   );
 };
 
 export const Home = withStyles(HomeScreen, (theme) => ({
+  bg: {
+    flex: 1,
+    // backgroundColor: theme["color-basic-300"],
+  },
   placeholder: {
     width: "100%",
     height: 200,
