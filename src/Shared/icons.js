@@ -30,3 +30,9 @@ export const MenuOutlineIcon = (props) => <Icon {...props} name="menu-outline" /
 export const InfoIcon = (props) => <Icon {...props} name="info" />;
 
 export const LogoutIcon = (props) => <Icon {...props} name="log-out" />;
+
+export const PeopleOutline = (props) => <Icon {...props} name="people-outline" />;
+
+export const CheckmarkCircleOutline = (props) => <Icon {...props} name="checkmark-circle-outline" />;
+
+export const SettingsOutline = (props) => <Icon {...props} name="settings-outline" />;

@@ -59,6 +59,12 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
         });
       }
 
+      if (json?.code === 500) {
+        Toast.show({
+          type: 'error',
+          text1: json?.message
+        });
+      }
       setResponse(json)
       setLoading(false)
       return json
