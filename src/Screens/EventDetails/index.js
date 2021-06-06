@@ -18,6 +18,26 @@ const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
   const {data, call: getEvent, loading} = useApiRequest(EVENTS_ID(eventId))
   const event = data?.data?.events
 
+  const navigateToGuestsList = () => navigation.navigate('EVENT_DETAILS', {
+    screen: 'GUESTS',
+    params: {eventId, eventName},
+  });
+
+  const navigateToTasksList = () => navigation.navigate('EVENT_DETAILS', {
+    screen: 'TASKS',
+    params: {eventId, eventName},
+  });
+
+  const navigateToSecurityMeasures = () => navigation.navigate('EVENT_DETAILS', {
+    screen: 'DASHBOARD',
+    params: {eventId, eventName},
+  });
+
+  const navigateToEditEvent = () => navigation.navigate('EVENT_DETAILS', {
+    screen: 'DASHBOARD',
+    params: {eventId, eventName},
+  });
+
   return (
     <MainLayout navigation={navigation} title='Safe Event Planner'>
       <Layout style={styles?.container} level='3'>
@@ -67,14 +87,14 @@ const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
           </SeButton>
           <SeSeparator value={2}/>
           <View style={styles?.twoColumns}>
-            <SeButton style={styles?.subButton}>
+            <SeButton onPress={navigateToGuestsList} style={styles?.subButton}>
               <PeopleOutline fill='#BE923B' style={styles?.icon}/>
               <Text style={styles?.securityMeasuresText}>
                 Invitados
               </Text>
             </SeButton>
             <SeSeparator d='H' value={2}/>
-            <SeButton style={styles?.subButton}>
+            <SeButton onPress={navigateToTasksList} style={styles?.subButton}>
               <CheckmarkCircleOutline fill='#BE923B' style={styles?.icon}/>
               <Text style={styles?.securityMeasuresText}>
                 Tareas
@@ -152,8 +172,8 @@ export const EventDetailsDashboard = withStyles(EventDetailsDashboardScreen, (th
     flex: 1,
     justifyContent: 'center'
   },
-  gauge:{
-    flex:1,
+  gauge: {
+    flex: 1,
     justifyContent: 'center'
   },
   subButton: {

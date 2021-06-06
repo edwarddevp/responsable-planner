@@ -60,7 +60,7 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
   bottomLeftContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: 6,
     backgroundColor: theme["color-danger-800"]
   },

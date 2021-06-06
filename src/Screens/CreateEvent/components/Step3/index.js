@@ -29,6 +29,7 @@ const Step3Component = ({eva, control, nextPage, errors, trigger, previousPage, 
       setValue={setValue}
     />
     <FooterButtons
+      buttonWidth={120}
       style={styles?.containerButtons}
       leftAction={previousPage}
       rightAction={changePage}

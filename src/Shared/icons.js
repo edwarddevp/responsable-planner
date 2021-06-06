@@ -36,3 +36,9 @@ export const PeopleOutline = (props) => <Icon {...props} name="people-outline" /
 export const CheckmarkCircleOutline = (props) => <Icon {...props} name="checkmark-circle-outline" />;
 
 export const SettingsOutline = (props) => <Icon {...props} name="settings-outline" />;
+
+export const PlusCircle = (props) => <Icon {...props} name="plus-circle" />;
+
+export const PlusOutline = (props) => <Icon {...props} name="plus-outline" />;
+
+export const TrashOutline = (props) => <Icon {...props} name="trash-2-outline" />;

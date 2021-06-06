@@ -32,6 +32,7 @@ const Step1Component = ({eva, control, nextPage, errors, trigger, navigation}) =
       <View/>
     </View>
     <FooterButtons
+      buttonWidth={120}
       style={styles?.containerButtons}
       leftAction={navigation?.goBack}
       rightAction={changePage}

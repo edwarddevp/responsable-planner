@@ -1,17 +1,49 @@
 import React from 'react';
 import {Button, Spinner, withStyles} from "@ui-kitten/components";
 import {View} from "react-native";
+import {SeSeparator} from "../../../../Shared/Separator";
 
-export const FooterButtonsComponent = ({eva, rightAction, leftAction, style, loading}) => {
+const buttonSize = (size, buttonWidth) => {
+  let buttonStyle = {}
+  if (size === 'md') buttonStyle.paddingVertical = 18
+  if (size === 'sm') buttonStyle.paddingVertical = 8
+  if (size === 'xs') buttonStyle.paddingVertical = 4
+  if (buttonWidth) {
+    buttonStyle.width = buttonWidth
+  }
+  return buttonStyle
+}
+
+export const FooterButtonsComponent = (
+  {
+    eva,
+    rightAction,
+    leftAction,
+    style,
+    loading,
+    size = 'md',
+    buttonWidth,
+    gap
+  }) => {
   const styles = eva?.style
   return <View style={style}>
-    <Button disabled={loading} status='basic' onPress={leftAction} style={styles?.goBackButton}>
+    <Button
+      disabled={loading}
+      status='basic'
+      onPress={leftAction}
+      style={{...styles?.button(size, buttonWidth), ...styles?.goBackButton}}
+    >
       Volver
     </Button>
-    <Button disabled={loading} onPress={rightAction} style={styles?.nextButton}>
+    {gap && <SeSeparator d='H' value={gap}/>}
+    <Button
+      disabled={loading}
+      onPress={rightAction}
+      style={{...styles?.button(size), ...styles?.nextButton}}
+    >
       {
-        loading?
-          <Spinner/>:
+        loading ?
+          <Spinner/> :
           "Siguiente"
       }
 
@@ -20,14 +52,10 @@ export const FooterButtonsComponent = ({eva, rightAction, leftAction, style, loa
 };
 
 export const FooterButtons = withStyles(FooterButtonsComponent, (theme) => ({
-  goBackButton:{
-    backgroundColor:theme['color-basic-500'],
-    borderColor:theme['color-basic-500'],
-    paddingVertical: 18,
-    width: 120
+  button: buttonSize,
+  goBackButton: {
+    backgroundColor: theme['color-basic-500'],
+    borderColor: theme['color-basic-500'],
   },
-  nextButton: {
-    paddingVertical: 18,
-    width: 120
-  },
+  nextButton: {},
 }));

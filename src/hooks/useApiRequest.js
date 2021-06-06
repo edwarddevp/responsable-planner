@@ -30,7 +30,7 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
     } : {}
   }
 
-  const apiRequest = async (params) => {
+  const apiRequest = async (params, methodConfig = method, addToPatch ='') => {
     try {
       setLoading(true)
 
@@ -38,8 +38,8 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
 
       const authorization =  await getToken()
 
-      const response = await fetch(API_URL + path, {
-        method: method, // *GET, POST, PUT, DELETE, etc.
+      const response = await fetch(API_URL + path + addToPatch, {
+        method: methodConfig, // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
@@ -60,6 +60,7 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
       }
 
       if (json?.code === 500) {
+        console.log('%c json', 'background: #222; color: #bada55',json)
         Toast.show({
           type: 'error',
           text1: json?.message

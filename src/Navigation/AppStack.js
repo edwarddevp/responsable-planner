@@ -8,6 +8,8 @@ import { useTheme } from '@ui-kitten/components';
 import { DrawerBody } from '../Shared/DrawerBody';
 import {CreateEvent} from "../Screens/CreateEvent";
 import {EventDetailsDashboard} from "../Screens/EventDetails";
+import {Guests} from "../Screens/Guests";
+import {Tasks} from "../Screens/Tasks";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -19,6 +21,16 @@ const EventDetailStack = ({navigation}) => {
             <Stack.Screen
                 name="DASHBOARD"
                 component={EventDetailsDashboard}
+            />
+
+            <Stack.Screen
+                name="GUESTS"
+                component={Guests}
+            />
+
+            <Stack.Screen
+                name="TASKS"
+                component={Tasks}
             />
 
             {/*<Stack.Screen*/}

@@ -8,6 +8,9 @@ export const EVENTS_ID = (id) => `/events/${id}`
 // guests
 export const EVENTS_EVENTID_GUESTS = (eventId) =>`/events/${eventId}/guests`
 export const EVENTS_EVENTID_GUESTS_ID = (eventId,id) => `/events/${eventId}/guests/${id}`
+// tasks
+export const EVENTS_EVENTID_TASKS = (eventId) =>`/events/${eventId}/tasks`
+export const EVENTS_EVENTID_TASKS_ID = (eventId,id) => `/events/${eventId}/tasks/${id}`
 // securityMeasures
 export const SECURITYMEASURES = '/securitymeasures'
 export const SECURITYMEASURES_ID = (id) => `/securitymeasures/${id}`
