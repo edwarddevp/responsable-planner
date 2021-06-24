@@ -5,18 +5,13 @@ import {format} from 'date-fns'
 import {DarkerImageBackground} from "../../../../Shared/DarkerImageBackground";
 import {ForwardIcon} from "../../../../Shared/icons";
 
-const EventItemComponent = ({navigation, id, enddate, name, startdate, eva}) => {
+const EventItemComponent = ({navigation, item, eva}) => {
   const {style: styles} = eva;
+  const {id, enddate, name, startdate} = item
 
   const formatDate = (date) => format(new Date(format(new Date(date), 'MM/dd/yyyy')), 'MM/dd/yyyy')
 
-  const navigateToEventDetails = () => navigation.navigate('EVENT_DETAILS', {
-    screen: 'DASHBOARD',
-    params: {
-      eventId: id,
-      eventName: name,
-    },
-  });
+  const navigateToEventDetails = () => navigation.navigate('DASHBOARD', item);
 
   return <Layout style={styles?.eventItem}>
     <Pressable onPress={navigateToEventDetails}>

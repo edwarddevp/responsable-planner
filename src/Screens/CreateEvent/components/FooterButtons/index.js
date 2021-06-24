@@ -23,20 +23,29 @@ export const FooterButtonsComponent = (
     loading,
     size = 'md',
     buttonWidth,
-    gap
+    gap,
+    confirmButtonText,
+    submitButton = true
   }) => {
   const styles = eva?.style
   return <View style={style}>
-    <Button
-      disabled={loading}
-      status='basic'
-      onPress={leftAction}
-      style={{...styles?.button(size, buttonWidth), ...styles?.goBackButton}}
-    >
-      Volver
-    </Button>
+    {
+      leftAction &&
+      <>
+        <Button
+          disabled={loading}
+          status='basic'
+          onPress={leftAction}
+          style={{...styles?.button(size, buttonWidth), ...styles?.goBackButton}}
+        >
+          Volver
+        </Button>
+        {gap && <SeSeparator d='H' value={gap}/>}
+      </>
+    }
     {gap && <SeSeparator d='H' value={gap}/>}
-    <Button
+    {
+      submitButton && <Button
       disabled={loading}
       onPress={rightAction}
       style={{...styles?.button(size), ...styles?.nextButton}}
@@ -44,10 +53,11 @@ export const FooterButtonsComponent = (
       {
         loading ?
           <Spinner/> :
-          "Siguiente"
+          confirmButtonText || "Siguiente"
       }
 
     </Button>
+    }
   </View>
 };
 

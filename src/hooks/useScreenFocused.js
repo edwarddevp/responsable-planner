@@ -6,7 +6,7 @@ export const useScreenFocused = (action) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    action()
+    action(isFocused)
   }, [isFocused]);
 
   return [isFocused]

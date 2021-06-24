@@ -8,12 +8,12 @@ import {compareAsc} from "date-fns";
 export const BasicInformationFormComponent = ({eva, control, errors, style, getValues, watch, setValue}) => {
   const {style: styles} = eva
   const date = new Date()
-  const watchStartDate = watch('startDate', date)
+  const watchStartDate = watch('startdate', date)
 
   useEffect(()=>{
-    const validate = compareAsc(watchStartDate,getValues('endDate'))
+    const validate = compareAsc(watchStartDate,getValues('enddate'))
     if(validate > 0){
-      setValue('endDate',watchStartDate)
+      setValue('enddate',watchStartDate)
     }
   },[watchStartDate])
 

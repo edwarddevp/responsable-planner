@@ -17,7 +17,7 @@ export const EventList = ({navigation}) => {
   return <FlatList
     data={data?.data?.events}
     renderItem={({item}) =>
-      <EventItem {...item} navigation={navigation}/>}
+      <EventItem item={item} navigation={navigation}/>}
     keyExtractor={item => item.id.toString()}
     contentContainerStyle={styles?.eventList}
     onRefresh={getEvents}

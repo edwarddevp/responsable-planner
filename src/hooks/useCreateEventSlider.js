@@ -11,13 +11,14 @@ export const useCreateEventSlider = ({reset, navigation}) => {
   })
   const {data} = useApiRequest(CATEGORIES)
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [loading, setLoading] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   // check if screen is focused
   const isFocused = useIsFocused();
 
   useEffect(() => {
     setSelectedIndex(0)
+    setLoading(false)
     reset({
       name: 'Test 1',
       description: '',

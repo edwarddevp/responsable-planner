@@ -8,7 +8,7 @@ import {StatusBarBackground} from "../../Shared/StatusBarBackground";
 import {MenuOutlineIcon, BackIcon, LogoutIcon} from "../../Shared/icons";
 
 
-export const MainLayout = ({children, backButton, navigation, title}) => {
+export const MainLayout = ({children, backButton, backButtonAction, navigation, title}) => {
   // const themeContext = React.useContext(ThemeContext);
   useStatusBarColor()
   const {logout} = useContext(AuthContext);
@@ -20,7 +20,7 @@ export const MainLayout = ({children, backButton, navigation, title}) => {
         title={title || 'MyApp'}
         renderLeftActions={() =>
           backButton ? (
-            <TopNavigationAction icon={BackIcon} onPress={navigation?.goBack}/>
+            <TopNavigationAction icon={BackIcon} onPress={backButtonAction || navigation?.goBack}/>
           ) : (
             <TopNavigationAction icon={MenuOutlineIcon} onPress={navigation?.toggleDrawer}/>
           )

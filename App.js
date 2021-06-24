@@ -16,6 +16,7 @@ import {useAppLoading} from "./src/hooks/useAppLoading";
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
   LogBox.ignoreLogs(['Reanimated 2']);
+  LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   const [theme, setTheme] = React.useState("dark");
   const  [loading, user, isAppFirstLaunched] = useAppLoading()
 
