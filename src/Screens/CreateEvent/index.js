@@ -10,22 +10,27 @@ import {Step1} from "./components/Step1";
 import {Step2} from "./components/Step2";
 import {Step3} from "./components/Step3";
 import {Dimensions} from "react-native";
+import {DEBUG} from "@env"
+import {addDays} from "date-fns";
 
 const {height} = Dimensions.get('window');
 
 const CreateEventScreen = ({navigation, eva}) => {
   const styles = eva?.style;
   const {control, handleSubmit, watch, trigger, reset, setValue, getValues, formState: {errors}} = useForm({
-    defaultValues: {
+    defaultValues: DEBUG ?{
       name: 'Test 1',
       description: '',
       guestlimit: 5,
       direction: 'Avenida Falsa',
       startdate: new Date(),
-      enddate: new Date(),
+      enddate: addDays(new Date(), 3),
       categoryid: 8,
       // securityMeasureIds: '',
-    },
+    } : {
+      startdate: new Date(),
+      enddate: addDays(new Date(), 3),
+    }
   });
 
   const {

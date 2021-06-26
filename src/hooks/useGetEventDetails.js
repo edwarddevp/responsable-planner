@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {useApiRequest} from "./useApiRequest";
 import {EVENTS_ID} from "../lib/apiRoutes";
-import {useScreenFocused} from "./useScreenFocused";
 
-export const useGetEventDetails = (eventId) => {
+export const useGetEventDetails = (eventId, refresh) => {
   const {data, call: getEvent, loading} = useApiRequest(EVENTS_ID(eventId))
-  useScreenFocused(()=>getEvent())
+
+  useEffect(() => {
+    getEvent()
+  }, [])
 
   return [
     data?.data?.event,
-    loading
+    loading,
+    getEvent
   ]
 };

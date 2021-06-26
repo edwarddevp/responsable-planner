@@ -19,11 +19,9 @@ export const MainLayout = ({children, backButton, backButtonAction, navigation, 
       <Navbar
         title={title || 'MyApp'}
         renderLeftActions={() =>
-          backButton ? (
-            <TopNavigationAction icon={BackIcon} onPress={backButtonAction || navigation?.goBack}/>
-          ) : (
-            <TopNavigationAction icon={MenuOutlineIcon} onPress={navigation?.toggleDrawer}/>
-          )
+          backButton ?
+            <TopNavigationAction icon={BackIcon} onPress={backButtonAction || navigation?.goBack}/> :
+            null
         }
         renderRightActions={() => (
           <React.Fragment>

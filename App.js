@@ -17,6 +17,7 @@ export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
   LogBox.ignoreLogs(['Reanimated 2']);
   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
   const [theme, setTheme] = React.useState("dark");
   const  [loading, user, isAppFirstLaunched] = useAppLoading()
 

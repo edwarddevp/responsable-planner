@@ -13,7 +13,7 @@ import {SeSelect} from "../../../../Shared/SeFields/SeSelect";
 
 const {height} = Dimensions.get('window');
 
-const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation}) => {
+const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation, getEvent}) => {
   const styles = eva?.style
   const {data} = useApiRequest(CATEGORIES)
   const {call: handleEvent, loading} = useApiRequest(EVENTS_ID(eventId), {skip: true})
@@ -45,16 +45,13 @@ const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation}
 
   const onSubmit = async (values) => {
     const res = await handleEvent(values, 'PUT')
+    getEvent()
 
     if (res?.success) {
-      navigation.navigate('EVENT', {
-        screen: 'DASHBOARD',
-        params: {
-          eventId: eventId,
-          refreshEvent: true,
-        },
+      navigation.navigate('DASHBOARD', {
+        eventId: eventId,
+        refreshEvent: true,
       });
-      console.log('%c res?.success', 'background: #222; color: #bada55',res?.success)
       // onClose()
     }
   }

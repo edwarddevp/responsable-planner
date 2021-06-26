@@ -4,6 +4,11 @@ import {Button, Text, View} from "react-native";
 import {getDayOfYear, parseISO} from 'date-fns'
 import {useScreenFocused} from "../../../../hooks/useScreenFocused";
 
+const MILLISECONDS_OF_A_SECOND = 1000;
+const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
+const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
+const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24
+
 const CountdownComponent = ({eva, startDate, label}) => {
   const styles = eva?.style
   const clock = new Date(startDate); // Obtener la fecha y almacenar en clock
@@ -13,30 +18,33 @@ const CountdownComponent = ({eva, startDate, label}) => {
   const [secondsLeft, setSecondsLeft] = useState(0)
   const interval = useRef()
 
-  const clearCountInterval = (isFocused) => {
-    if (isFocused) {
-      handleTimeLeft()
-      interval.current = window.setInterval(handleTimeLeft, 1); // Frecuencia de actualización
-    } else {
+  useEffect(() => {
+    handleTimeLeft()
+    interval.current = window.setInterval(handleTimeLeft, 1); // Frecuencia de actualización
+    return () => {
       clearInterval(interval.current);
     }
-  }
+  }, [])
 
-  useScreenFocused(clearCountInterval, () => {
-    clearInterval(interval.current);
-  })
 
   const handleTimeLeft = () => {
     const now = new Date();
-    const day = (getDayOfYear(clock)) - getDayOfYear(now);
-    const hours = (clock.getHours() + 24) - now.getHours();
-    const minutes = (clock.getMinutes() + 60) - now.getMinutes();
-    const seconds = (clock.getSeconds() + 60) - now.getSeconds();
+    const duration = clock - now  
+
+    const day = Math.floor(duration / MILLISECONDS_OF_A_DAY);
+    const hours = Math.floor((duration % MILLISECONDS_OF_A_DAY) / MILLISECONDS_OF_A_HOUR);
+    const minutes = Math.floor((duration % MILLISECONDS_OF_A_HOUR) / MILLISECONDS_OF_A_MINUTE);
+    const seconds = Math.floor((duration % MILLISECONDS_OF_A_MINUTE) / MILLISECONDS_OF_A_SECOND);
+
+
+    const hoursFormat = hours < 10? '0'+ hours : hours;
+    const minutesFormat = minutes < 10? '0'+ minutes : minutes;
+    const secondsFormat = seconds < 10? '0'+ seconds : seconds;
 
     if (day !== daysLeft) setDaysLeft(day)
-    if (hours !== hoursLeft) setHoursLeft(hours)
-    if (minutes !== minutesLeft) setMinutesLeft(minutes)
-    if (seconds !== secondsLeft) setSecondsLeft(seconds)
+    if (hoursFormat !== hoursLeft) setHoursLeft(hoursFormat)
+    if (minutesFormat !== minutesLeft) setMinutesLeft(minutesFormat)
+    if (secondsFormat !== secondsLeft) setSecondsLeft(secondsFormat)
 
   }
 

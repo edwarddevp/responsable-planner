@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
 import {useApiRequest} from "./useApiRequest";
-import {CATEGORIES, EVENTS, USERS_BY_TOKEN} from "../lib/apiRoutes";
+import {CATEGORIES, EVENTS} from "../lib/apiRoutes";
 import {useIsFocused} from "@react-navigation/native";
 import Toast from "react-native-toast-message";
+import {DEBUG} from "@env"
+import {addDays} from "date-fns";
 
 export const useCreateEventSlider = ({reset, navigation}) => {
   const {call: createEvent} = useApiRequest(EVENTS, {
@@ -19,15 +21,18 @@ export const useCreateEventSlider = ({reset, navigation}) => {
   useEffect(() => {
     setSelectedIndex(0)
     setLoading(false)
-    reset({
+    reset(DEBUG ?{
       name: 'Test 1',
       description: '',
       guestlimit: 5,
       direction: 'Avenida Falsa',
       startdate: new Date(),
-      enddate: new Date(),
+      enddate: addDays(new Date(), 3),
       categoryid: 8,
-      // securityMeasureIds: '',
+      securityMeasureIds: ["1","2","8"],
+    } : {
+      startdate: new Date(),
+      enddate: addDays(new Date(), 3),
     })
   }, [isFocused]);
 

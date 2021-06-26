@@ -11,7 +11,7 @@ const EventItemComponent = ({navigation, item, eva}) => {
 
   const formatDate = (date) => format(new Date(format(new Date(date), 'MM/dd/yyyy')), 'MM/dd/yyyy')
 
-  const navigateToEventDetails = () => navigation.navigate('DASHBOARD', item);
+  const navigateToEventDetails = () => navigation.navigate('DASHBOARD', {eventId:item?.id});
 
   return <Layout style={styles?.eventItem}>
     <Pressable onPress={navigateToEventDetails}>
@@ -69,7 +69,7 @@ export const EventItem = withStyles(EventItemComponent, (theme) => ({
   eventItem: {
     borderTopStartRadius: 8,
     borderTopEndRadius: 8,
-    marginHorizontal: 24,
+    marginHorizontal: 20,
     marginVertical: 12,
     overflow: 'hidden',
     shadowColor: theme["color-basic-transparent-500"],

@@ -11,8 +11,8 @@ const {height} = Dimensions.get('window');
 
 const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
   const {style: styles} = eva;
-  const eventRoute = route?.params || {};
-  const [event, loading] = useGetEventDetails(eventRoute?.id)
+  const {eventId, refresh} = route?.params || {};
+  const [event, loading, getEvent] = useGetEventDetails(eventId, refresh)
 
   return (
     <MainLayout navigation={navigation} title='Safe Event Planner'>
@@ -28,6 +28,7 @@ const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
                 navigation={navigation}
                 eventId={event?.id}
                 event={event}
+                getEvent={getEvent}
               />
             </ScrollView>
         }

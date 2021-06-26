@@ -19,6 +19,6 @@ const NavbarComponent = ({ renderLeftActions, renderRightActions, title, eva }) 
 export const Navbar = withStyles(NavbarComponent, (theme) => ({
   title:{
     fontSize: 20,
-    marginLeft:8
+    marginLeft: 12
   }
 }));

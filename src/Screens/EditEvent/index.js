@@ -7,7 +7,7 @@ import {useBackButtonAction} from "../../hooks/useBackButtonAction";
 
 const EditEventComponent = ({eva, navigation, route}) => {
   const styles = eva?.style
-  const {eventId, eventName, event} = route?.params || {};
+  const {eventId, eventName, event, getEvent} = route?.params || {};
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const onBackPress = () => {
@@ -43,6 +43,7 @@ const EditEventComponent = ({eva, navigation, route}) => {
           selectedIndex={selectedIndex}
           event={event}
           navigation={navigation}
+          getEvent={getEvent}
         />
       </ViewPager>
 

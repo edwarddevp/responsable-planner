@@ -6,31 +6,32 @@ import {AnimatedCircularProgress} from "react-native-circular-progress";
 import {SeSeparator} from "../../../../Shared/Separator";
 import {CheckmarkCircleOutline, PeopleOutline, SettingsOutline} from "../../../../Shared/icons";
 
-const ButtonGridComponent = ({eva, navigation, eventId, event}) => {
+const ButtonGridComponent = ({eva, navigation, eventId, event, getEvent}) => {
   const {style: styles, theme} = eva
 
-  const navigateToGuestsList = () => navigation.navigate('EVENT', {
-    screen: 'GUESTS',
-    params: {
+  const navigateToGuestsList = () => navigation.navigate('GUESTS', {
       eventId,
       eventName: event?.name,
       guestTotal: event?.securitymeasuresids?.includes(2) ? event?.recommendedGuestsTotal : event?.guestlimit
     },
-  });
+  );
 
-  const navigateToTasksList = () => navigation.navigate('EVENT', {
-    screen: 'TASKS',
-    params: {eventId, eventName: event?.name},
-  });
+  const navigateToTasksList = () => navigation.navigate('TASKS', {eventId, eventName: event?.name},
+  );
 
-  const navigateToSecurityMeasures = () => navigation.navigate('EVENT', {
-    screen: 'EVENT_SECURITY_MEASURES',
-    params: {eventId, eventName: event?.name, eventSecurityMeasuresIds: event?.securitymeasuresids?.filter(measure=>measure)},
-  });
+  const navigateToSecurityMeasures = () => navigation.navigate('EVENT_SECURITY_MEASURES', {
+      eventId,
+      eventName: event?.name,
+      eventSecurityMeasuresIds: event?.securitymeasuresids?.filter(measure => measure),
+      getEvent
+    },
+  );
 
-  const navigateToEditEvent = () => navigation.navigate('EVENT', {
-    screen: 'EDIT_EVENT',
-    params: {eventId, eventName: event?.name, event},
+  const navigateToEditEvent = () => navigation.navigate('EDIT_EVENT', {
+    eventId,
+    eventName: event?.name,
+    event,
+    getEvent
   });
 
   const gaugeColor = event?.securityValue === 100 ?
@@ -79,7 +80,7 @@ const ButtonGridComponent = ({eva, navigation, eventId, event}) => {
           {
             (fill) => (
               <Text>
-                {Math.round(fill)}pts
+                {Math.round(fill)}%
               </Text>
             )
           }
@@ -134,8 +135,6 @@ export const ButtonGrid = withStyles(ButtonGridComponent, (theme) => ({
   },
   securityMeasure: {
     flexDirection: 'row',
-    // justifyContent: 'space-evenly',
-    // alignItems: 'center',
     paddingHorizontal: 24,
     paddingVertical: 16,
     height: 200,
@@ -156,19 +155,19 @@ export const ButtonGrid = withStyles(ButtonGridComponent, (theme) => ({
     lineHeight: 25,
   },
   securityMeasuresSubText: {
-    marginTop:16,
+    marginTop: 16,
     fontSize: 16,
     lineHeight: 16,
   },
   securityMeasuresSecurityText: {
     fontSize: 18,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginTop: 4
   },
   securityMeasuresMoreDetails: {
     fontSize: 14,
     marginTop: 8,
-    textAlign:'right',
+    textAlign: 'right',
     color: theme['color-basic-700']
   },
   securityMeasureTextContainer: {
