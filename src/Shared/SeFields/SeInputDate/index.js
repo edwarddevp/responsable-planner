@@ -73,14 +73,15 @@ const SeInputDateComponent = (
 
               ]}
             >
-              <Icon
-                name={rightIcon || 'calendar-outline'}
-                fill={
-                  errors.name ?
-                    theme['color-danger-500'] :
-                    theme['color-primary-500']
-                }
-              />
+              {/*<Icon*/}
+              {/*  name={rightIcon || 'calendar-outline'}*/}
+              {/*  style={styles?.icon}*/}
+              {/*  fill={*/}
+              {/*    errors.name ?*/}
+              {/*      theme['color-danger-500'] :*/}
+              {/*      theme['color-primary-500']*/}
+              {/*  }*/}
+              {/*/>*/}
               {
                 mode === 'datetime' ? <>
                   <Text style={styles?.textCenter}>{format(value, 'MM/dd/yyyy')}</Text>
@@ -128,5 +129,9 @@ export const SeInputDate = withStyles(SeInputDateComponent, (theme) => ({
   },
   separator: {
     height: 4
-  }
+  },
+  icon: {
+    width: 22,
+    height: 22
+  },
 }));

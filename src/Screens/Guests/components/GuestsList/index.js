@@ -1,9 +1,10 @@
 import React from 'react';
 import {RefreshControl, ScrollView, View} from "react-native";
 import {GuestItem} from "../GuestItem";
-import {Text} from "@ui-kitten/components";
+import {Text, withStyles} from "@ui-kitten/components";
 
-export const GuestsList = ({data, navigation, getGuests, loading, setGuestToEdit}) => {
+export const GuestsListComponent = ({data, navigation, getGuests, loading, setGuestToEdit, guestTotal, isGuestLimit, eva}) => {
+  const styles = eva?.style;
   return <ScrollView
     refreshControl={
       <RefreshControl refreshing={loading} onRefresh={getGuests}/>
@@ -13,8 +14,8 @@ export const GuestsList = ({data, navigation, getGuests, loading, setGuestToEdit
       <Text style={styles?.title}>
         Lista de Invitados:
       </Text>
-      <Text style={styles?.title}>
-        {data?.data?.guests?.length}
+      <Text style={styles?.guestNumber(isGuestLimit)}>
+        {data?.data?.guests?.length}/{guestTotal}
       </Text>
     </View>
     <View style={styles?.eventList}>
@@ -33,7 +34,7 @@ export const GuestsList = ({data, navigation, getGuests, loading, setGuestToEdit
   </ScrollView>
 };
 
-const styles = {
+export const GuestsList = withStyles(GuestsListComponent, (theme) => ({
   eventList: {
     paddingVertical: 12,
   },
@@ -45,5 +46,10 @@ const styles = {
   },
   title:{
     fontSize:20
-  }
-};
+  },
+  guestNumber: (isGuestLimit)=>({
+    fontSize:18,
+    color: isGuestLimit? theme['color-info-500'] : theme['color-basic-100']
+  })
+}));
+

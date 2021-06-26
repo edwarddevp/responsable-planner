@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {withStyles} from "@ui-kitten/components";
 import {Button, Text, View} from "react-native";
-import { getDayOfYear, parseISO } from 'date-fns'
+import {getDayOfYear, parseISO} from 'date-fns'
 import {useScreenFocused} from "../../../../hooks/useScreenFocused";
 
 const CountdownComponent = ({eva, startDate, label}) => {
@@ -22,19 +22,21 @@ const CountdownComponent = ({eva, startDate, label}) => {
     }
   }
 
-  useScreenFocused(clearCountInterval)
+  useScreenFocused(clearCountInterval, () => {
+    clearInterval(interval.current);
+  })
 
   const handleTimeLeft = () => {
     const now = new Date();
     const day = (getDayOfYear(clock)) - getDayOfYear(now);
     const hours = (clock.getHours() + 24) - now.getHours();
-    const minutes =  (clock.getMinutes() + 60) - now.getMinutes();
+    const minutes = (clock.getMinutes() + 60) - now.getMinutes();
     const seconds = (clock.getSeconds() + 60) - now.getSeconds();
 
-    if(day !== daysLeft) setDaysLeft(day)
-    if(hours !== hoursLeft) setHoursLeft(hours)
-    if(minutes !== minutesLeft) setMinutesLeft(minutes)
-    if(seconds !== secondsLeft) setSecondsLeft(seconds)
+    if (day !== daysLeft) setDaysLeft(day)
+    if (hours !== hoursLeft) setHoursLeft(hours)
+    if (minutes !== minutesLeft) setMinutesLeft(minutes)
+    if (seconds !== secondsLeft) setSecondsLeft(seconds)
 
   }
 
@@ -71,11 +73,11 @@ const CountdownComponent = ({eva, startDate, label}) => {
 };
 
 export const Countdown = withStyles(CountdownComponent, (theme) => ({
-  countDown:{
-    flexDirection:'row'
+  countDown: {
+    flexDirection: 'row'
   },
-  period:{
-    alignItems:'center'
+  period: {
+    alignItems: 'center'
   },
   timeLabel: {
     color: 'white',
@@ -88,9 +90,7 @@ export const Countdown = withStyles(CountdownComponent, (theme) => ({
   separator: {
     color: 'white',
     fontSize: 12,
-    paddingHorizontal:6,
+    paddingHorizontal: 6,
   },
-  timeUnit:{
-
-  }
+  timeUnit: {}
 }));

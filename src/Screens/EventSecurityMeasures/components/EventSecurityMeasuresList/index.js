@@ -1,36 +1,25 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FlatList} from "react-native";
-import {useApiRequest} from "../../../../hooks/useApiRequest";
-import {EVENTS, EVENTS_EVENTID_SECURITYMEASURES, SECURITYMEASURES} from "../../../../lib/apiRoutes";
 import {EventSecurityMeasuresItem} from "../EventSecurityMeasuresItem";
-import {useIsFocused} from "@react-navigation/native";
+import {SeAnimation} from "../../../../Shared/SeAnimation";
 
-export const EventSecurityMeasuresList = ({navigation, eventId, event}) => {
-  const {data: eventSecurityMeasures, call: getEventSecurityMeasures, loading: loadingEventSecurityMeasures} = useApiRequest(EVENTS_EVENTID_SECURITYMEASURES(eventId))
-  const {data: securityMeasures, call: getSecurityMeasures, loading: loadingSecurityMeasures} = useApiRequest(SECURITYMEASURES)
+export const EventSecurityMeasuresList = ({securityMeasures, loadingSecurityMeasures ,securitiesActive, setSecuritiesActive}) => {
 
-  // check if screen is focused
-  const isFocused = useIsFocused();
-
-
-  useEffect(() => {
-    getSecurityMeasures()
-    getEventSecurityMeasures()
-  }, [isFocused]);
-
-  return <FlatList
-    data={securityMeasures?.data?.securityMeasures}
-    renderItem={({item}) =>
-      <EventSecurityMeasuresItem
-        item={item}
-        eventId={eventId}
-        eventSecurityMeasures={eventSecurityMeasures?.data?.securityMeasure}
-      />}
-    keyExtractor={item => item.id.toString()}
-    contentContainerStyle={styles?.eventList}
-    // onRefresh={getSecurityMeasures}
-    refreshing={loadingEventSecurityMeasures || loadingSecurityMeasures}
-  />
+  return loadingSecurityMeasures ?
+    <SeAnimation src={require('../../../../../assets/animations/loading-spinner.json')} />
+    : <FlatList
+      data={securityMeasures?.data?.securityMeasures}
+      renderItem={({item}) =>
+        <EventSecurityMeasuresItem
+          item={item}
+          eventSecurityMeasures={securitiesActive}
+          setSecuritiesActive={setSecuritiesActive}
+        />}
+      keyExtractor={item => item.id.toString()}
+      contentContainerStyle={styles?.eventList}
+      // onRefresh={getSecurityMeasures}
+      refreshing={loadingSecurityMeasures}
+    />
 };
 
 const styles = {

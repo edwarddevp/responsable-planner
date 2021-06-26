@@ -10,12 +10,12 @@ export const BasicInformationFormComponent = ({eva, control, errors, style, getV
   const date = new Date()
   const watchStartDate = watch('startdate', date)
 
-  useEffect(()=>{
-    const validate = compareAsc(watchStartDate,getValues('enddate'))
-    if(validate > 0){
-      setValue('enddate',watchStartDate)
+  useEffect(() => {
+    const validate = compareAsc(watchStartDate, getValues('enddate'))
+    if (validate > 0) {
+      setValue('enddate', watchStartDate)
     }
-  },[watchStartDate])
+  }, [watchStartDate])
 
   return <View style={style}>
     <View style={styles?.paddingH18}>
@@ -42,25 +42,25 @@ export const BasicInformationFormComponent = ({eva, control, errors, style, getV
           required
         />
       </View>
-      <View style={styles?.separator} />
-        <SeInput
-          name='direction'
-          control={control}
-          errors={errors}
-          label='Ubicación:'
-          placeholder='Ubicación'
-          rightIcon='map-outline'
-        />
-      <View style={styles?.separator} />
-        <SeInput
-          multiline
-          textStyle={{ minHeight: 64 }}
-          name='description'
-          control={control}
-          errors={errors}
-          label='Descripcion:'
-          placeholder='Descripcion'
-        />
+      <View style={styles?.separator}/>
+      <SeInput
+        name='direction'
+        control={control}
+        errors={errors}
+        label='Ubicación:'
+        placeholder='Ubicación'
+        rightIcon='map-outline'
+      />
+      <View style={styles?.separator}/>
+      <SeInput
+        multiline
+        textStyle={{minHeight: 64}}
+        name='description'
+        control={control}
+        errors={errors}
+        label='Descripcion:'
+        placeholder='Descripcion'
+      />
     </View>
   </View>
 };
@@ -68,21 +68,21 @@ export const BasicInformationFormComponent = ({eva, control, errors, style, getV
 export const BasicInformationForm = withStyles(BasicInformationFormComponent, (theme) => ({
   twoColumns: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
-  paddingH18:{
+  paddingH18: {
     paddingHorizontal: 18
   },
-  startDate:{
-    flex:1,
-    paddingRight:18
+  startDate: {
+    flex: 1,
+    paddingRight: 18
   },
-  endDate:{
-    flex:1,
-    paddingLeft:18
+  endDate: {
+    flex: 1,
+    paddingLeft: 18
   },
   flex1: {
-    flex:1
+    flex: 1
   },
   separator: {
     height: 12

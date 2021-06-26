@@ -11,7 +11,11 @@ const ButtonGridComponent = ({eva, navigation, eventId, event}) => {
 
   const navigateToGuestsList = () => navigation.navigate('EVENT', {
     screen: 'GUESTS',
-    params: {eventId, eventName: event?.name},
+    params: {
+      eventId,
+      eventName: event?.name,
+      guestTotal: event?.securitymeasuresids?.includes(2) ? event?.recommendedGuestsTotal : event?.guestlimit
+    },
   });
 
   const navigateToTasksList = () => navigation.navigate('EVENT', {
@@ -21,13 +25,20 @@ const ButtonGridComponent = ({eva, navigation, eventId, event}) => {
 
   const navigateToSecurityMeasures = () => navigation.navigate('EVENT', {
     screen: 'EVENT_SECURITY_MEASURES',
-    params: {eventId, eventName: event?.name, event},
+    params: {eventId, eventName: event?.name, eventSecurityMeasuresIds: event?.securitymeasuresids?.filter(measure=>measure)},
   });
 
   const navigateToEditEvent = () => navigation.navigate('EVENT', {
     screen: 'EDIT_EVENT',
     params: {eventId, eventName: event?.name, event},
   });
+
+  const gaugeColor = event?.securityValue === 100 ?
+    'color-success-500' : event?.securityValue >= 80 ?
+      'color-success-400' : event?.securityValue >= 60 ?
+        'color-warning-400' : event?.securityValue >= 40 ?
+          'color-warning-500' : event?.securityValue >= 20 ?
+            'color-danger-400' : 'color-danger-500'
 
   return <>
     <SeButton
@@ -37,32 +48,45 @@ const ButtonGridComponent = ({eva, navigation, eventId, event}) => {
       style={styles?.securityMeasure}
     >
       <View style={styles?.securityMeasureTextContainer}>
-        <Text style={styles?.securityMeasuresText}>
-          Nivel de
-        </Text>
-        <Text style={styles?.securityMeasuresText}>
-          Seguridad
-        </Text>
+        <View style={styles?.securityMeasureTextContainer}>
+          <Text style={styles?.securityMeasuresText}>
+            Nivel de
+          </Text>
+          <Text style={styles?.securityMeasuresText}>
+            Seguridad
+          </Text>
+        </View>
+        <View style={styles?.securityMeasureTextSecurityContainer}>
+          <Text style={styles?.securityMeasuresSubText}>
+            Su evento es condiderado:
+          </Text>
+          <Text style={styles?.securityMeasuresSecurityText}>
+            {event?.securityCategory}
+          </Text>
+        </View>
       </View>
       <View style={styles?.separatorH}/>
       <View style={styles?.gauge}>
         <AnimatedCircularProgress
-          size={120}
-          width={3}
-          backgroundWidth={20}
-          fill={50}
-          tintColor={theme['color-primary-300']}
+          size={140}
+          width={10}
+          backgroundWidth={30}
+          fill={event?.securityValue}
+          tintColor={theme[gaugeColor || 'color-primary-300']}
           backgroundColor={theme['color-basic-700']}
           rotation={180}
         >
           {
             (fill) => (
               <Text>
-                {fill}
+                {Math.round(fill)}pts
               </Text>
             )
           }
         </AnimatedCircularProgress>
+        <Text style={styles?.securityMeasuresMoreDetails}>
+          more details...
+        </Text>
       </View>
       <View/>
     </SeButton>
@@ -110,10 +134,10 @@ export const ButtonGrid = withStyles(ButtonGridComponent, (theme) => ({
   },
   securityMeasure: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: 0,
-    paddingVertical: 54,
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
     height: 200,
     marginTop: -70,
     marginHorizontal: 20,
@@ -129,15 +153,33 @@ export const ButtonGrid = withStyles(ButtonGridComponent, (theme) => ({
   },
   securityMeasuresText: {
     fontSize: 24,
-    textAlign: 'center'
+    lineHeight: 25,
+  },
+  securityMeasuresSubText: {
+    marginTop:16,
+    fontSize: 16,
+    lineHeight: 16,
+  },
+  securityMeasuresSecurityText: {
+    fontSize: 18,
+    fontWeight:'bold',
+    marginTop: 4
+  },
+  securityMeasuresMoreDetails: {
+    fontSize: 14,
+    marginTop: 8,
+    textAlign:'right',
+    color: theme['color-basic-700']
   },
   securityMeasureTextContainer: {
     flex: 1,
-    justifyContent: 'center'
+  },
+  securityMeasureTextSecurityContainer: {
+    flex: 2,
+    marginTop: 16
   },
   gauge: {
     flex: 1,
-    justifyContent: 'center'
   },
   subButton: {
     flex: 1,

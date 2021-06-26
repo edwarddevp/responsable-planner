@@ -10,32 +10,25 @@ import {EVENTS_EVENTID_SECURITYMEASURES_ID, EVENTS_EVENTID_TASKS_ID} from "../..
 import {useDisclosure} from "../../../../hooks/useDisclosure";
 import {EventSecurityMeasuresItemModal} from "../EventSecurityMeasuresModal";
 
-const EventSecurityMeasuresItemComponent = ({item, eva, eventSecurityMeasures = [], eventId}) => {
+const EventSecurityMeasuresItemComponent = ({item, eva, eventSecurityMeasures = [], setSecuritiesActive}) => {
   const {style: styles, theme} = eva;
-  const {call: handleSecurityMeasure, loading} = useApiRequest(EVENTS_EVENTID_SECURITYMEASURES_ID(eventId, item?.id), {
-    skip: true
-  })
-  const [isActive,setIsActive] = useState(eventSecurityMeasures.includes(eventSecurityMeasure => eventSecurityMeasure.id === item.id))
+  const [isActive, setIsActive] = useState(eventSecurityMeasures.includes(eventSecurityMeasure => eventSecurityMeasure.id === item.id))
 
-  useEffect(()=>{
+  useEffect(() => {
     if (eventSecurityMeasures && eventSecurityMeasures.length) {
-      setIsActive(
-        Boolean(
-          eventSecurityMeasures.filter(eventSecurityMeasure => eventSecurityMeasure.id === item.id)[0]
-        )
-      )
+      setIsActive(eventSecurityMeasures.includes(item.id))
     }
-  },[eventSecurityMeasures])
+  }, [eventSecurityMeasures])
 
   const {isOpen, onOpen, onClose} = useDisclosure()
 
-  const {isOpen: isOpenConfirmAlert, onOpen:onOpenConfirmAlert, onClose:onCloseConfirmAlert} = useDisclosure()
-
   const toggleEventSecurityMeasure = async () => {
-    const res = await handleSecurityMeasure()
-    if (res?.success) {
-      setIsActive(res?.data?.securityMeasure)
-      onCloseConfirmAlert()
+    if (isActive) {
+      setSecuritiesActive(measures => measures.filter(measure => measure !== item.id))
+      setIsActive(false)
+    } else {
+      setSecuritiesActive(measures => [...measures, item.id])
+      setIsActive(true)
     }
   }
 
@@ -46,7 +39,7 @@ const EventSecurityMeasuresItemComponent = ({item, eva, eventSecurityMeasures = 
           <Layout level={pressed ? "2" : "1"} style={styles?.leftSideContentCompleteIcon}>
             <View style={styles?.rightBorder}>
               {
-                isActive?
+                isActive ?
                   <View style={styles?.checkIcon}>
                     <CheckmarkCircleOutline
                       fill={theme['color-success-600']}
@@ -55,8 +48,7 @@ const EventSecurityMeasuresItemComponent = ({item, eva, eventSecurityMeasures = 
                   </View> :
                   <Radio
                     style={styles?.setCompleteRadio}
-                    onChange={onOpenConfirmAlert}
-                    disabled={loading}
+                    onChange={toggleEventSecurityMeasure}
                   />
               }
             </View>
@@ -76,16 +68,7 @@ const EventSecurityMeasuresItemComponent = ({item, eva, eventSecurityMeasures = 
       onClose={onClose}
       securityMeasure={item}
     />
-    <SeAlert
-      isOpen={isOpenConfirmAlert}
-      onCancel={onCloseConfirmAlert}
-      onConfirm={toggleEventSecurityMeasure}
-      loading={loading}
-      confirmButtonText='Si, marcala activada'
-      confirmButtonColor={theme['color-info-700']}
-      title={item?.name}
-      message='¿Esta usted seguro que su evento cumple con esta medida de seguridad?'
-    />
+
   </Layout>
 }
 

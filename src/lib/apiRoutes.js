@@ -15,7 +15,7 @@ export const EVENTS_EVENTID_TASKS_ID = (eventId,id) => `/events/${eventId}/tasks
 export const SECURITYMEASURES = '/securitymeasures'
 export const SECURITYMEASURES_ID = (id) => `/securitymeasures/${id}`
 // event securityMeasures
-export const EVENTS_EVENTID_SECURITYMEASURES = (eventId,id) => `/events/${eventId}/securitymeasures`
+export const EVENTS_EVENTID_SECURITYMEASURES = (eventId) => `/events/${eventId}/securitymeasures`
 export const EVENTS_EVENTID_SECURITYMEASURES_ID = (eventId,id) => `/events/${eventId}/securitymeasures/${id}`
 // category
 export const CATEGORIES = '/categories'
