@@ -24,8 +24,11 @@ export const FooterButtonsComponent = (
     size = 'md',
     buttonWidth,
     gap,
+    buttonSize,
     confirmButtonText,
-    submitButton = true
+    leftButtonText,
+    submitButton = true,
+    loadingLeftAction
   }) => {
   const styles = eva?.style
   return <View style={style}>
@@ -33,12 +36,17 @@ export const FooterButtonsComponent = (
       leftAction &&
       <>
         <Button
-          disabled={loading}
+          size={buttonSize || 'small'}
+          disabled={loadingLeftAction || loading}
           status='basic'
           onPress={leftAction}
           style={{...styles?.button(size, buttonWidth), ...styles?.goBackButton}}
         >
-          Volver
+          {
+            loadingLeftAction ?
+              <Spinner/> :
+              leftButtonText || 'Volver'
+          }
         </Button>
         {gap && <SeSeparator d='H' value={gap}/>}
       </>
@@ -46,17 +54,17 @@ export const FooterButtonsComponent = (
     {gap && <SeSeparator d='H' value={gap}/>}
     {
       submitButton && <Button
-      disabled={loading}
-      onPress={rightAction}
-      style={{...styles?.button(size), ...styles?.nextButton}}
-    >
-      {
-        loading ?
-          <Spinner/> :
-          confirmButtonText || "Siguiente"
-      }
-
-    </Button>
+        size={buttonSize || 'small'}
+        disabled={loading}
+        onPress={rightAction}
+        style={{...styles?.button(size), ...styles?.nextButton}}
+      >
+        {
+          loading ?
+            <Spinner/> :
+            confirmButtonText || "Siguiente"
+        }
+      </Button>
     }
   </View>
 };
@@ -64,8 +72,11 @@ export const FooterButtonsComponent = (
 export const FooterButtons = withStyles(FooterButtonsComponent, (theme) => ({
   button: buttonSize,
   goBackButton: {
+    flex: 1,
     backgroundColor: theme['color-basic-500'],
     borderColor: theme['color-basic-500'],
   },
-  nextButton: {},
+  nextButton: {
+    flex: 1,
+  },
 }));

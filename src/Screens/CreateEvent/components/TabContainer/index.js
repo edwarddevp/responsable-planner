@@ -7,7 +7,7 @@ const {height} = Dimensions.get('window');
 
 const TabContainerComponent = ({eva, children, source}) => {
   const styles = eva?.style
-  return <DarkerImageBackground style={styles.darkerImageBackground} source={source}>
+  return <DarkerImageBackground style={styles.darkerImageBackground} source={source} overlayColor='rgba(0, 0, 0, .5)'>
     <KeyboardAvoidingView behavior="height" style={styles?.keyboardAvoidingView}>
       <ScrollView >
         <View style={styles.view}>
@@ -27,7 +27,7 @@ export const TabContainer = withStyles(TabContainerComponent, (theme) => ({
     flex: 1,
   },
   view: {
-    paddingVertical: 48,
+    paddingVertical: 32,
     // minHeight: height,
     height: height,
     justifyContent:'space-around',

@@ -5,6 +5,7 @@ import {Text, View} from "react-native";
 import {AnimatedCircularProgress} from "react-native-circular-progress";
 import {SeSeparator} from "../../../../Shared/Separator";
 import {CheckmarkCircleOutline, PeopleOutline, SettingsOutline} from "../../../../Shared/icons";
+import {getSecurityColorLevel} from "../../../../lib/helper";
 
 const ButtonGridComponent = ({eva, navigation, eventId, event, getEvent}) => {
   const {style: styles, theme} = eva
@@ -34,12 +35,7 @@ const ButtonGridComponent = ({eva, navigation, eventId, event, getEvent}) => {
     getEvent
   });
 
-  const gaugeColor = event?.securityValue === 100 ?
-    'color-success-500' : event?.securityValue >= 80 ?
-      'color-success-400' : event?.securityValue >= 60 ?
-        'color-warning-400' : event?.securityValue >= 40 ?
-          'color-warning-500' : event?.securityValue >= 20 ?
-            'color-danger-400' : 'color-danger-500'
+  const gaugeColor = getSecurityColorLevel(event?.securityValue)
 
   return <>
     <SeButton

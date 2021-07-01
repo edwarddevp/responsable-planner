@@ -35,8 +35,10 @@ const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation,
 
   useEffect(() => {
     if (event?.id && selectedIndex === 1) {
+      console.log('%c event', 'background: #222; color: #bada55',event)
       reset({
         ...event,
+        guestlimit: event?.guestlimit?.toString(),
         startdate: new Date(event?.startdate),
         enddate: new Date(event?.enddate)
       })
@@ -105,6 +107,22 @@ const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation,
         </View>
         <SeSeparator value={2}/>
         <SeInput
+          name='guestlimit'
+          control={control}
+          errors={errors}
+          label='Limite de personas:'
+          placeholder='Limite de Personas'
+          rightIcon='people'
+          labelStyles={styles?.label}
+          underlineColorAndroid='transparent'
+          style={styles?.inputLabel}
+          keyboardType="numeric"
+          type='number'
+          required
+          maxLength={7}
+        />
+        <SeSeparator value={2}/>
+        <SeInput
           name='direction'
           control={control}
           errors={errors}
@@ -122,17 +140,15 @@ const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation,
           label='Descripcion:'
           placeholder='Descripcion'
         />
-
-
       </View>
       <SeSeparator value={4}/>
       <FooterButtons
         style={styles?.containerButtons}
         rightAction={handleSubmit(onSubmit)}
         size='xs'
-        gap={2}
         loading={loading}
         confirmButtonText='Guardar Cambios'
+        buttonSize='medium'
       />
     </ScrollView>
   </View>

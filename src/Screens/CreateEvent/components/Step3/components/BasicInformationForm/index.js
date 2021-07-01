@@ -18,7 +18,7 @@ export const BasicInformationFormComponent = ({eva, control, errors, style, getV
   }, [watchStartDate])
 
   return <View style={style}>
-    <View style={styles?.paddingH18}>
+    <View >
       <Text style={styles?.label}>Fecha del evento:</Text>
       <View style={styles?.twoColumns}>
         <SeInputDate
@@ -62,6 +62,7 @@ export const BasicInformationFormComponent = ({eva, control, errors, style, getV
         placeholder='Descripcion'
       />
     </View>
+    <View />
   </View>
 };
 

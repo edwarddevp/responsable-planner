@@ -34,7 +34,8 @@ export const BackgroundImage = withStyles(BackgroundImageComponent, (theme) => (
   },
   eventName: {
     color: 'white',
-    fontSize: 28
+    fontSize: 28,
+    textAlign:'center'
   },
   topImg: {
     flex: 1,
@@ -45,6 +46,6 @@ export const BackgroundImage = withStyles(BackgroundImageComponent, (theme) => (
   centerImg: {
     flex: 2,
     flexDirection: 'row',
-    justifyContent: 'center',
+    paddingHorizontal: 16
   },
 }));

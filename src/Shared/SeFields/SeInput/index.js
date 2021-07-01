@@ -21,9 +21,11 @@ const SeInputComponent = (
     maxLength,
     errorText,
     trim,
+    type = '',
     ...rest
   }) => {
   const {style: styles, theme} = eva
+
   return <View style={style}>
     <Text style={{...styles?.label, ...labelStyles}}>{label}</Text>
     {
@@ -35,10 +37,11 @@ const SeInputComponent = (
             status={validateAfterTouch ? (errors?.[name] && isTouched) ? 'danger' : 'control' : 'control'}
             placeholder={placeholder}
             onBlur={onBlur}
-            onChangeText={value => onChange(trim ? value.trim() : value)}
+            onChangeText={value => onChange(trim ? value.trim() : type === 'number'? value.replace(/[^0-9]/g, '') : value)}
             value={value}
             style={(errors?.[name]) ? styles?.borderColorRed : {}}
             placeholderTextColor={theme['color-basic-600']}
+            maxLength={maxLength}
             accessoryRight={(props) =>
               rightIcon ?
                 <Icon
@@ -65,7 +68,7 @@ const SeInputComponent = (
           errorText ?
             errorText(errors?.[name]) :
             errors?.[name]?.type === 'maxLength' ?
-              'Limite Excedido.' :
+              `Limite de ${maxLength} letras excedido.` :
               errors?.[name]?.type === 'pattern' ?
                 pattern?.errorMsg || 'Invalid Pattern' :
                 'Campo Requerido.'

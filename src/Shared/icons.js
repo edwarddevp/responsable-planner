@@ -44,3 +44,7 @@ export const PlusOutline = (props) => <Icon {...props} name="plus-outline" />;
 export const TrashOutline = (props) => <Icon {...props} name="trash-2-outline" />;
 
 export const ArrowDown = (props) => <Icon {...props} name="arrow-ios-downward-outline" />;
+
+export const CheckCircle = (props) => <Icon {...props} name="checkmark-circle-2" />;
+
+export const ArrowDownward = (props) => <Icon {...props} name="arrow-downward" />;
