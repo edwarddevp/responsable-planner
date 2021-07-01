@@ -55,7 +55,8 @@ export const SingUp = ({navigation}) => {
     } else {
       setLoading(false);
       Toast.show({
-        text1: `Error ${response?.errors?.error?.[0]}`,
+        text1:`Error de conexion`,
+        text2:`inténtelo de nuevo más tarde`,
         type: 'error'
       });
     }
@@ -79,7 +80,7 @@ export const SingUp = ({navigation}) => {
     <KeyboardAvoidingView>
       <ImageOverlay
         style={styles.container}
-        source={image}>
+        source={require('../../../assets/images/register.jpg')}>
         <View style={styles.headerContainer}>
           <Text
             category='h1'
@@ -156,7 +157,6 @@ export const SingUp = ({navigation}) => {
         </View>
         <Button
           type='submit'
-          status='success'
           style={styles.signUpButton}
           size='giant'
           onPress={handleSubmit(onSubmit)}

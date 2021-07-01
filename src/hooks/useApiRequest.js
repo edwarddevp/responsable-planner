@@ -25,18 +25,18 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
   }
 
   const getBody = (params) => {
-    return params? {
+    return params ? {
       body: JSON.stringify(params)
     } : {}
   }
 
-  const apiRequest = async (params, methodConfig = method, addToPatch ='') => {
+  const apiRequest = async (params, methodConfig = method, addToPatch = '') => {
     try {
       setLoading(true)
 
       const body = getBody(params || paramsData)
 
-      const authorization =  await getToken()
+      const authorization = await getToken()
 
       const response = await fetch(API_URL + path + addToPatch, {
         method: methodConfig, // *GET, POST, PUT, DELETE, etc.
@@ -60,11 +60,20 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
       }
 
       if (json?.code === 500) {
-        console.log('%c json', 'background: #222; color: #bada55',json)
-        Toast.show({
-          type: 'error',
-          text1: json?.message
-        });
+        console.log('%c json', 'background: #222; color: #bada55', json)
+        if (json?.message) {
+          Toast.show({
+            type: 'error',
+            text1: json?.message
+          });
+        } else {
+          Toast.show({
+            text1: `Error de conexion`,
+            text2: `inténtelo de nuevo más tarde`,
+            type: 'error'
+          });
+        }
+
       }
       setResponse(json)
       setLoading(false)

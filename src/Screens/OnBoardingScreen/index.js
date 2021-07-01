@@ -3,6 +3,9 @@ import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
 import Onboarding from 'react-native-onboarding-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PageOne from "./components/PageOne";
+import PageTwo from "./components/PageTwo";
+import PageThree from "./components/PageThree";
 
 const Dots = ({selected}) => {
   let backgroundColor;
@@ -26,7 +29,7 @@ const Skip = ({...props}) => (
     style={{marginHorizontal: 10}}
     {...props}
   >
-    <Text style={{fontSize: 16}}>Skip</Text>
+    <Text style={{fontSize: 16}}>Saltar</Text>
   </TouchableOpacity>
 );
 
@@ -35,7 +38,7 @@ const Next = ({...props}) => (
     style={{marginHorizontal: 10}}
     {...props}
   >
-    <Text style={{fontSize: 16}}>Next</Text>
+    <Text style={{fontSize: 16}}>Siguiente</Text>
   </TouchableOpacity>
 );
 
@@ -44,7 +47,7 @@ const Done = ({...props}) => (
     style={{marginHorizontal: 10}}
     {...props}
   >
-    <Text style={{fontSize: 16}}>Done</Text>
+    <Text style={{fontSize: 16}}>Listo</Text>
   </TouchableOpacity>
 );
 
@@ -68,25 +71,22 @@ export const OnBoardingScreen = ({navigation}) => {
       onDone={onDone}
       pages={[
         {
-          backgroundColor: '#a6e4d0',
-          image: <Image
-            source={{uri: 'https://images.unsplash.com/photo-1553531888-973dce69bd1f?ixid=MXwxMjA3fDF8MHxzZWFyY2h8MXx8bmF0dXJlfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60'}}/>,
-          title: 'Connect to the World',
-          subtitle: 'A New Way To Connect With The World',
+          backgroundColor: '#D8B668',
+          image: <PageOne width={300} height={300} />,
+          title: 'Crea tu evento',
+          subtitle: 'Una manera sencilla de administrar y hacer seguro tu evento',
         },
         {
-          backgroundColor: '#fdeb93',
-          image: <Image
-            source={{uri: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8bmF0dXJlfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60'}}/>,
-          title: 'Share Your Favorites',
-          subtitle: 'Share Your Thoughts With Similar Kind of People',
+          backgroundColor: '#EBD18A',
+          image: <PageTwo width={300} height={300} />,
+          title: 'Protegelo contra el covid-19',
+          subtitle: 'Te ayudamos a cumplir con las medidas de seguridad, necesarias para hacer tu evento seguro',
         },
         {
-          backgroundColor: '#e9bcbe',
-          image: <Image
-            source={{uri: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60'}}/>,
-          title: 'Become The Star',
-          subtitle: "Let The Spot Light Capture You",
+          backgroundColor: '#D8B668',
+          image: <PageThree width={300} height={300} />,
+          title: '¡Empieza ya!',
+          subtitle: "Crea un evento y transformalo en una experiencia segura para todos",
         },
       ]}
     />
@@ -100,4 +100,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  img:{
+    width: 50,
+    height: 50
+  }
 });

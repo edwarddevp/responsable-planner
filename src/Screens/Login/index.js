@@ -42,7 +42,8 @@ const LoginScreenComponent = ({navigation,eva}) => {
     if (!response?.success) {
       setLoading(false);
       Toast.show({
-        text1:`Error ${response?.errors?.error?.[0]}`,
+        text1:`Error de conexion`,
+        text2:`inténtelo de nuevo más tarde`,
         type:'error'
     });
     }
@@ -160,7 +161,7 @@ export const LoginScreen = withStyles(LoginScreenComponent, (theme) => ({
     alignItems: 'center',
   },
   textColor: {
-    color: theme['color-primary-500']
+    // color: theme['color-primary-500']
   },
   formContainer: {
     flex: 1,
