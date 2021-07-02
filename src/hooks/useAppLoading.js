@@ -15,6 +15,7 @@ export const useAppLoading = () => {
   })
 
   useEffect(() => {
+    AsyncStorage.setItem('alreadyLaunched', 'false');
     loadingAppData()
   }, []);
 
@@ -49,7 +50,6 @@ export const useAppLoading = () => {
   const checkIfAppFirstLaunched = async () => {
     try {
       const isFirstLaunchedValue = await AsyncStorage.getItem('alreadyLaunched')
-      console.log('%c isFirstLaunchedValue', 'background: #222; color: #bada55',isFirstLaunchedValue)
       if (isFirstLaunchedValue === 'true') {
         setIsAppFirstLaunched(false);
       } else {
@@ -62,6 +62,7 @@ export const useAppLoading = () => {
   return [
     loading,
     user,
-    isAppFirstLaunched
+    isAppFirstLaunched,
+    setIsAppFirstLaunched
   ]
 };

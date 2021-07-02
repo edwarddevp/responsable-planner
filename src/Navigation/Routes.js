@@ -4,7 +4,7 @@ import {AuthContext} from './AuthProvider';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
 
-export const Routes = ({isAppFirstLaunched}) => {
+export const Routes = ({isAppFirstLaunched, setIsAppFirstLaunched}) => {
   const {user} = useContext(AuthContext);
 
   return (
@@ -14,6 +14,7 @@ export const Routes = ({isAppFirstLaunched}) => {
           <AppStack/> :
           <AuthStack
             isAppFirstLaunched={isAppFirstLaunched}
+            setIsAppFirstLaunched={setIsAppFirstLaunched}
           />
       }
     </NavigationContainer>

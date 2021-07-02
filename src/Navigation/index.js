@@ -2,10 +2,10 @@ import React from 'react';
 import {AuthProvider} from './AuthProvider';
 import {Routes} from './Routes';
 
-const Providers = ({user, isAppFirstLaunched}) => {
+const Providers = ({user, isAppFirstLaunched, setIsAppFirstLaunched}) => {
   return (
     <AuthProvider initialValue={user}>
-      <Routes isAppFirstLaunched={isAppFirstLaunched}/>
+      <Routes isAppFirstLaunched={isAppFirstLaunched} setIsAppFirstLaunched={setIsAppFirstLaunched}/>
     </AuthProvider>
   );
 }

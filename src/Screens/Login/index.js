@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback, Platform} from 'react-native';
+import {View, TouchableWithoutFeedback, Platform} from 'react-native';
 import {Button, Input, Text, Icon, Spinner, withStyles, useTheme} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 import {ImageOverlay} from '../../Shared/image-overlay.component';
@@ -61,6 +61,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
   return (
     <KeyboardAvoidingView>
+      <StatusBar style="light" />
       <ImageOverlay
         style={styles.container}
         source={loginImage}

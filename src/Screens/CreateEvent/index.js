@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Layout, ViewPager, withStyles} from "@ui-kitten/components";
-import {StatusBarBackground} from "../../Shared/StatusBarBackground";
 import step1 from './../../../assets/images/steps/step1.png';
 import step2 from './../../../assets/images/steps/step2.png';
 import step3 from './../../../assets/images/steps/step3.png';
@@ -22,6 +21,8 @@ import {addDays} from "date-fns";
 import {useBackButtonAction} from "../../hooks/useBackButtonAction";
 import {Step6} from "./components/Step6";
 import {SeAnimation} from "../../Shared/SeAnimation";
+import {StatusBar} from "expo-status-bar";
+import Constants from "expo-constants";
 
 const {height} = Dimensions.get('window');
 
@@ -67,8 +68,7 @@ const CreateEventScreen = ({navigation, eva}) => {
 
   return (
     <>
-      <StatusBarBackground/>
-      <Layout level='2' style={{backgroundColor: 'white'}}>
+      <StatusBar style="light" />
         <ViewPager
           selectedIndex={selectedIndex}
           onSelect={index => setSelectedIndex(index)}
@@ -179,7 +179,6 @@ const CreateEventScreen = ({navigation, eva}) => {
           />
         </TabContainer>
         </ViewPager>
-      </Layout>
     </>
   );
 };

@@ -7,7 +7,7 @@ export const StatusBarBackground = (props) =>
 
 const styles = StyleSheet.create({
   statusBarBackground: {
-    height: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight ,
   }
 
 })

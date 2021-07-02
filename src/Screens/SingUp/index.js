@@ -78,6 +78,7 @@ export const SingUp = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView>
+      <StatusBar style="light" />
       <ImageOverlay
         style={styles.container}
         source={require('../../../assets/images/register.jpg')}>

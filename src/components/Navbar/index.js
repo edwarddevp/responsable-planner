@@ -1,11 +1,13 @@
 import React from "react";
 import {TopNavigation, Divider, withStyles, Text} from "@ui-kitten/components";
+import Constants from "expo-constants";
 
 const NavbarComponent = ({ renderLeftActions, renderRightActions, title, eva }) => {
   const styles = eva?.style;
   return (
     <>
       <TopNavigation
+        style={{ paddingTop: Constants.statusBarHeight * 1.3}}
         title={(TextProps) => <Text style={styles?.title} category='h2'>{title}</Text>}
         // subtitle="Subtitle"
         accessoryLeft={renderLeftActions || undefined}

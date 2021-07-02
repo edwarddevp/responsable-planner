@@ -1,21 +1,17 @@
 import React, {useContext} from "react";
-import {SafeAreaView} from "react-native";
 import {Navbar} from "../../components/Navbar";
 import {TopNavigationAction} from "@ui-kitten/components";
-import {useStatusBarColor} from "../../hooks/useStatusBarColor";
 import {AuthContext} from "../../Navigation/AuthProvider";
-import {StatusBarBackground} from "../../Shared/StatusBarBackground";
-import {MenuOutlineIcon, BackIcon, LogoutIcon} from "../../Shared/icons";
-
+import {BackIcon, LogoutIcon} from "../../Shared/icons";
+import {View} from "react-native";
+import { StatusBar } from 'expo-status-bar';
 
 export const MainLayout = ({children, backButton, backButtonAction, navigation, title}) => {
-  // const themeContext = React.useContext(ThemeContext);
-  useStatusBarColor()
   const {logout} = useContext(AuthContext);
 
   return (
-    <SafeAreaView style={{flex: 1,}}>
-      <StatusBarBackground/>
+    <View style={{flex: 1,}}>
+      <StatusBar style="light" />
       <Navbar
         title={title || 'MyApp'}
         renderLeftActions={() =>
@@ -32,6 +28,6 @@ export const MainLayout = ({children, backButton, backButtonAction, navigation, 
       />
 
       {children}
-    </SafeAreaView>
+    </View>
   );
 };

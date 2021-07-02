@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, SafeAreaView} from 'react-native';
 
 import Onboarding from 'react-native-onboarding-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PageOne from "./components/PageOne";
 import PageTwo from "./components/PageTwo";
 import PageThree from "./components/PageThree";
+import {StatusBar} from "expo-status-bar";
 
 const Dots = ({selected}) => {
   let backgroundColor;
@@ -51,45 +52,50 @@ const Done = ({...props}) => (
   </TouchableOpacity>
 );
 
-export const OnBoardingScreen = ({navigation}) => {
+export const OnBoardingScreen = ({navigation, setIsAppFirstLaunched}) => {
   const onDone = () => {
+    setIsAppFirstLaunched(false)
     AsyncStorage.setItem('alreadyLaunched', 'true');
     navigation.replace("Login")
   }
 
   const onSkip = () => {
+    setIsAppFirstLaunched(false)
     AsyncStorage.setItem('alreadyLaunched', 'true');
     navigation.replace("Login")
   }
   return (
-    <Onboarding
-      SkipButtonComponent={Skip}
-      NextButtonComponent={Next}
-      DoneButtonComponent={Done}
-      DotComponent={Dots}
-      onSkip={onSkip}
-      onDone={onDone}
-      pages={[
-        {
-          backgroundColor: '#D8B668',
-          image: <PageOne width={300} height={300} />,
-          title: 'Crea tu evento',
-          subtitle: 'Una manera sencilla de administrar y hacer seguro tu evento',
-        },
-        {
-          backgroundColor: '#EBD18A',
-          image: <PageTwo width={300} height={300} />,
-          title: 'Protegelo contra el covid-19',
-          subtitle: 'Te ayudamos a cumplir con las medidas de seguridad, necesarias para hacer tu evento seguro',
-        },
-        {
-          backgroundColor: '#D8B668',
-          image: <PageThree width={300} height={300} />,
-          title: '¡Empieza ya!',
-          subtitle: "Crea un evento y transformalo en una experiencia segura para todos",
-        },
-      ]}
-    />
+    <SafeAreaView style={{flex: 1,}}>
+      <StatusBar style="light" />
+      <Onboarding
+        SkipButtonComponent={Skip}
+        NextButtonComponent={Next}
+        DoneButtonComponent={Done}
+        DotComponent={Dots}
+        onSkip={onSkip}
+        onDone={onDone}
+        pages={[
+          {
+            backgroundColor: '#D8B668',
+            image: <PageOne width={300} height={300}/>,
+            title: 'Crea tu evento',
+            subtitle: 'Una manera sencilla de administrar y hacer seguro tu evento',
+          },
+          {
+            backgroundColor: '#EBD18A',
+            image: <PageTwo width={300} height={300}/>,
+            title: 'Protegelo contra el covid-19',
+            subtitle: 'Te ayudamos a cumplir con las medidas de seguridad, necesarias para hacer tu evento seguro',
+          },
+          {
+            backgroundColor: '#D8B668',
+            image: <PageThree width={300} height={300}/>,
+            title: '¡Empieza ya!',
+            subtitle: "Crea un evento y transformalo en una experiencia segura para todos",
+          },
+        ]}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  img:{
+  img: {
     width: 50,
     height: 50
   }
