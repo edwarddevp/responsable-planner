@@ -7,7 +7,7 @@ import Toast from "react-native-toast-message";
 export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => {
   const [response, setResponse] = useState({})
   const [loading, setLoading] = useState(!skip)
-  const [error, setError] = useState({})
+  const [error, setError] = useState("")
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -53,13 +53,15 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
 
       if (json?.code === 401 || json?.code === 403) {
         authContext && await authContext?.logout()
+        setError(json?.message)
         Toast.show({
           type: 'error',
-          text1: 'Authentication error, please sign in'
+          text1: `Error de autenticación`
         });
       }
 
       if (json?.code === 500) {
+        setError(json?.message)
         console.log('%c json', 'background: #222; color: #bada55', json)
         if (json?.message) {
           Toast.show({

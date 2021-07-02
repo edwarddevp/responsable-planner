@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, View} from "react-native";
 import {Layout, withStyles, Text, Radio} from "@ui-kitten/components";
-import {format} from 'date-fns'
-import {DarkerImageBackground} from "../../../../Shared/DarkerImageBackground";
-import {CheckmarkCircleOutline, ForwardIcon, TrashOutline} from "../../../../Shared/icons";
-import {SeAlert} from "../../../../Shared/SeAlert";
-import {useApiRequest} from "../../../../hooks/useApiRequest";
-import {EVENTS_EVENTID_SECURITYMEASURES_ID, EVENTS_EVENTID_TASKS_ID} from "../../../../lib/apiRoutes";
+import {CheckmarkCircleOutline} from "../../../../Shared/icons";
 import {useDisclosure} from "../../../../hooks/useDisclosure";
 import {EventSecurityMeasuresItemModal} from "../EventSecurityMeasuresModal";
 

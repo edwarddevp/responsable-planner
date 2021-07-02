@@ -1,17 +1,15 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Navbar} from "../../components/Navbar";
 import {TopNavigationAction} from "@ui-kitten/components";
-import {AuthContext} from "../../Navigation/AuthProvider";
-import {BackIcon, LogoutIcon} from "../../Shared/icons";
+import {BackIcon} from "../../Shared/icons";
 import {View} from "react-native";
-import { StatusBar } from 'expo-status-bar';
+import {StatusBar} from 'expo-status-bar';
+import {MenuNavbar} from "./accessories/MenuNavbar";
 
-export const MainLayout = ({children, backButton, backButtonAction, navigation, title}) => {
-  const {logout} = useContext(AuthContext);
-
+export const MainLayout = ({children, backButton, backButtonAction, navigation, title, event}) => {
   return (
     <View style={{flex: 1,}}>
-      <StatusBar style="light" />
+      <StatusBar style="light"/>
       <Navbar
         title={title || 'MyApp'}
         renderLeftActions={() =>
@@ -19,14 +17,8 @@ export const MainLayout = ({children, backButton, backButtonAction, navigation, 
             <TopNavigationAction icon={BackIcon} onPress={backButtonAction || navigation?.goBack}/> :
             null
         }
-        renderRightActions={() => (
-          <React.Fragment>
-            {/*<TopNavigationAction icon={EditIcon}/>*/}
-            <TopNavigationAction icon={LogoutIcon} onPress={logout}/>
-          </React.Fragment>
-        )}
+        renderRightActions={()=><MenuNavbar event={event}/>}
       />
-
       {children}
     </View>
   );

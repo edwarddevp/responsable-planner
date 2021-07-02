@@ -2,10 +2,10 @@ import React from 'react';
 import {Text, withStyles} from "@ui-kitten/components";
 import {Image, Linking, View} from "react-native";
 
-const SeImageWithCaptionComponent = ({eva, source, width, height, caption, captionLink, style, ...rest}) => {
+const SeImageWithCaptionComponent = ({eva, source, width, height, caption, captionLink, style, containerStyles, ...rest}) => {
   const {style:styles, theme} = eva
 
-  return <View style={styles?.container}>
+  return <View style={{...styles?.container, ...containerStyles}}>
     <Image
       source={source}
       style={style || styles?.img(width,height)}

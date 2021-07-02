@@ -75,8 +75,9 @@ export const useCreateEventSlider = ({reset, navigation}) => {
     setSelectedIndex(index => index + 1)
   }
 
-  const previousPage = () => {
+  const previousPage = (fromButton) => {
     if (selectedIndex === 0) {
+      fromButton && navigation && navigation?.goBack()
       return false
     } else {
       setSelectedIndex(selectedIndex - 1)

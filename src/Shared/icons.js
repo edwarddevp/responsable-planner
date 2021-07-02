@@ -48,3 +48,5 @@ export const ArrowDown = (props) => <Icon {...props} name="arrow-ios-downward-ou
 export const CheckCircle = (props) => <Icon {...props} name="checkmark-circle-2" />;
 
 export const ArrowDownward = (props) => <Icon {...props} name="arrow-downward" />;
+
+export const ShareOutline = (props) => <Icon {...props} name="share-outline" />;

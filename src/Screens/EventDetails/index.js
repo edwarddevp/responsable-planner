@@ -12,15 +12,17 @@ const {height} = Dimensions.get('window');
 const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
   const {style: styles} = eva;
   const {eventId, refresh} = route?.params || {};
-  const [event, loading, getEvent] = useGetEventDetails(eventId, refresh)
+  const [event, loading, getEvent, error] = useGetEventDetails(eventId, refresh)
 
   return (
-    <MainLayout navigation={navigation} title='Safe Event Planner'>
+    <MainLayout navigation={navigation} title='Safe Event Planner' event={(loading || error)? false : event}>
       <Layout style={styles?.container} level='3'>
         {
           loading ?
             <SeAnimation src={require('../../../assets/animations/loading.json')} /> :
-            <ScrollView style={styles?.scrollView}>
+            error?
+              <SeAnimation src={require('../../../assets/animations/empty-file.json')} /> :
+              <ScrollView style={styles?.scrollView}>
               <BackgroundImage
                 event={event}
               />

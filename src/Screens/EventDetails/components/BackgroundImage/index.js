@@ -45,7 +45,6 @@ export const BackgroundImage = withStyles(BackgroundImageComponent, (theme) => (
   },
   centerImg: {
     flex: 2,
-    flexDirection: 'row',
-    paddingHorizontal: 16
+    paddingHorizontal: 32
   },
 }));

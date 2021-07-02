@@ -3,7 +3,7 @@ import {useApiRequest} from "./useApiRequest";
 import {EVENTS_ID} from "../lib/apiRoutes";
 
 export const useGetEventDetails = (eventId, refresh) => {
-  const {data, call: getEvent, loading} = useApiRequest(EVENTS_ID(eventId))
+  const {data, call: getEvent, loading, error} = useApiRequest(EVENTS_ID(eventId))
 
   useEffect(() => {
     getEvent()
@@ -12,6 +12,7 @@ export const useGetEventDetails = (eventId, refresh) => {
   return [
     data?.data?.event,
     loading,
-    getEvent
+    getEvent,
+    error
   ]
 };

@@ -49,8 +49,8 @@ export const SingUp = ({navigation}) => {
     if (response?.success) {
       navigation && navigation.navigate('Login');
       Toast.show({
-        text1: `User registered succesfully`,
-        text2: 'Please sign in to continue'
+        text1: `Usuario registrado exitosamente`,
+        text2: 'por favor, inicie sessión'
       });
     } else {
       setLoading(false);

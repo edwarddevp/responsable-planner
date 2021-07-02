@@ -2,7 +2,7 @@ import React from "react";
 import {TopNavigation, Divider, withStyles, Text} from "@ui-kitten/components";
 import Constants from "expo-constants";
 
-const NavbarComponent = ({ renderLeftActions, renderRightActions, title, eva }) => {
+const NavbarComponent = ({ renderLeftActions, renderRightActions, title, event, eva }) => {
   const styles = eva?.style;
   return (
     <>

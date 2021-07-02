@@ -23,7 +23,7 @@ const StepContainerComponent = (
   return <>
     <View style={styles?.containerTitle}>
       <View style={styles?.backButtonTitle}>
-        <BackIcon onPress={previousPage} fill='white' style={styles?.backIcon}/>
+        <BackIcon onPress={() => previousPage(true)} fill='white' style={styles?.backIcon}/>
         <Text style={styles?.h1} numberOfLines={2}>{title}</Text>
         <View style={styles?.backIcon}/>
       </View>
