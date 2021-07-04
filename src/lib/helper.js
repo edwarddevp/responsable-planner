@@ -24,7 +24,7 @@ export const getSecurityColorLevel = (value) => value >= 80 ?
 
 export const getImageSecurityCredits = (value) =>
   value === 1 ? {
-      caption: 's',
+      caption: '',
       captionLink: ''
     } :
     value === 2 ? {

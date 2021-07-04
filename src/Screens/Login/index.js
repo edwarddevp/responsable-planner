@@ -41,11 +41,18 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
     if (!response?.success) {
       setLoading(false);
-      Toast.show({
-        text1:`Error de conexion`,
-        text2:`inténtelo de nuevo más tarde`,
-        type:'error'
-    });
+      if(response?.errors?.error?.[0]){
+        Toast.show({
+          text1:response?.errors?.error?.[0],
+          type:'error'
+        });
+      } else {
+        Toast.show({
+          text1:`Error de conexion`,
+          text2:`inténtelo de nuevo más tarde`,
+          type:'error'
+        });
+      }
     }
   };
 

@@ -19,6 +19,8 @@ const SecurityMeasureSelectComponent = ({eva, securityMeasure, even, getValues, 
 
   const {caption, captionLink} = getImageSecurityCredits(securityMeasure?.id)
 
+  //Img to check
+
   return <Pressable
     onPress={onPress}
     style={({pressed}) => [
@@ -31,7 +33,7 @@ const SecurityMeasureSelectComponent = ({eva, securityMeasure, even, getValues, 
     ]}>
     {
       !even ? <>
-        <Image style={styles?.img} source={require('./../../../../../../../assets/images/covid/covid-3.jpg')}/>
+        <Image style={styles?.img} source={{uri: securityMeasure?.img}}/>
         <View style={styles?.actionContainer}>
           <View>
             <Text style={styles?.name}>{securityMeasure?.name}</Text>
@@ -62,7 +64,7 @@ const SecurityMeasureSelectComponent = ({eva, securityMeasure, even, getValues, 
             {caption}
           </Text>:<></>}
         </View>
-        <Image style={styles?.img} source={require('./../../../../../../../assets/images/covid/covid-7.jpg')}/>
+        <Image style={styles?.img} source={{uri: securityMeasure?.img}}/>
       </>
     }
     <View style={styles?.checkContainer}>
@@ -96,7 +98,8 @@ export const SecurityMeasureSelect = withStyles(SecurityMeasureSelectComponent, 
   img: {
     width: '100%',
     height: '100%',
-    flex: 1
+    flex: 1,
+    backgroundColor: theme['color-basic-800']
   },
   actionContainer: {
     flex: 1,

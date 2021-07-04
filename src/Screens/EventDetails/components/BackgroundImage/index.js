@@ -6,9 +6,9 @@ import {EventTime} from "../EventTime";
 
 const BackgroundImageComponent = ({eva, event, eventName}) => {
   const styles = eva?.style
-
+  //Img to check
   return <DarkerImageBackground
-    source={{uri: "https://reactjs.org/logo-og.png"}}
+    source={{uri: event?.categoryImg}}
     contentContainerStyles={styles?.eventImgContainer}
     style={styles?.eventImg}
     overlayColor='rgba(0, 0, 0, .8)'

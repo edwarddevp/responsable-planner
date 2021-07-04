@@ -11,7 +11,7 @@ const EventSecurityMeasuresScreen = ({navigation, eva, route}) => {
   const { eventName, onSubmit, eventList, alert} = useSecurityMeasures(navigation, route?.params || {})
 
   return (
-    <MainLayout navigation={navigation} title={eventName}>
+    <MainLayout navigation={navigation} title={eventName} backButton>
       <Layout style={styles?.bg} level='3'>
         <EventSecurityMeasuresList {...eventList} />
         {

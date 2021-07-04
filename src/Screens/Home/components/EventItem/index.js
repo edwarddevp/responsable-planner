@@ -16,11 +16,13 @@ const EventItemComponent = ({navigation, item, eva}) => {
 
   const securityColor = getSecurityColorLevel(securityValue)
 
+  //Img to check
+
   return <Layout style={styles?.eventItem}>
     <Pressable onPress={navigateToEventDetails}>
       {({pressed}) => (
         <>
-          <DarkerImageBackground source={{uri: "https://reactjs.org/logo-og.png"}} style={styles?.image}>
+          <DarkerImageBackground source={{uri: item?.categoryImg}} style={styles?.image}>
             <View style={styles?.imageContainer(pressed)}>
               <View style={styles?.topItem}>
                 {/*<Text style={styles?.textColor}>{name}</Text>*/}

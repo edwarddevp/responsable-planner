@@ -12,6 +12,8 @@ const EventSecurityMeasuresItemModalComponent = ({isOpen, onClose, securityMeasu
 
   const {caption, captionLink} = getImageSecurityCredits(securityMeasure?.id)
 
+  //Img to check
+
   return <SeModal isOpen={isOpen} onClose={onClose}>
     <Text style={styles?.title}>
       {securityMeasure?.name}
@@ -19,7 +21,7 @@ const EventSecurityMeasuresItemModalComponent = ({isOpen, onClose, securityMeasu
     <SeSeparator value={2}/>
     <SeImageWithCaption
       style={styles.tinyLogo}
-      source={require('../../../../../assets/images/covid/covid-3.jpg')}
+      source={{uri: securityMeasure?.img}}
       caption={caption}
       captionLink={captionLink}
     />

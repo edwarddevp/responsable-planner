@@ -143,6 +143,7 @@ const CreateEventScreen = ({navigation, eva}) => {
               watch={watch}
               setValue={setValue}
               loading={loading}
+              securityMeasure={securityMeasures?.filter(measure=> measure?.id === 6)?.[0]}
             />
           </TabContainer>
           <TabContainer style={styles.tab} source={step6}>

@@ -1,13 +1,12 @@
 import React from 'react';
 import {Text, withStyles} from "@ui-kitten/components";
-import {Image, ImageBackground, Pressable} from "react-native";
+import {ImageBackground, Pressable} from "react-native";
 import {SeSeparator} from "../../../../../../Shared/Separator";
 import {CheckCircle} from "../../../../../../Shared/icons";
-import {BackgroundImage} from "../../../../../EventDetails/components/BackgroundImage";
 
 const CategoryItemComponent = ({eva, category, onChange, selected}) => {
   const {style: styles, theme} = eva
-
+//Img to check
   return <>
     <Pressable
       onPress={() => {
@@ -72,6 +71,7 @@ export const CategoryItem = withStyles(CategoryItemComponent, (theme) => ({
   },
   categoryImage: {
     height: 120,
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: theme['color-basic-800']
   },
 }));

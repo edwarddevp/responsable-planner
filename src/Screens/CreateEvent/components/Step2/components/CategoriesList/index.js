@@ -19,7 +19,7 @@ export const CategoriesListComponent = ({eva, categories, style, control, errors
               data={categories}
               renderItem={({item}) =>
                 <CategoryItem
-                  category={{...item, img: "https://reactjs.org/logo-og.png"}}
+                  category={item}
                   onChange={onChange}
                   selected={value === item?.id}
                 />

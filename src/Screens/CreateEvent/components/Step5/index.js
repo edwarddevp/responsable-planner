@@ -13,7 +13,8 @@ const Step5Component = (
     previousPage,
     getValues,
     setValue,
-    loading
+    loading,
+    securityMeasure
   }) => {
   const {style: styles, theme} = eva
 
@@ -52,7 +53,7 @@ const Step5Component = (
     <SeSeparator value={2}/>
     <View style={styles?.containerForm}>
       <SeImageWithCaption
-        source={require('./../../../../../assets/images/covid/covid-6.jpg')}
+        source={{uri: securityMeasure?.img}}
         {...getImageSecurityCredits(2)}
       />
       <SeSeparator value={2}/>

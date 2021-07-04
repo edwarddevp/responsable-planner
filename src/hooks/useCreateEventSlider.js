@@ -11,13 +11,23 @@ export const useCreateEventSlider = ({reset, navigation}) => {
     skip: true,
     method: 'POST'
   })
-  const {data: categories, loading: loadingCategories} = useApiRequest(CATEGORIES)
-  const {data: securityMeasures, loading: loadingSecurityMeasures} = useApiRequest(SECURITYMEASURES)
+  const {data: categories, loading: loadingCategories, error: errorCategories} = useApiRequest(CATEGORIES)
+  const {data: securityMeasures, loading: loadingSecurityMeasures, error: errorSecurityMeasures} = useApiRequest(SECURITYMEASURES)
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
   // check if screen is focused
   const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if(errorCategories || errorSecurityMeasures) {
+      Toast.show({
+        text1: `Error, please try again later`,
+        type: 'error'
+      });
+      navigation && navigation.navigate('HOME');
+    }
+  }, [errorCategories,errorSecurityMeasures]);
 
   useEffect(() => {
     setSelectedIndex(0)

@@ -14,7 +14,7 @@ const TasksScreen = ({route, navigation, eva}) => {
   const styles = eva?.style;
   const {eventId, eventName} = route?.params || {};
   const {data, call: getTasks, loading} = useApiRequest(EVENTS_EVENTID_TASKS(eventId))
-  useScreenFocused(getTasks)
+  useScreenFocused(() => getTasks())
 
   const {isOpen, onOpen, onClose, itemToEdit: taskToEdit, setItemToEdit: setTaskToEdit} = useHandleCUModal()
 

@@ -52,21 +52,29 @@ const Done = ({...props}) => (
   </TouchableOpacity>
 );
 
-export const OnBoardingScreen = ({navigation, setIsAppFirstLaunched}) => {
+export const OnBoardingScreen = ({navigation, setIsAppFirstLaunched, isRepeat}) => {
   const onDone = () => {
-    setIsAppFirstLaunched(false)
-    AsyncStorage.setItem('alreadyLaunched', 'true');
-    navigation.replace("Login")
+    if (isRepeat) {
+      navigation.navigate("USER_SETTINGS")
+    } else {
+      setIsAppFirstLaunched(false)
+      AsyncStorage.setItem('alreadyLaunched', 'true');
+      navigation.replace("Login")
+    }
   }
 
   const onSkip = () => {
-    setIsAppFirstLaunched(false)
-    AsyncStorage.setItem('alreadyLaunched', 'true');
-    navigation.replace("Login")
+    if (isRepeat) {
+      navigation.navigate("USER_SETTINGS")
+    } else {
+      setIsAppFirstLaunched(false)
+      AsyncStorage.setItem('alreadyLaunched', 'true');
+      navigation.replace("Login")
+    }
   }
   return (
     <SafeAreaView style={{flex: 1,}}>
-      <StatusBar style="light" />
+      <StatusBar style="light"/>
       <Onboarding
         SkipButtonComponent={Skip}
         NextButtonComponent={Next}

@@ -30,6 +30,7 @@ const SeAlertComponent = ({eva, isOpen, onCancel, onConfirm, message, title, con
     confirmButtonColor={confirmButtonColor || "#DD6B55"}
     onCancelPressed={onCancel}
     onConfirmPressed={onConfirm}
+    onDismiss={onCancel}
   />
 }
 export const SeAlert = withStyles(SeAlertComponent, (theme) => ({

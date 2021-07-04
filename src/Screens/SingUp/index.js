@@ -14,13 +14,12 @@ import {EmailIcon, PersonIcon} from '../../Shared/icons';
 import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
 import {Controller, useForm} from "react-hook-form";
-import {authBgImage, emailRegex} from "../../lib/constants";
+import {emailRegex} from "../../lib/constants";
 import Toast from "react-native-toast-message";
 
 export const SingUp = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const image = {uri: authBgImage};
   const {register} = useContext(AuthContext);
 
   const styles = useStyleSheet(themedStyles);

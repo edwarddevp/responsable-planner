@@ -62,7 +62,7 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
 
       if (json?.code === 500) {
         setError(json?.message)
-        console.log('%c json', 'background: #222; color: #bada55', json)
+        // console.log('%c json', 'background: #222; color: #bada55', json)
         if (json?.message) {
           Toast.show({
             type: 'error',
@@ -83,7 +83,7 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
     } catch (e) {
       setError(e)
       setLoading(false)
-      console.log('%c e', 'background: #222; color: #bada55', e)
+      // console.log('%c e', 'background: #222; color: #bada55', path +" ==== " +e)
     }
   }
 

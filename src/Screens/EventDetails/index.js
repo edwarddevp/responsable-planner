@@ -15,7 +15,7 @@ const EventDetailsDashboardScreen = ({route, navigation, eva}) => {
   const [event, loading, getEvent, error] = useGetEventDetails(eventId, refresh)
 
   return (
-    <MainLayout navigation={navigation} title='Safe Event Planner' event={(loading || error)? false : event}>
+    <MainLayout navigation={navigation} title='Safe Event Planner' event={(loading || error)? false : event} backButton>
       <Layout style={styles?.container} level='3'>
         {
           loading ?

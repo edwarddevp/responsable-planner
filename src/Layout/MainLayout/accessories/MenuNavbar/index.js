@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {format} from "date-fns";
 import {MenuItem, OverflowMenu, Text, TopNavigationAction, withStyles} from "@ui-kitten/components";
-import {InfoIcon, LogoutIcon, MenuIcon, ShareOutline} from "../../../../Shared/icons";
+import {InfoIcon, LogoutIcon, MenuIcon, SettingsOutline, ShareOutline} from "../../../../Shared/icons";
 import {AuthContext} from "../../../../Navigation/AuthProvider";
 import {SeSeparator} from "../../../../Shared/Separator";
 import {SeImageWithCaption} from "../../../../Shared/SeImageWithCaption";
@@ -11,7 +11,7 @@ import {SeModal} from "../../../../Shared/SeModal";
 import {useDisclosure} from "../../../../hooks/useDisclosure";
 import {SeAlert} from "../../../../Shared/SeAlert";
 
-const MenuNavbarComponent = ({eva, event}) => {
+const MenuNavbarComponent = ({eva, event, navigation}) => {
   const {style: styles, theme} = eva
   const [menuVisible, setMenuVisible] = React.useState(false);
   const {logout} = useContext(AuthContext);
@@ -58,9 +58,11 @@ Lo estaremos esperando a nuestro ${event?.categoyName}, gracias`
     <OverflowMenu
       anchor={renderMenuAction}
       visible={menuVisible}
-      onBackdropPress={toggleMenu}>
-      <MenuItem accessoryLeft={InfoIcon} title='About' onPress={aboutModal?.onOpen}/>
-      <MenuItem accessoryLeft={LogoutIcon} title='Logout' onPress={alertLogOut?.onOpen}/>
+      onBackdropPress={toggleMenu}
+    >
+      <MenuItem accessoryLeft={InfoIcon} title='Nosotros' onPress={aboutModal?.onOpen}/>
+      <MenuItem accessoryLeft={SettingsOutline} title='Opciones' onPress={()=>navigation.navigate('USER_SETTINGS')}/>
+      {/*<MenuItem accessoryLeft={LogoutIcon} title='Salir' onPress={alertLogOut?.onOpen}/>*/}
     </OverflowMenu>
 
     <SeModal isOpen={aboutModal?.isOpen} onClose={aboutModal?.onClose}>

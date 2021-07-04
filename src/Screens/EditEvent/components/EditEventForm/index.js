@@ -4,14 +4,12 @@ import {useForm} from "react-hook-form";
 import {SeInput} from "../../../../Shared/SeFields/SeInput";
 import {FooterButtons} from "../../../CreateEvent/components/FooterButtons";
 import {SeSeparator} from "../../../../Shared/Separator";
-import {Dimensions, ScrollView, View} from "react-native";
+import {ScrollView, View} from "react-native";
 import {useApiRequest} from "../../../../hooks/useApiRequest";
 import {CATEGORIES, EVENTS_ID} from "../../../../lib/apiRoutes";
 import {SeInputDate} from "../../../../Shared/SeFields/SeInputDate";
 import {compareAsc} from "date-fns";
 import {SeSelect} from "../../../../Shared/SeFields/SeSelect";
-
-const {height} = Dimensions.get('window');
 
 const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation, getEvent}) => {
   const styles = eva?.style
@@ -35,7 +33,6 @@ const EditEventFormComponent = ({eva, eventId, event, selectedIndex, navigation,
 
   useEffect(() => {
     if (event?.id && selectedIndex === 1) {
-      console.log('%c event', 'background: #222; color: #bada55',event)
       reset({
         ...event,
         guestlimit: event?.guestlimit?.toString(),
