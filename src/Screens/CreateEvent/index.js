@@ -22,7 +22,6 @@ import {useBackButtonAction} from "../../hooks/useBackButtonAction";
 import {Step6} from "./components/Step6";
 import {SeAnimation} from "../../Shared/SeAnimation";
 import {StatusBar} from "expo-status-bar";
-import Constants from "expo-constants";
 
 const {height} = Dimensions.get('window');
 
@@ -64,105 +63,109 @@ const CreateEventScreen = ({navigation, eva}) => {
 
   const {categories, loadingCategories, securityMeasures, loadingSecurityMeasures} = data
 
-  const securityMeasuresFiltered = securityMeasures?.filter(item=> !(item?.id === 2 || item?.id === 6))
+  const securityMeasuresFiltered = securityMeasures?.filter(item => !(item?.id === 2 || item?.id === 6))
+
+  const shouldLoadComponent = (index) =>
+    index === selectedIndex || selectedIndex === (index - 1) || selectedIndex === (index + 1);
 
   return (
     <>
-      <StatusBar style="light" />
-        <ViewPager
-          selectedIndex={selectedIndex}
-          onSelect={index => setSelectedIndex(index)}
-          swipeEnabled={false}
-        >
-          <TabContainer style={styles.tab} source={step1}>
-            {
-              loadingCategories || loadingSecurityMeasures ?
-                <SeAnimation src={require('../../../assets/animations/loading.json')}/> :
-                <Step1
-                  control={control}
-                  trigger={trigger}
-                  errors={errors}
-                  previousPage={previousPage}
-                  nextPage={nextPage}
-                />
-            }
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step2}>
-            <Step2
-              control={control}
-              trigger={trigger}
-              errors={errors}
-              nextPage={nextPage}
-              previousPage={previousPage}
-              navigation={navigation}
-              categories={categories}
-              loadingCategories={loadingCategories}
-              getValues={getValues}
-            />
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step3}>
-            <Step3
-              control={control}
-              trigger={trigger}
-              errors={errors}
-              nextPage={nextPage}
-              previousPage={previousPage}
-              navigation={navigation}
-              categories={categories}
-              getValues={getValues}
-              watch={watch}
-              setValue={setValue}
-              loading={loading}
-            />
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step4}>
-            <Step4
-              control={control}
-              trigger={trigger}
-              errors={errors}
-              nextPage={nextPage}
-              previousPage={previousPage}
-              navigation={navigation}
-              categories={categories}
-              getValues={getValues}
-              watch={watch}
-              setValue={setValue}
-              loading={loading}
-            />
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step5}>
-            <Step5
-              control={control}
-              trigger={trigger}
-              errors={errors}
-              nextPage={nextPage}
-              previousPage={previousPage}
-              navigation={navigation}
-              categories={categories}
-              getValues={getValues}
-              watch={watch}
-              setValue={setValue}
-              loading={loading}
-              securityMeasure={securityMeasures?.filter(measure=> measure?.id === 6)?.[0]}
-            />
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step6}>
-            <Step6
-              control={control}
-              trigger={trigger}
-              errors={errors}
-              nextPage={nextPage}
-              previousPage={previousPage}
-              navigation={navigation}
-              categories={categories}
-              getValues={getValues}
-              watch={watch}
-              setValue={setValue}
-              loading={loading}
-              securityMeasures={securityMeasuresFiltered?.slice(0,3)}
-            />
-          </TabContainer>
-          <TabContainer style={styles.tab} source={step7}>
+      <StatusBar style="light"/>
+      <ViewPager
+        selectedIndex={selectedIndex}
+        onSelect={index => setSelectedIndex(index)}
+        swipeEnabled={false}
+        shouldLoadComponent={shouldLoadComponent}
+      >
+        <TabContainer style={styles.tab} source={step1}>
+          {
+            loadingCategories || loadingSecurityMeasures ?
+              <SeAnimation src={require('../../../assets/animations/loading.json')}/> :
+              <Step1
+                control={control}
+                trigger={trigger}
+                errors={errors}
+                previousPage={previousPage}
+                nextPage={nextPage}
+              />
+          }
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step2}>
+          <Step2
+            control={control}
+            trigger={trigger}
+            errors={errors}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            navigation={navigation}
+            categories={categories}
+            loadingCategories={loadingCategories}
+            getValues={getValues}
+          />
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step3}>
+          <Step3
+            control={control}
+            trigger={trigger}
+            errors={errors}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            navigation={navigation}
+            categories={categories}
+            getValues={getValues}
+            watch={watch}
+            setValue={setValue}
+            loading={loading}
+          />
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step4}>
+          <Step4
+            control={control}
+            trigger={trigger}
+            errors={errors}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            navigation={navigation}
+            categories={categories}
+            getValues={getValues}
+            watch={watch}
+            setValue={setValue}
+            loading={loading}
+          />
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step5}>
+          <Step5
+            control={control}
+            trigger={trigger}
+            errors={errors}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            navigation={navigation}
+            categories={categories}
+            getValues={getValues}
+            watch={watch}
+            setValue={setValue}
+            loading={loading}
+            securityMeasure={securityMeasures?.filter(measure => measure?.id === 6)?.[0]}
+          />
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step6}>
+          <Step6
+            control={control}
+            trigger={trigger}
+            errors={errors}
+            nextPage={nextPage}
+            previousPage={previousPage}
+            navigation={navigation}
+            categories={categories}
+            getValues={getValues}
+            watch={watch}
+            setValue={setValue}
+            loading={loading}
+            securityMeasures={securityMeasuresFiltered?.slice(0, 3)}
+          />
+        </TabContainer>
+        <TabContainer style={styles.tab} source={step7}>
           <Step6
             control={control}
             trigger={trigger}
@@ -175,11 +178,11 @@ const CreateEventScreen = ({navigation, eva}) => {
             watch={watch}
             setValue={setValue}
             loading={loading}
-            securityMeasures={securityMeasuresFiltered?.slice(3,7)}
+            securityMeasures={securityMeasuresFiltered?.slice(3, 7)}
             confirmButtonText='Guardar Evento'
           />
         </TabContainer>
-        </ViewPager>
+      </ViewPager>
     </>
   );
 };

@@ -41,7 +41,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
     if (!response?.success) {
       setLoading(false);
-      if(response?.errors?.error?.[0]){
+      if(response?.errors?.error?.[0]?.length){
         Toast.show({
           text1:response?.errors?.error?.[0],
           type:'error'
