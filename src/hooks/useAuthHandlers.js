@@ -25,7 +25,6 @@ export const useAuthHandlers = () => {
     } catch (e) {
       setError(e)
       setLoading(false)
-      console.log('%c e', 'background: #222; color: #bada55', e)
     }
   }
 

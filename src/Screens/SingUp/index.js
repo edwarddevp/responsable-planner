@@ -14,13 +14,12 @@ import {EmailIcon, PersonIcon} from '../../Shared/icons';
 import {KeyboardAvoidingView} from '../../Shared/3rd-party';
 import {AuthContext} from '../../Navigation/AuthProvider';
 import {Controller, useForm} from "react-hook-form";
-import {authBgImage, emailRegex} from "../../lib/constants";
+import {emailRegex} from "../../lib/constants";
 import Toast from "react-native-toast-message";
 
 export const SingUp = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const image = {uri: authBgImage};
   const {register} = useContext(AuthContext);
 
   const styles = useStyleSheet(themedStyles);
@@ -49,13 +48,14 @@ export const SingUp = ({navigation}) => {
     if (response?.success) {
       navigation && navigation.navigate('Login');
       Toast.show({
-        text1: `User registered succesfully`,
-        text2: 'Please sign in to continue'
+        text1: `Usuario registrado exitosamente`,
+        text2: 'por favor, inicie sessión'
       });
     } else {
       setLoading(false);
       Toast.show({
-        text1: `Error ${response?.errors?.error?.[0]}`,
+        text1:`Error de conexion`,
+        text2:`inténtelo de nuevo más tarde`,
         type: 'error'
       });
     }
@@ -77,9 +77,10 @@ export const SingUp = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView>
+      <StatusBar style="light" />
       <ImageOverlay
         style={styles.container}
-        source={image}>
+        source={require('../../../assets/images/register.jpg')}>
         <View style={styles.headerContainer}>
           <Text
             category='h1'
@@ -156,7 +157,6 @@ export const SingUp = ({navigation}) => {
         </View>
         <Button
           type='submit'
-          status='success'
           style={styles.signUpButton}
           size='giant'
           onPress={handleSubmit(onSubmit)}

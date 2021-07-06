@@ -1,39 +1,28 @@
-import React, {useContext} from "react";
-import {SafeAreaView} from "react-native";
+import React from "react";
 import {Navbar} from "../../components/Navbar";
-import {TopNavigationAction} from "@ui-kitten/components";
-import {useStatusBarColor} from "../../hooks/useStatusBarColor";
-import {AuthContext} from "../../Navigation/AuthProvider";
-import {StatusBarBackground} from "../../Shared/StatusBarBackground";
-import {MenuOutlineIcon, BackIcon, LogoutIcon} from "../../Shared/icons";
+import {TopNavigationAction, useTheme} from "@ui-kitten/components";
+import {BackIcon} from "../../Shared/icons";
+import {View} from "react-native";
+import {StatusBar} from 'expo-status-bar';
+import {MenuNavbar} from "./accessories/MenuNavbar";
 
-
-export const MainLayout = ({children, backButton, navigation, title}) => {
-  // const themeContext = React.useContext(ThemeContext);
-  useStatusBarColor()
-  const {logout} = useContext(AuthContext);
-
+export const MainLayout = ({children, backButton, backButtonAction, navigation, title, event}) => {
+  const theme = useTheme();
   return (
-    <SafeAreaView style={{flex: 1,}}>
-      <StatusBarBackground/>
+    <View style={{flex: 1,}}>
+      <StatusBar style="light" backgroundColor={theme['color-basic-900']}/>
       <Navbar
         title={title || 'MyApp'}
         renderLeftActions={() =>
-          backButton ? (
-            <TopNavigationAction icon={BackIcon} onPress={navigation?.goBack}/>
-          ) : (
-            <TopNavigationAction icon={MenuOutlineIcon} onPress={navigation?.toggleDrawer}/>
-          )
+          backButton ?
+            <TopNavigationAction icon={BackIcon} onPress={backButtonAction || navigation?.goBack}/> :
+            null
         }
-        renderRightActions={() => (
-          <React.Fragment>
-            {/*<TopNavigationAction icon={EditIcon}/>*/}
-            <TopNavigationAction icon={LogoutIcon} onPress={logout}/>
-          </React.Fragment>
-        )}
+        renderRightActions={()=>
+          <MenuNavbar event={event} navigation={navigation}/>}
+        backButton={backButton}
       />
-
       {children}
-    </SafeAreaView>
+    </View>
   );
 };

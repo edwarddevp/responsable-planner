@@ -15,6 +15,7 @@ export const useAppLoading = () => {
   })
 
   useEffect(() => {
+    // AsyncStorage.setItem('alreadyLaunched', 'false');
     loadingAppData()
   }, []);
 
@@ -61,6 +62,7 @@ export const useAppLoading = () => {
   return [
     loading,
     user,
-    isAppFirstLaunched
+    isAppFirstLaunched,
+    setIsAppFirstLaunched
   ]
 };

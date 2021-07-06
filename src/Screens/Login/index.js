@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback, Platform} from 'react-native';
+import {View, TouchableWithoutFeedback, Platform} from 'react-native';
 import {Button, Input, Text, Icon, Spinner, withStyles, useTheme} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 import {ImageOverlay} from '../../Shared/image-overlay.component';
@@ -41,10 +41,18 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
     if (!response?.success) {
       setLoading(false);
-      Toast.show({
-        text1:`Error ${response?.errors?.error?.[0]}`,
-        type:'error'
-    });
+      if(response?.errors?.error?.[0]?.length){
+        Toast.show({
+          text1:response?.errors?.error?.[0],
+          type:'error'
+        });
+      } else {
+        Toast.show({
+          text1:`Error de conexion`,
+          text2:`inténtelo de nuevo más tarde`,
+          type:'error'
+        });
+      }
     }
   };
 
@@ -60,6 +68,7 @@ const LoginScreenComponent = ({navigation,eva}) => {
 
   return (
     <KeyboardAvoidingView>
+      <StatusBar style="light" />
       <ImageOverlay
         style={styles.container}
         source={loginImage}
@@ -160,7 +169,7 @@ export const LoginScreen = withStyles(LoginScreenComponent, (theme) => ({
     alignItems: 'center',
   },
   textColor: {
-    color: theme['color-primary-500']
+    // color: theme['color-primary-500']
   },
   formContainer: {
     flex: 1,

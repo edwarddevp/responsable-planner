@@ -2,12 +2,13 @@ import React from 'react';
 import {withStyles} from "@ui-kitten/components";
 import {DarkerImageBackground} from "../../../../Shared/DarkerImageBackground";
 import {Dimensions, KeyboardAvoidingView, ScrollView, View} from "react-native";
+import Constants from "expo-constants";
 
 const {height} = Dimensions.get('window');
 
 const TabContainerComponent = ({eva, children, source}) => {
   const styles = eva?.style
-  return <DarkerImageBackground style={styles.darkerImageBackground} source={source}>
+  return <DarkerImageBackground style={styles.darkerImageBackground} source={source} overlayColor='rgba(0, 0, 0, .5)'>
     <KeyboardAvoidingView behavior="height" style={styles?.keyboardAvoidingView}>
       <ScrollView >
         <View style={styles.view}>
@@ -22,12 +23,14 @@ const TabContainerComponent = ({eva, children, source}) => {
 export const TabContainer = withStyles(TabContainerComponent, (theme) => ({
   darkerImageBackground: {
     height: height,
+
   },
   keyboardAvoidingView: {
     flex: 1,
   },
   view: {
-    paddingVertical: 48,
+    paddingVertical: 16,
+    paddingTop: (Constants.statusBarHeight * 1.3) + 16,
     // minHeight: height,
     height: height,
     justifyContent:'space-around',

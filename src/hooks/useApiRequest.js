@@ -7,7 +7,7 @@ import Toast from "react-native-toast-message";
 export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => {
   const [response, setResponse] = useState({})
   const [loading, setLoading] = useState(!skip)
-  const [error, setError] = useState({})
+  const [error, setError] = useState("")
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -25,21 +25,21 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
   }
 
   const getBody = (params) => {
-    return params? {
+    return params ? {
       body: JSON.stringify(params)
     } : {}
   }
 
-  const apiRequest = async (params) => {
+  const apiRequest = async (params, methodConfig = method, addToPatch = '') => {
     try {
       setLoading(true)
 
       const body = getBody(params || paramsData)
 
-      const authorization =  await getToken()
+      const authorization = await getToken()
 
-      const response = await fetch(API_URL + path, {
-        method: method, // *GET, POST, PUT, DELETE, etc.
+      const response = await fetch(API_URL + path + addToPatch, {
+        method: methodConfig, // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
@@ -53,19 +53,37 @@ export const useApiRequest = (path, {method = 'GET', paramsData, skip} = {}) => 
 
       if (json?.code === 401 || json?.code === 403) {
         authContext && await authContext?.logout()
+        setError(json?.message)
         Toast.show({
           type: 'error',
-          text1: 'Authentication error, please sign in'
+          text1: `Error de autenticación`
         });
       }
 
+      if (json?.code === 500) {
+        setError(json?.message)
+        // console.log('%c json', 'background: #222; color: #bada55', json)
+        if (json?.message) {
+          Toast.show({
+            type: 'error',
+            text1: json?.message
+          });
+        } else {
+          Toast.show({
+            text1: `Error de conexion`,
+            text2: `inténtelo de nuevo más tarde`,
+            type: 'error'
+          });
+        }
+
+      }
       setResponse(json)
       setLoading(false)
       return json
     } catch (e) {
       setError(e)
       setLoading(false)
-      console.log('%c e', 'background: #222; color: #bada55', e)
+      // console.log('%c e', 'background: #222; color: #bada55', path +" ==== " +e)
     }
   }
 

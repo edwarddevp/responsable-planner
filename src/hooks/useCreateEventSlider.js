@@ -1,50 +1,82 @@
 import React, {useEffect} from 'react';
 import {useApiRequest} from "./useApiRequest";
-import {CATEGORIES, EVENTS, USERS_BY_TOKEN} from "../lib/apiRoutes";
+import {CATEGORIES, EVENTS, SECURITYMEASURES} from "../lib/apiRoutes";
 import {useIsFocused} from "@react-navigation/native";
 import Toast from "react-native-toast-message";
+import {DEBUG} from "@env"
+import {addDays} from "date-fns";
 
 export const useCreateEventSlider = ({reset, navigation}) => {
   const {call: createEvent} = useApiRequest(EVENTS, {
     skip: true,
     method: 'POST'
   })
-  const {data} = useApiRequest(CATEGORIES)
+  const {data: categories, loading: loadingCategories, error: errorCategories} = useApiRequest(CATEGORIES)
+  const {data: securityMeasures, loading: loadingSecurityMeasures, error: errorSecurityMeasures} = useApiRequest(SECURITYMEASURES)
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [loading, setLoading] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   // check if screen is focused
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    if(errorCategories || errorSecurityMeasures) {
+      Toast.show({
+        text1: `Error, please try again later`,
+        type: 'error'
+      });
+      navigation && navigation.navigate('HOME');
+    }
+  }, [errorCategories,errorSecurityMeasures]);
+
+  useEffect(() => {
     setSelectedIndex(0)
-    reset({
-      name: 'Test 1',
+    setLoading(false)
+    reset(DEBUG ? {
+      name: '',
       description: '',
-      guestlimit: 5,
-      direction: 'Avenida Falsa',
+      guestlimit: "50",
+      direction: '',
       startdate: new Date(),
-      enddate: new Date(),
-      categoryid: 8,
-      // securityMeasureIds: '',
+      enddate: addDays(new Date(), 3),
+      categoryid: undefined,
+      securityMeasureIds: [],
+    } : {
+      name: '',
+      description: '',
+      guestlimit: "50",
+      direction: '',
+      startdate: new Date(),
+      enddate: addDays(new Date(), 3),
+      categoryid: undefined,
+      securityMeasureIds: [],
     })
   }, [isFocused]);
 
   const onSubmit = async (values) => {
     setLoading(true);
-    const response = await createEvent(values);
+    const response = await createEvent({
+      name:values?.name,
+      description:values?.description,
+      guestlimit: parseInt(values?.guestlimit),
+      direction:values?.direction,
+      startdate:values?.startdate,
+      enddate:values?.enddate,
+      categoryid:values?.categoryid,
+      securityMeasureIds:values?.securityMeasureIds,
+    });
 
     if (!response?.success) {
       setLoading(false);
       Toast.show({
-        text1:`Error ${response?.errors?.error?.[0]}`,
-        type:'error'
+        text1: `Error ${response?.errors?.error?.[0]}`,
+        type: 'error'
       });
     } else {
       navigation && navigation.navigate('HOME');
       Toast.show({
-        text1:`Evento Creado`,
-        type:'success'
+        text1: `Evento Creado`,
+        type: 'success'
       });
     }
   };
@@ -53,19 +85,28 @@ export const useCreateEventSlider = ({reset, navigation}) => {
     setSelectedIndex(index => index + 1)
   }
 
-  const previousPage = () => {
-    setSelectedIndex(index => index - 1)
+  const previousPage = (fromButton) => {
+    if (selectedIndex === 0) {
+      fromButton && navigation && navigation?.goBack()
+      return false
+    } else {
+      setSelectedIndex(selectedIndex - 1)
+      return true
+    }
   }
 
   return {
     data: {
-      categories: data?.data?.categories,
+      categories: categories?.data?.categories,
+      loadingCategories,
+      securityMeasures: securityMeasures?.data?.securityMeasures,
+      loadingSecurityMeasures
     },
     nextPage,
     previousPage,
     onSubmit,
     selectedIndex,
     setSelectedIndex,
-    loading,
+    loading
   }
 };

@@ -16,13 +16,9 @@ import {useAppLoading} from "./src/hooks/useAppLoading";
 export default () => {
   LogBox.ignoreLogs(['Remote debugger']);
   LogBox.ignoreLogs(['Reanimated 2']);
-  const [theme, setTheme] = React.useState("dark");
-  const  [loading, user, isAppFirstLaunched] = useAppLoading()
-
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-  };  
+  LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
+  const [loading, user, isAppFirstLaunched, setIsAppFirstLaunched] = useAppLoading()
 
   let [fontsLoaded] = useFonts({
     'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -37,22 +33,21 @@ export default () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack}/>
-      <ThemeContext.Provider value={{theme, toggleTheme}}>
-        <ApplicationProvider
-          {...eva}
-          theme={{
-            ...eva[theme],
-             ...customTheme
-          }}
-          customMapping={mapping}
-        >
-          <Providers
-            user={user}
-            isAppFirstLaunched={isAppFirstLaunched}
-          />
-          <Toast ref={(ref) => Toast.setRef(ref)}/>
-        </ApplicationProvider>
-      </ThemeContext.Provider>
+      <ApplicationProvider
+        {...eva}
+        theme={{
+          ...eva["dark"],
+          ...customTheme
+        }}
+        customMapping={mapping}
+      >
+        <Providers
+          user={user}
+          isAppFirstLaunched={isAppFirstLaunched}
+          setIsAppFirstLaunched={setIsAppFirstLaunched}
+        />
+        <Toast ref={(ref) => Toast.setRef(ref)}/>
+      </ApplicationProvider>
     </>
   );
 };

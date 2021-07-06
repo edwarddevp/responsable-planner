@@ -6,27 +6,37 @@ import {OnBoardingScreen} from '../Screens/OnBoardingScreen';
 
 const Stack = createStackNavigator();
 
-const AuthStack = ({isAppFirstLaunched}) => {
+const AuthStack = ({isAppFirstLaunched, setIsAppFirstLaunched}) => {
+  const options = {
+    statusBar: {
+      visible:false
+    },
+  };
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode='none'>
       {
         isAppFirstLaunched ?
           <Stack.Screen
             name="OnBoarding"
-            component={OnBoardingScreen}
-            options={{header: () => null}}
-          /> : null
+            options={options}
+            headerStatusBarHeight={0}
+          >
+            {(props) =>
+              <OnBoardingScreen setIsAppFirstLaunched={setIsAppFirstLaunched} {...props} />}
+          </Stack.Screen> : <></>
       }
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{header: () => null}}
+        options={options}
+        headerStatusBarHeight={0}
       />
       <Stack.Screen
         name="Signup"
         component={SingUp}
-        options={{header: () => null}}
+        options={options}
+        headerStatusBarHeight={0}
       />
     </Stack.Navigator>
   );

@@ -30,3 +30,23 @@ export const MenuOutlineIcon = (props) => <Icon {...props} name="menu-outline" /
 export const InfoIcon = (props) => <Icon {...props} name="info" />;
 
 export const LogoutIcon = (props) => <Icon {...props} name="log-out" />;
+
+export const PeopleOutline = (props) => <Icon {...props} name="people-outline" />;
+
+export const CheckmarkCircleOutline = (props) => <Icon {...props} name="checkmark-circle-outline" />;
+
+export const SettingsOutline = (props) => <Icon {...props} name="settings-outline" />;
+
+export const PlusCircle = (props) => <Icon {...props} name="plus-circle" />;
+
+export const PlusOutline = (props) => <Icon {...props} name="plus-outline" />;
+
+export const TrashOutline = (props) => <Icon {...props} name="trash-2-outline" />;
+
+export const ArrowDown = (props) => <Icon {...props} name="arrow-ios-downward-outline" />;
+
+export const CheckCircle = (props) => <Icon {...props} name="checkmark-circle-2" />;
+
+export const ArrowDownward = (props) => <Icon {...props} name="arrow-downward" />;
+
+export const ShareOutline = (props) => <Icon {...props} name="share-outline" />;
