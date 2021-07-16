@@ -7,7 +7,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "build": "NODE_ENV=production expo build:android -t apk"
+    "build-apk": "NODE_ENV=production expo build:android -t apk",
+    "build": "NODE_ENV=production expo build:android"
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.0",
